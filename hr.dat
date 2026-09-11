@@ -16,7 +16,7 @@
 
 ## višak riječi, razmaka i pravopisnih znakova...
 
-\b( {2,3})(?!\s+) -> \1  # Unijeli ste dvije ili tri bjeline. Možda biste htjeli samo jednu?
+# \b( {2,3})(?!\s+) -> \1  # Unijeli ste dvije ili tri bjeline. Možda biste htjeli samo jednu?
 (\w+)(\.\.)(?!\.) -> \1...|\1. # Unijeli ste svega dvije točke, treba ili jednu ili tri.
 
 
@@ -37,6 +37,7 @@
 
 ## Točka iza razmaka na kraju rečenice
 
+(\w+)\s+\1 -> \1   # Unijeli ste dvaput istu riječ.
 (\w+)\s([\.\,\?\!\:\;])(?![\w\w+]) -> \1\2     # Slučajno ste unijeli bjelinu između posljednje riječi u rečenici i točke.
 (\w+)\s([\.\,\?\!\:\;])(?!\s)(\w+) -> \1\2 \3  # Nista unijeli razmak između kraja prethodne i početka nove rečenice.
 
