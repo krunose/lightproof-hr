@@ -1,6 +1,7 @@
 # Jednostavna pravila za provjeru pravopisa i gramatike hrvatskoga jezika LightProofom na LibreOfficeu
 # Krunoslav Šebetić (2026.) kruno [točka] se [na gmx com]u
 
+[word]
 
 ## Ispravljanje krnjega infinitiva.
 
@@ -22,23 +23,17 @@
 
 ##  zamjena 's' i 'sa'
 
-\b[sS]\s([szšžSZŠŽ]\w*)\b -> sa \1          # Kada riječ iza prijedloga 's' počinje sa 's, z, š, ž', treba pisati 'sa'.
-\b[sS]\s([kpKP][s]\w*)\b -> sa \1           # Kada riječ iza prijedloga 's' počinje sa 'ks', treba pisati 'sa'.
-\bsa\s([^szšžSZŠŽ]\w+)\b -> s \1            # Kada riječ iza prijedloga 's' ne počinje sa 's, z, š, ž', treba pisati 's'.
-
-
-
-## Ispravak razmaka uz kratice
-
-pr.n.e -> pr. n. e.
-pr.Kr. -> pr. Kr.
-n.e. -> n. e.
-doo -> d. o. o. | d.o.o.
-dd -> d. d. | d.d.
-jdoo -> j. d. o. o. | j.d.o.o.
-
+\bs\s([kKpP]?[szšžSZŠŽ]\w+)\b -> sa \1        # Kada riječ iza prijed. 's' počinje sa 's, z, š, ž, ks, ps', treba pisati 'sa'.
+\bsa\s((?![kKpP])[^szšžSZŠŽ]\w+)\b -> s \1    # Kada riječ iza prijed. 'sa' ne počinje sa 's, z, š, ž', treba pisati 's'.
+\bsa\s(([kKpP])[^szšžSZŠŽ]\w+)\b -> s \1      # Kada riječ iza prijed. 'sa' ne počinje sa 'ks, ps', treba pisati 's'.
 
 
 ## Veliko i malo slovo
 
 
+
+[char]
+
+## Razmak između kratica
+
+n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
