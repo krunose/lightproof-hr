@@ -15,16 +15,28 @@
 
 ## višak riječi, razmaka i pravopisnih znakova...
 
-([ ])([ ]) -> \1  # Unijeli ste dvije bjeline (ili više). Možda biste željeli samo jednu.
+([\s])([ ]) -> \1  # Unijeli ste dvije ili tri bjeline. Možda biste htjeli samo jednu?
 (\w+)(\.\.)(?!\.) -> \1...|\1. # Unijeli ste svega dvije točke, treba ili jednu ili tri.
 
 
 
 ##  zamjena 's' i 'sa'
 
-\b[sS]\s([szšžSZŠŽ]\w*)\b -> sa \1      # Kada riječ iza prijedloga 's' počinje sa 's, z, š, ž', treba pisati 'sa'.
-\b[sS]\s([kpKP][s]\w*)\b -> sa \1         # Kada riječ iza prijedloga 's' počinje sa 'ks', treba pisati 'sa'.
-\bsa\s([^szšžSZŠŽ]\w+)\b -> s \1        # Kada riječ iza prijedloga 's' ne počinje sa 's, z, š, ž', treba pisati 's'.
+\b[sS]\s([szšžSZŠŽ]\w*)\b -> sa \1          # Kada riječ iza prijedloga 's' počinje sa 's, z, š, ž', treba pisati 'sa'.
+\b[sS]\s([kpKP][s]\w*)\b -> sa \1           # Kada riječ iza prijedloga 's' počinje sa 'ks', treba pisati 'sa'.
+\bsa\s([^szšžSZŠŽ]\w+)\b -> s \1            # Kada riječ iza prijedloga 's' ne počinje sa 's, z, š, ž', treba pisati 's'.
+
+
+
+## Ispravak razmaka uz kratice
+
+pr.n.e -> pr. n. e.
+pr.Kr. -> pr. Kr.
+n.e. -> n. e.
+doo -> d. o. o. | d.o.o.
+dd -> d. d. | d.d.
+jdoo -> j. d. o. o. | j.d.o.o.
+
 
 
 ## Veliko i malo slovo
