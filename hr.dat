@@ -1,0 +1,28 @@
+# Jednostavna pravila za provjeru pravopisa i gramatike hrvatskoga jezika LightProofom na LibreOfficeu
+# Krunoslav Šebetić (2026.) kruno.se na gmx comu
+
+
+## Ispravljanje krnjega infinitiva.
+
+\b(\w*[t])[i]\s(ću|ćeš|će|ćemo|ćete) -> \1 \2  # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
+\b([ćĆ]u|eš|e|emo|ete)\s(\w*[t]) -> \1 \2i    # Kada pom. gl. htjeti stoji ispred infinitiva, on ne smije biti u knjem obliku.
+
+
+## višak riječi, razmaka i pravopisnih znakova...
+
+\b([\s]{2,3})\b -> " "  # Unijeli ste dvije bjeline (ili više). Možda biste željeli samo jednu.
+(\w+)(\.\.)(?!\.) -> \1...|\1. # Unijeli ste svega dvije točke, treba ili jednu ili tri.
+
+
+
+##  zamjena 's' i 'sa'
+
+\b[sS]\s([szšžSZŠŽ]\w*)\b -> sa \1      # Kada riječ iza prijedloga 's' počinje sa 's, z, š, ž', treba pisati 'sa'.
+\b[sS]\s([kK][s]\w*)\b -> sa \1         # Kada riječ iza prijedloga 's' počinje sa 'ks', treba pisati 'sa'.
+\b[sS]\s([pP][s]\w*)\b -> sa \1         # Kada riječ iza prijedloga 's' počinje sa 'ks', treba pisati 'sa'.
+
+
+
+## Veliko i malo slovo
+
+
