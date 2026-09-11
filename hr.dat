@@ -23,8 +23,7 @@
 ##  zamjena 's' i 'sa'
 
 \b[sS]\s([szšžSZŠŽ]\w*)\b -> sa \1      # Kada riječ iza prijedloga 's' počinje sa 's, z, š, ž', treba pisati 'sa'.
-\b[sS]\s([kK][s]\w*)\b -> sa \1         # Kada riječ iza prijedloga 's' počinje sa 'ks', treba pisati 'sa'.
-\b[sS]\s([pP][s]\w*)\b -> sa \1         # Kada riječ iza prijedloga 's' počinje sa 'ks', treba pisati 'sa'.
+\b[sS]\s([kpKP][s]\w*)\b -> sa \1         # Kada riječ iza prijedloga 's' počinje sa 'ks', treba pisati 'sa'.
 \bsa\s([^szšžSZŠŽ]\w+)\b -> s \1        # Kada riječ iza prijedloga 's' ne počinje sa 's, z, š, ž', treba pisati 's'.
 
 
