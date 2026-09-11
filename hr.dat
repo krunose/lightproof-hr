@@ -1,7 +1,6 @@
 # Jednostavna pravila za provjeru pravopisa i gramatike hrvatskoga jezika LightProofom na LibreOfficeu
 # Krunoslav Šebetić (2026.) kruno [točka] se [na gmx com]u
 
-[word]
 
 ## Ispravljanje krnjega infinitiva.
 
@@ -16,8 +15,10 @@
 
 ## višak riječi, razmaka i pravopisnih znakova...
 
-# \b( {2,3})(?!\s+) -> \1  # Unijeli ste dvije ili tri bjeline. Možda biste htjeli samo jednu?
-(\w+)(\.\.)(?!\.) -> \1...|\1. # Unijeli ste svega dvije točke, treba ili jednu ili tri.
+# \b( {2,3})(?!\s+) -> \1           # Unijeli ste dvije ili tri bjeline. Možda biste htjeli samo jednu?
+(\w+)(\.\.)(?!\.) -> \1...|\1.      # Unijeli ste svega dvije točke, treba ili jednu ili tri.
+(\w+)(\?\?)(?!\?) -> \1???| \1?     # Unijeli ste dva upitnika, treba ili jednu ili tri.
+(\w+)(\!\!)(?!\!) -> \1!!!| \1!     # Unijeli ste dva upitnika, treba ili jednu ili tri.
 
 
 
@@ -32,8 +33,6 @@
 
 
 
-[char]
-
 
 ## Točka iza razmaka na kraju rečenice
 
@@ -45,3 +44,9 @@
 ## Razmak između kratica
 
 n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
+
+
+
+# Ispravljanje riječi u bolje i pogrešne u dobre
+
+iznimno često -> vrlo često         # Unijeli ste oksimoron, možda ste mislili:
