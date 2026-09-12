@@ -26,7 +26,7 @@ nenaghtjeti ću|ćeš|će|ćemo|ćete
 \b([ć]u|eš|e|ćemo|ete)\s(\w+[ć])\b -> \1 \2i            # Ako je riječ o infinitivu, treba završavati na '-ći'.
 \b(\w+[t])\s(hoću|hoćeš|hoće|hoćemo|hoćete)\b -> \1i \2 # Ako je riječ o infinitivu, treba završavati na '-ti'.
 \b([hH]oću|oćeš|oće|oćemo|oćete)\s(\w+[t])\b -> \1 \2i  # Ako je riječ o infinitivu, treba završavati na '-ti'.
-\b(\w+t)\b <- word(-1) not in ["ću", "ćeš", "će", "ćemo", "ćete"] and word(1) not in ["ću", "ćeš", "će", "ćemo", "ćete"] -> \1i # Napisli ste krnji infinitiv, treba stajati '\1i'.
+# \b(\w+t)\b <- word(-1) not in ["ću", "ćeš", "će", "ćemo", "ćete"] and word(1) not in ["ću", "ćeš", "će", "ćemo", "ćete"] -> \1i # Napisli ste krnji infinitiv, treba stajati '\1i'.
 
 
 ## Upozorenje na konstrukciju 'da li'
@@ -82,6 +82,10 @@ Iznimno često -> Vrlo često             # Unijeli ste oksimoron, možda ste mi
 [n]o međutim -> no|međutim              # Unijeli ste pleonazam, možda ste mislili:
 [N]o međutim -> No|Međutim              # Unijeli ste pleonazam, možda ste mislili:
 oko cca -> oko|cca.|otprilike|približno # Unijeli ste pleonazam, možda ste mislili:
+[k]ako i na koji način -> kako|na koji način # Unijeli ste pleonazam, možda ste mislili:
+[K]ako i na koji način -> Kako|Na koji način    # Unijeli ste pleonazam, možda ste mislili:
+[č]ak štoviše -> čak|štoviše            # Unijeli ste pleonazam, možda ste mislili:
+[Č]ak štoviše -> Čak|Štoviše            # Unijeli ste pleonazam, možda ste mislili:
 
 
 
