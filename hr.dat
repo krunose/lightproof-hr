@@ -47,6 +47,11 @@ neprefiksoidi sam|si|je|smo|ste|su|ću|ćeš|će|ćemo|ćete|bih|bi|bismo|biste|
 \bsa\s(SAD-om) -> s SAD-om                    # Trebalo bi pisati 's SAD-om' jer se čita [es-a-de].
 
 
+## zamjena 'k' i 'ka'
+\bk\s([kghKGH]\w+)\b -> ka \1                 # Ako iza 'k' slijedi riječ koja počinje s 'k, g, h', treba pisati 'ka'.
+\bka\s([^kghKGH]\w+)\b -> k \1                 # Ako iza 'ka' slijedi riječ koja ne počinje s 'k, g, h', treba pisati 'k'.
+
+
 ## Veliko i malo slovo
 
 
