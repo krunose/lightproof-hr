@@ -5,10 +5,6 @@
 [word]
 
 
-
-
-
-
 ## Ispravljanje krnjega infinitiva.
 
 \b(\w[t])[i]\s(ću|ćeš|će|ćemo|ćete) -> \1 \2            # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
@@ -17,6 +13,10 @@
 \b([ć]u|eš|e|ćemo|ete)\s(\w+[ć])\b -> \1 \2i            # Ako je riječ o infinitivu, treba završavati na '-ći'.
 \b(\w+[t])\s(hoću|hoćeš|hoće|hoćemo|hoćete)\b -> \1i \2 # Ako je riječ o infinitivu, treba završavati na '-ti'.
 \b([hH]oću|oćeš|oće|oćemo|oćete)\s(\w+[t])\b -> \1 \2i  # Ako je riječ o infinitivu, treba završavati na '-ti'.
+
+
+## Ispravljanje konstrukcije 'da li' (generirano pomoću AI-a)
+
 
 
 
@@ -37,7 +37,6 @@
 
 
 ## Veliko i malo slovo
-
 
 
 
