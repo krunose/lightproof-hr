@@ -26,6 +26,12 @@ nenaghtjeti ću|ćeš|će|ćemo|ćete
 # \b(\w+t)\b <- word(-1) not in ["ću", "ćeš", "će", "ćemo", "ćete"] and word(1) not in ["ću", "ćeš", "će", "ćemo", "ćete"] -> \1i # Napisli ste krnji infinitiv, treba stajati '\1i'.
 
 
+krnjiinfinitivi = analizirat|bježat|bojat|boljet|boravit|brinut|brisat|brojit|budit|bunit|čakat|častit|čavrljat|čekat|čestitat|činit|čistit|čitati|čut|čuvar|darovat|dati|davati|definirat|dijelit|dizat|dirat|dizajnirat|djelovat|dijeliti|dobit|dobivati|dočekat|doći|dodat|dodavat|dodijelit|dodirnut|dogodit|dohvatit|dojavit|dokat|dokazat|doleć|dopustit|donijet|doprijat|doputovat|doradit|doručkovat|dostavit|dostizat|doživjet|dramatizirat|družit|držat|dubit|dugovat|duljit|duplat|dvojit|edukovat|eksplodirat|emitirat|evaluirat|evakuirat|financirat|formirat|fotografirat|funkcionirat|fundamentalizirat|ganut|garantirat|gasit|gatat|generirat|gibat|gledat|glumit|gnjavit|godit|gorjet|gostovat|govorit|gradit|grijat|grijati|grlit|grist|gubit|gural|gurnut|gustit|hvalit|hranit|hraniti|hrabrit|hvaliti|htjet|igrat|imati
+
+\b({krnjiinfinitivi})\b <- word(-1) != "ću" and word(-1) != "ćeš" and word(-1) != "će" and word(-1) != "ćemo" and word(-1) != "ćete" and word(1) != "ću" and word(1) != "ćeš" and word(1) != "će" and word(1) != "ćemo" and word(1) != "ćete" -> \1i # Napisali ste krnji infinitiv, treba stajati '\1i'.
+
+
+
 
 ## Upozorenje na konstrukciju 'da li'
 \b[dD]a li\b -> _ # U hrvatskom treba izbjegavati ovu konstrukciju, preformulirajte rečenicu.
@@ -99,4 +105,3 @@ p[hH] vrijednost -> pH-vrijednost                                               
 ([pP]op) (kultu\w+) -> \1-\2                                                                    # Riječ '\1' piše se sa spojnicom s riječju '\2'.
 # \b{prefiksoidi} ((?!sam|si|je|smo|ste|su|ću|ćeš|će|ćemo|ćete)\w+)\b -> \1\2                   # Prefiksoid '\1' se piše sastavljeno s '\2'.
 \b{prefiksoidi}\s+(?!(?:{neprefiksoidi})\b)(\w+)\b -> \1\3                                          # Prefiksoid '\1' se piše sastavljeno s '\3'.
-
