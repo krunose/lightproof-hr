@@ -4,6 +4,17 @@
 [word]
 
 
+
+# prefiksoidi za pozvati se na njih u polju
+prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|ego|elektro|epi|fero|fono|galvano|gono|helio|hidro|hiro|infra|izo|kiber|kreno|kripto|kseno|latino|magneto|megalo|metro|mili|mono|muzeo|neo|nukleo|osteo|para|pireto|poli|proto|roto|servo|soc|steno|surdo|tele|trofo|vazo|akva|alu|anglo|arterio|auto|balneo|bio|centi|deci|disko|egzo|empirio|etno|filo|foto|gastro|grafo|hemo|hemato|homo|ino|kabrio|kilo|krim|kromo|ksero|leuko|makro|melo|mezo|mini|morfo|nano|neto|oligo|paleo|pato|piro|porno|pseudo|repro|ruso|sidero|socio|stereo|tahi|teo|turbo|video|afro|alergo|ampelo|antropo|astro|baro|blasto|cito|deka|domato|ekstra|endo|euro|fito|geo|grando|hero|hiper|indo|inter|kardio|kino|krimi|krono|kvazi|lito|maksi|meta|midi|mio|moto|narko|neuro|ornito|palin|pedo|pluskvam|profi|psiho|retro|semio|sinkro|solo|supra|tara|termo|ultra|zoo|agro|alo|anarho|argiro|audio|auzo|bi|bronho|dakno|demo|doro|eko|entomo|fizio|franko|germano|hekto|hetero|hipo|info|italo|kata|klepto|krio|kozmo|labio|logo|mega|meteo|mikro|mnemo|multi|nekro|nitro|orto|pan|petro|pneumo|promo|radio|rino|sero|ski|spektro|super|tehno|topo|uni|žiro
+
+# negativan uzorak za pregled što stoji iza prefiksoida (ovo ne smije stajati)
+neprefiksoidi sam|si|je|smo|ste|su|ću|ćeš|će|ćemo|ćete|bih|bi|bismo|biste|me|te|ga|je|ju|nas|vas|ih|mi|ti|mu|joj|nam|vam|im|se
+
+
+
+
+
 ## Ispravljanje krnjega infinitiva.
 
 \b(\w[t])i\s(ću|ćeš|će|ćemo|ćete) -> \1 \2              # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
@@ -17,13 +28,6 @@
 ## Upozorenje na konstrukciju 'da li'
 \b[dD]a li\b -> _ # U hrvatskom treba izbjegavati ovu konstrukciju, preformulirajte rečenicu.
 
-
-
-# prefiksoidi za pozvati se na njih u polju
-prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|ego|elektro|epi|fero|fono|galvano|gono|helio|hidro|hiro|infra|izo|kiber|kreno|kripto|kseno|latino|magneto|megalo|metro|mili|mono|muzeo|neo|nukleo|osteo|para|pireto|poli|proto|roto|servo|soc|steno|surdo|tele|trofo|vazo|akva|alu|anglo|arterio|auto|balneo|bio|centi|deci|disko|egzo|empirio|etno|filo|foto|gastro|grafo|hemo|hemato|homo|ino|kabrio|kilo|krim|kromo|ksero|leuko|makro|melo|mezo|mini|morfo|nano|neto|oligo|paleo|pato|piro|porno|pseudo|repro|ruso|sidero|socio|stereo|tahi|teo|turbo|video|afro|alergo|ampelo|antropo|astro|baro|blasto|cito|deka|domato|ekstra|endo|euro|fito|geo|grando|hero|hiper|indo|inter|kardio|kino|krimi|krono|kvazi|lito|maksi|meta|midi|mio|moto|narko|neuro|ornito|palin|pedo|pluskvam|profi|psiho|retro|semio|sinkro|solo|supra|tara|termo|ultra|zoo|agro|alo|anarho|argiro|audio|auzo|bi|bronho|dakno|demo|doro|eko|entomo|fizio|franko|germano|hekto|hetero|hipo|info|italo|kata|klepto|krio|kozmo|labio|logo|mega|meteo|mikro|mnemo|multi|nekro|nitro|orto|pan|petro|pneumo|promo|radio|rino|sero|ski|spektro|super|tehno|topo|uni|žiro
-
-# najčešće enklitike
-enklitike sam|si|je|smo|ste|su|ću|ćeš|će|ćemo|ćete|bih|bi|bismo|biste|me|te|ga|je|ju|nas|vas|ih|mi|ti|mu|joj|nam|vam|im|se
 
 
 ## višak riječi, razmaka i pravopisnih znakova...
@@ -77,5 +81,5 @@ p[hH] vrijednost -> pH-vrijednost                                               
 ([pP]lacebo) (učin\w|efek\w+|pilul\w+) -> \1-\2                                                 # Riječ '\' piše se sa spojnicom s riječju '\2'.
 ([pP]op) (kultu\w+) -> \1-\2                                                                    # Riječ '\1' piše se sa spojnicom s riječju '\2'.
 # \b{prefiksoidi} ((?!sam|si|je|smo|ste|su|ću|ćeš|će|ćemo|ćete)\w+)\b -> \1\2                   # Prefiksoid '\1' se piše sastavljeno s '\2'.
-\b{prefiksoidi}\s+(?!(?:{enklitike})\b)(\w+)\b -> \1\3                                          # Prefiksoid '\1' se piše sastavljeno s '\3'.
+\b{prefiksoidi}\s+(?!(?:{neprefiksoidi})\b)(\w+)\b -> \1\3                                          # Prefiksoid '\1' se piše sastavljeno s '\3'.
 
