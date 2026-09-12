@@ -75,12 +75,13 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 # Ispravljanje izraza u bolje
 
-iznimno često -> vrlo često         # Unijeli ste oksimoron, možda ste mislili:
-Iznimno često -> Vrlo često         # Unijeli ste oksimoron, možda ste mislili:
-[S] obzirom da -> S obzirom na to da  # Bolje je napisati:
-[s] obzirom da -> s obzirom na to da  # Ispravite:
-[n]o međutim -> no|međutim            # Unijeli ste oksimoron, možda ste mislili:
-[N]o međutim -> No|Međutim            # Unijeli ste oksimoron, možda ste mislili:
+iznimno često -> vrlo često             # Unijeli ste oksimoron, možda ste mislili:
+Iznimno često -> Vrlo često             # Unijeli ste oksimoron, možda ste mislili:
+[S] obzirom da -> S obzirom na to da    # Bolje je napisati:
+[s] obzirom da -> s obzirom na to da    # Bolje je napisati:
+[n]o međutim -> no|međutim              # Unijeli ste pleonazam, možda ste mislili:
+[N]o međutim -> No|Međutim              # Unijeli ste pleonazam, možda ste mislili:
+oko cca -> oko|cca.|otprilike|približno # Unijeli ste pleonazam, možda ste mislili:
 
 
 
