@@ -4,9 +4,6 @@
 [word]
 
 
-
-
-
 ## Ispravljanje krnjega infinitiva.
 
 \b(\w[t])i\s(ću|ćeš|će|ćemo|ćete) -> \1 \2              # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
@@ -21,6 +18,9 @@
 \b[dD]a li\b -> _ # U hrvatskom treba izbjegavati ovu konstrukciju, preformulirajte rečenicu.
 
 
+
+# prefiksoidi za pozvati se na njih u polju
+prefiksoidi auto|bio|foto|avio
 
 
 ## višak riječi, razmaka i pravopisnih znakova...
@@ -69,11 +69,10 @@ s obzirom da -> s obzirom na to da  # Ispravite pogrešno:
 
 # Sastavljeno i nesastavljeno pisanje
 
-za ništa -> ni za što | nizašto                                 # (1) Ne bih to učinio ni za što. (2) Radio je nizašto.
-p[hH] vrijednost -> pH-vrijednost                               # Pokrate se uz glavnu riječ pišu sa spojnicom.
-([pP]lacebo) (učin\w|efek\w+|pilul\w+) -> \1-\2                 # Riječ '\' piše se sa spojnicom s riječju '\2'.
-([pP]op) (kultu\w+) -> \1-\2                                    # Riječ '\1' piše se sa spojnicom s riječju '\2'.
-
-
+za ništa -> ni za što | nizašto                                                                 # (1) Ne bih to učinio ni za što. (2) Radio je nizašto.
+p[hH] vrijednost -> pH-vrijednost                                                               # Pokrate se uz glavnu riječ pišu sa spojnicom.
+([pP]lacebo) (učin\w|efek\w+|pilul\w+) -> \1-\2                                                 # Riječ '\' piše se sa spojnicom s riječju '\2'.
+([pP]op) (kultu\w+) -> \1-\2                                                                    # Riječ '\1' piše se sa spojnicom s riječju '\2'.
+\b{prefiksoidi} ((?!sam|si|je|smo|ste|su|ću|ćeš|će|ćemo|ćete)\w+)\b -> \1\2                     # Prefiksoid '\1' se piše sastavljeno s '\2'.
 
 
