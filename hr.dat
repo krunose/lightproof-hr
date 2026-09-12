@@ -1,12 +1,16 @@
 # Jednostavna pravila za provjeru pravopisa i gramatike hrvatskoga jezika LightProofom na LibreOfficeu
 # Krunoslav Šebetić (2026.) kruno [točka] se [na gmx com]u
 
+[word]
+
+
+
 
 
 ## Ispravljanje krnjega infinitiva.
 
-\b(\w[t])i\s(ću|ćeš|će|ćemo|ćete) -> \1 \2            # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
-\b([ć]u|eš|e|emo|ete)\s(\w+[t])\b -> \1 \2i            # Kada pom. gl. htjeti stoji ispred infinitiva, on ne smije biti u krnjem obliku.
+\b(\w[t])i\s(ću|ćeš|će|ćemo|ćete) -> \1 \2              # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
+\b([ć]u|eš|e|emo|ete)\s(\w+[t])\b -> \1 \2i             # Kada pom. gl. htjeti stoji ispred infinitiva, on ne smije biti u krnjem obliku.
 \b(\w+[ć])\s(ću|ćeš|će|ćemo|ćete)\b -> \1i \2           # Ako je riječ o infinitivu, treba završavati na '-ći'.
 \b([ć]u|eš|e|ćemo|ete)\s(\w+[ć])\b -> \1 \2i            # Ako je riječ o infinitivu, treba završavati na '-ći'.
 \b(\w+[t])\s(hoću|hoćeš|hoće|hoćemo|hoćete)\b -> \1i \2 # Ako je riječ o infinitivu, treba završavati na '-ti'.
@@ -21,7 +25,7 @@
 
 ## višak riječi, razmaka i pravopisnih znakova...
 
-# \b( {2,3})(?!\s+) -> \1           # Unijeli ste dvije ili tri bjeline. Možda biste htjeli samo jednu?
+# [ ]{2,3} ->                       # Unijeli ste dvije ili tri bjeline. Možda biste htjeli samo jednu?
 (\w+)(\.\.)(?!\.) -> \1...|\1.      # Unijeli ste svega dvije točke, treba ili jednu ili tri.
 (\w+)(\?\?)(?!\?) -> \1???| \1?     # Unijeli ste dva upitnika, treba ili jednu ili tri.
 (\w+)(\!\!)(?!\!) -> \1!!!| \1!     # Unijeli ste dva upitnika, treba ili jednu ili tri.
@@ -31,8 +35,9 @@
 ##  zamjena 's' i 'sa'
 
 \bs\s([kKpP]?[szšžSZŠŽ]\w+)\b -> sa \1        # Kada riječ iza prijed. 's' počinje sa 's, z, š, ž, ks, ps', treba pisati 'sa'.
-\bsa\s((?![kKpP])[^szšžSZŠŽ][a-z])\b -> s \1    # Kada riječ iza prijed. 'sa' ne počinje sa 's, z, š, ž', treba pisati 's'.
+\bsa\s((?![kKpP])[^szšžSZŠŽ][a-z])\b -> s \1  # Kada riječ iza prijed. 'sa' ne počinje sa 's, z, š, ž', treba pisati 's'.
 \bsa\s(([kKpP])[^szšžSZŠŽ]\w+)\b -> s \1      # Kada riječ iza prijed. 'sa' ne počinje sa 'ks, ps', treba pisati 's'.
+\bsa\s(SAD-om) -> s SAD-om                    # Trebalo bi pisati 's SAD-om' jer se čita [es-a-de].
 
 
 ## Veliko i malo slovo
@@ -55,9 +60,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # Ispravljanje izraza u bolje
 
 iznimno često -> vrlo često         # Unijeli ste oksimoron, možda ste mislili:
-
-
-
+s obzirom da -> s obzirom na to da  # Ispravite pogrešno:
 
 
 # Brojevi sa spojnicom
@@ -70,6 +73,7 @@ za ništa -> ni za što | nizašto                                 # (1) Ne bih 
 p[hH] vrijednost -> pH-vrijednost                               # Pokrate se uz glavnu riječ pišu sa spojnicom.
 ([pP]lacebo) (učin\w|efek\w+|pilul\w+) -> \1-\2                 # Riječ '\' piše se sa spojnicom s riječju '\2'.
 ([pP]op) (kultu\w+) -> \1-\2                                    # Riječ '\1' piše se sa spojnicom s riječju '\2'.
+
 
 
 
