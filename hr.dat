@@ -15,7 +15,7 @@ neprefiksoidi sam|si|je|smo|ste|su|ću|ćeš|će|ćemo|ćete|bih|bi|bismo|biste|
 nenaghtjeti ću|ćeš|će|ćemo|ćete
 
 
-## Ispravljanje krnjega infinitiva.
+## Ispravljanje krnjega infinitiva u futurima.
 
 \b(\w[t])i\s(ću|ćeš|će|ćemo|ćete) -> \1 \2              # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
 \b([ć]u|eš|e|emo|ete)\s(\w+[t])\b -> \1 \2i             # Kada pom. gl. htjeti stoji ispred infinitiva, on ne smije biti u krnjem obliku.
@@ -32,8 +32,8 @@ krnjiinfinitivi = analizirat|bježat|bojat|boljet|boravit|brinut|brisat|brojit|b
 
 
 
-
 ## Upozorenje na konstrukciju 'da li'
+
 \b[dD]a li\b -> _ # U hrvatskom treba izbjegavati ovu konstrukciju, preformulirajte rečenicu.
 
 
@@ -97,11 +97,15 @@ oko cca -> oko|cca.|otprilike|približno # Unijeli ste pleonazam, možda ste mis
 \b(\d[0])\-tih\b -> \1-ih   # Možda ste željeli napisati:
 
 
+# Razmaci između broja i kojega znaka (stavlja se tzv. non-breaking space)
+(\d+)([%‰]) -> \1 \2                        # Iza broja '\1' i znaka '\2' treba pisati bjelinu.
+
+
 # Sastavljeno i nesastavljeno pisanje
 
-za ništa -> ni za što | nizašto                                                                 # (1) Ne bih to učinio ni za što. (2) Radio je nizašto.
-p[hH] vrijednost -> pH-vrijednost                                                               # Pokrate se uz glavnu riječ pišu sa spojnicom.
-([pP]lacebo) (učin\w|efek\w+|pilul\w+) -> \1-\2                                                 # Riječ '\' piše se sa spojnicom s riječju '\2'.
-([pP]op) (kultu\w+) -> \1-\2                                                                    # Riječ '\1' piše se sa spojnicom s riječju '\2'.
-# \b{prefiksoidi} ((?!sam|si|je|smo|ste|su|ću|ćeš|će|ćemo|ćete)\w+)\b -> \1\2                   # Prefiksoid '\1' se piše sastavljeno s '\2'.
-\b{prefiksoidi}\s+(?!(?:{neprefiksoidi})\b)(\w+)\b -> \1\3                                          # Prefiksoid '\1' se piše sastavljeno s '\3'.
+za ništa -> ni za što | nizašto                                                     # (1) Ne bih to učinio ni za što. (2) Radio je nizašto.
+p[hH] vrijednost -> pH-vrijednost                                                   # Pokrate se uz glavnu riječ pišu sa spojnicom.
+([pP]lacebo) (učin\w|efek\w+|pilul\w+) -> \1-\2                                     # Riječ '\' piše se sa spojnicom s riječju '\2'.
+([pP]op) (kultu\w+) -> \1-\2                                                        # Riječ '\1' piše se sa spojnicom s riječju '\2'.
+# \b{prefiksoidi} ((?!sam|si|je|smo|ste|su|ću|ćeš|će|ćemo|ćete)\w+)\b -> \1\2       # Prefiksoid '\1' se piše sastavljeno s '\2'.
+\b{prefiksoidi}\s+(?!(?:{neprefiksoidi})\b)(\w+)\b -> \1\3                          # Prefiksoid '\1' se piše sastavljeno s '\3'.
