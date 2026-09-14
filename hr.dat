@@ -33,7 +33,6 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 # Ispravak ije i je
 
-
 ## Slijedeći i sljedeći (generirano pomoću AI-a jer odviše komplicirano za držati u glavi)
 ### 1. Muški rod (mjesec, tjedan, dan, korak, tjedan, trenutak, put, tekst, natječaj, tjedan...)
 \b([sS])lijedeć(i|eg|ega|em|emu|im|ih|ima)\s+(mjesec\w*|tjedan\w*|dan\w*|korak\w*|trenut\w*|put\w*|tekst\w*|natječaj\w*|sastank\w*|član\w*|primjer\w*|odlom\w*|petak\w*|subot\w*)\b -> \1ljedeć\2 \3   # Ako ste mislili na ono što treba doći, piše se '\1\2'.
@@ -43,6 +42,17 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 ### 3. Srednji rod (razdoblje, vrijeme, stoljeće, pitanje, poglavlje, kolo, ljeto, jutro, mjesto...)
 \b([sS])lijedeć(e|eg|ega|em|emu|im|ih|ima)\b\s+(razdoblj\w*|vremen\w*|stoljeć\w*|pitanj\w*|poglavlj\w*|kol\w*|ljet\w*|jutr\w*|mjest\w*|izvješć\w*|pism\w*|svojstv\w*)\b -> \1ljeđeć\2 \3    # Ako ste mislili na ono što treba doći, piše se '\1\2'.
+
+### Prijedložni izrazi s vremenskim i prostornim značenjem (uvijek ide pridjev 'sljedeći')
+
+### 4. Konstrukcije s prijedlozima "u" i "na" (npr. u slijedećem koraku, na slijedećoj stranici)
+\b([uU]|[nN]a)\s+([sS])lijedeć(eg|ega|em|emu|im|ih|ima|oj|u|e)\b -> \1 \2ljeđeć\3   # U ovom slučaju je riječ o pridjevu, ne prilogu sadašnjem.
+
+### 5. Konstrukcije s prijedlozima koji traže genitiv: "tijekom", "nakon", "kroz", "tijekom", "poslije" (npr. nakon slijedećeg sastanka)
+\b([tT]ijekom|[nN]akon|[kK]roz|[pP]oslije)\s+([sS])lijedeć(eg|ega|ih|ih|e|a)\b -> \1 \2ljeđeć\3 # U ovom slučaju je riječ o pridjevu, ne prilogu sadašnjem.
+
+### 6. Konstrukcija s prijedlogom "za" (npr. rezervirano za slijedeći tjedan, odgođeno za slijedeću subotu)
+\b([zZ]a)\s+([sS])lijedeć(i|eg|ega|em|im|ih|a|e|u)\b -> \1 \2ljeđeć\3   # U ovom slučaju je riječ o pridjevu, ne prilogu sadašnjem.
 
 
 
