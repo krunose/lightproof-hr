@@ -1,6 +1,8 @@
 # Jednostavna računalna provjera pravopisa i gramatike hrvatskoga jezika LightProofom
 
-**LightProof je jednostavan alat za provjeru gramatike, tipografije i stila baziran na pravilnim izrazima (regular expression).** Ovaj dodatak omogućuje brzu, laganu i nativnu provjeru teksta izravno unutar programa LibreOffice Writer, prilagođenu svakodnevnim potrebama izvornih govornika hrvatskoga jezika.
+**LightProof je jednostavan alat za provjeru gramatike, tipografije i stila baziran na pravilnim izrazima (regular expression).**
+
+Ovaj dodatak omogućuje brzu, laganu i nativnu provjeru teksta izravno unutar programa LibreOffice Writer, prilagođenu svakodnevnim potrebama izvornih govornika hrvatskoga jezika.
 
 Alat je kalibriran za prepoznavanje najčešćih jezičnih i stilskih previda u praksi:
 * **Gramatika i oblici:** Krnji infinitiv u futurima (*radit ću* vs. *neću raditi*), pravilna uporaba enklitika u kondicionalu (*mi bismo*, *vi biste*) i ispravak konstrukcije *da li*.
