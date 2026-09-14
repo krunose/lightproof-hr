@@ -60,7 +60,6 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 
 
-
 ## višak riječi, razmaka i pravopisnih znakova...
 
 (\w+)(\.\.)(?!\.) -> \1...|\1.      # Unijeli ste svega dvije točke, treba ili jednu ili tri.
@@ -78,7 +77,7 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 \b([sS])\s([kK][sS]\w*)\b -> \1a \2                  # Kada iza 's' stoji riječ koja počinje na 'ks, kz, kš, kž', piše se 'sa'.
 \b([sS])\s([pP][sS]\w*)\b -> \1a \2                  # Kada iza 's' stoji riječ koja počinje na 'ps, pz, pš, pž', piše se 'sa'.
 
-\b([sS])a\s(?![szšžSZŠŽ]|[kK][sS]|[pP][sS])([a-zA-ZčČćĆžŽšŠđĐ\-]+)\b -> \1 \2  # sa doktorom > s doktorom, sa Krunom > s Krunom
+\b([sS])a\s(?![szšžSZŠŽ]|[kK][sS]|[pP][sS])([a-zA-ZčČćĆžŽšŠđĐ\-]+)\b -> \1 \2  # Ako riječ iza 'sa' ne počinje sa 's, z, ž, š, ks, ps', nema potrebe pisati 'sa'.i n
 
 
 
