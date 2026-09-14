@@ -13,18 +13,18 @@ neprefiksoidi sam|si|je|smo|ste|su|ću|ćeš|će|ćemo|ćete|bih|bio|bila|bilo|b
 
 ## Ispravljanje krnjega infinitiva u futurima (jesni oblik nenagl. gl. htjeti)
 
-\b(\w[t])i\s(ću|ćeš|će|ćemo|ćete) -> \1 \2              # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
-\b([ć]u|eš|e|emo|ete)\s(\w+[t])\b -> \1 \2i             # Kada pom. gl. htjeti stoji ispred infinitiva, on ne smije biti u krnjem obliku.
+\b(\w+[t])i\s(ću|ćeš|će|ćemo|ćete) -> \1 \2              # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
+\b(ću|ćeš|će|ćemo|ćete)\s(\w+[t])\b -> \1 \2i             # Kada pom. gl. htjeti stoji ispred infinitiva, on ne smije biti u krnjem obliku.
 \b(\w+[ć])\s(ću|ćeš|će|ćemo|ćete)\b -> \1i \2           # Ako je riječ o infinitivu, treba završavati na '-ći'.
-\b([ć]u|eš|e|ćemo|ete)\s(\w+[ć])\b -> \1 \2i            # Ako je riječ o infinitivu, treba završavati na '-ći'.
+\b(ću|ćeš|će|ćemo|ćete)\s(\w+[ć])\b -> \1 \2i            # Ako je riječ o infinitivu, treba završavati na '-ći'.
 \b(\w+[t])\s(hoću|hoćeš|hoće|hoćemo|hoćete)\b -> \1i \2 # Ako je riječ o infinitivu, treba završavati na '-ti'.
-\b([hH]oću|oćeš|oće|oćemo|oćete)\s(\w+[t])\b -> \1 \2i  # Ako je riječ o infinitivu, treba završavati na '-ti'.
+\b([hH]oću|[hH]oćeš|[hH]oće|[hH]oćemo|[hH]oćete)\s(\w+[t])\b -> \1 \2i  # Ako je riječ o infinitivu, treba završavati na '-ti'.
 
 ## Ispravljanje krnjega infinitiva u futurima (niječni oblik nenagl. gl. htjeti)
 
-\b(\w+t)(?=\s(?:[nN]eću|ećeš|eće|ećemo|ećete|eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
+\b(\w+t)(?=\s(?:[nN]eću|[nN]ećeš|[nN]eće|[nN]ećemo|[nN]ećete|[nN]eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
 \b(\w+t)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
-\b(\w+ć)(?=\s(?:[nN]eću|ećeš|eće|ećemo|ećete|eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
+\b(\w+ć)(?=\s(?:[nN]eću|[nN]ećeš|[nN]eće|[nN]ećemo|[nN]ećete|[nN]eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
 \b(\w+ć)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
 
 
