@@ -26,17 +26,32 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 \b(\w+ć)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
 
 
-
-
 ## Upozorenje na konstrukciju 'da li'
 
 \b[dD]a li\b -> _ # U hrvatskom treba izbjegavati ovu konstrukciju, preformulirajte rečenicu.
 
 
+# Ispravak ije i je
+
+
+## Slijedeći i sljedeći (generirano pomoću AI-a jer odviše komplicirano za držati u glavi)
+### 1. Muški rod (mjesec, tjedan, dan, korak, tjedan, trenutak, put, tekst, natječaj, tjedan...)
+\b([sS])lijedeć(i|eg|ega|em|emu|im|ih|ima)\s+(mjesec\w*|tjedan\w*|dan\w*|korak\w*|trenut\w*|put\w*|tekst\w*|natječaj\w*|sastank\w*|član\w*|primjer\w*|odlom\w*|petak\w*|subot\w*)\b -> \1ljedeć\2 \3   # Ako ste mislili na ono što treba doći, piše se '\1\2'.
+
+### 2. Ženski rod (godina, stranica, strana, točka, rečenica, faza, sezona, stanica, utakmica, sjednica...)
+\b([sS])lijedeć(a|e|oj|u|im|ih|ima)\s+(godin\w*|stranic\w*|stran\w*|točk\w*|rečenic\w*|faz\w*|sezon\w*|stanic\w*|utakmic\w*|sjednic\w*|generacij\w*|vježb\w*|lekcij\w*|subot\w*|nedjelj\w*|srijed\w*)\b -> \1ljedeć\2 \3   # Ako ste mislili na ono što treba doći, piše se '\1\2'.
+
+### 3. Srednji rod (razdoblje, vrijeme, stoljeće, pitanje, poglavlje, kolo, ljeto, jutro, mjesto...)
+\b([sS])lijedeć(e|eg|ega|em|emu|im|ih|ima)\b\s+(razdoblj\w*|vremen\w*|stoljeć\w*|pitanj\w*|poglavlj\w*|kol\w*|ljet\w*|jutr\w*|mjest\w*|izvješć\w*|pism\w*|svojstv\w*)\b -> \1ljeđeć\2 \3    # Ako ste mislili na ono što treba doći, piše se '\1\2'.
+
+
+
+
+
+
 
 ## višak riječi, razmaka i pravopisnih znakova...
 
-# [ ]{2,3} ->                       # Unijeli ste dvije ili tri bjeline. Možda biste htjeli samo jednu?
 (\w+)(\.\.)(?!\.) -> \1...|\1.      # Unijeli ste svega dvije točke, treba ili jednu ili tri.
 (\w+)(\?\?)(?!\?) -> \1???| \1?     # Unijeli ste dva upitnika, treba ili jednu ili tri.
 (\w+)(\!\!)(?!\!) -> \1!!!| \1!     # Unijeli ste dva upitnika, treba ili jednu ili tri.
