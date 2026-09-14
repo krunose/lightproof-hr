@@ -11,19 +11,19 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 ## Ispravljanje krnjega infinitiva u futurima (jesni oblik nenagl. gl. htjeti)
 
-\b(\w+[t])i\s(ću|ćeš|će|ćemo|ćete) -> \1 \2              # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
-\b(ću|ćeš|će|ćemo|ćete)\s(\w+[t])\b -> \1 \2i             # Kada pom. gl. htjeti stoji ispred infinitiva, on ne smije biti u krnjem obliku.
-\b(\w+[ć])\s(ću|ćeš|će|ćemo|ćete)\b -> \1i \2           # Ako je riječ o infinitivu, treba završavati na '-ći'.
-\b(ću|ćeš|će|ćemo|ćete)\s(\w+[ć])\b -> \1 \2i            # Ako je riječ o infinitivu, treba završavati na '-ći'.
-\b(\w+[t])\s(hoću|hoćeš|hoće|hoćemo|hoćete)\b -> \1i \2 # Ako je riječ o infinitivu, treba završavati na '-ti'.
-\b([hH]oću|[hH]oćeš|[hH]oće|[hH]oćemo|[hH]oćete)\s(\w+[t])\b -> \1 \2i  # Ako je riječ o infinitivu, treba završavati na '-ti'.
+\b(\w+[aeiounj]t)i\s(ću|ćeš|će|ćemo|ćete) -> \1 \2              # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
+\b(ću|ćeš|će|ćemo|ćete)\s(\w+[aeiounj]t)\b -> \1 \2i             # Kada pom. gl. htjeti stoji ispred infinitiva, on ne smije biti u krnjem obliku.
+\b(\w+[eiou]ć)\s(ću|ćeš|će|ćemo|ćete)\b -> \1i \2           # Ako je riječ o infinitivu, treba završavati na '-ći'.
+\b(ću|ćeš|će|ćemo|ćete)\s(\w+[eiou]ć)\b -> \1 \2i            # Ako je riječ o infinitivu, treba završavati na '-ći'.
+\b(\w+[aeiounj]t)\s(hoću|hoćeš|hoće|hoćemo|hoćete)\b -> \1i \2 # Ako je riječ o infinitivu, treba završavati na '-ti'.
+\b([hH]oću|[hH]oćeš|[hH]oće|[hH]oćemo|[hH]oćete)\s(\w+[aeiounj]t)\b -> \1 \2i  # Ako je riječ o infinitivu, treba završavati na '-ti'.
 
 ## Ispravljanje krnjega infinitiva u futurima (niječni oblik nenagl. gl. htjeti)
 
-\b(\w+t)(?=\s(?:[nN]eću|[nN]ećeš|[nN]eće|[nN]ećemo|[nN]ećete|[nN]eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
-\b(\w+t)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
-\b(\w+ć)(?=\s(?:[nN]eću|[nN]ećeš|[nN]eće|[nN]ećemo|[nN]ećete|[nN]eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
-\b(\w+ć)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
+\b(\w+[aeiounj]t)(?=\s(?:[nN]eću|[nN]ećeš|[nN]eće|[nN]ećemo|[nN]ećete|[nN]eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
+\b(\w+[aeiounj]t)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
+\b(\w+[eiou]ć)(?=\s(?:[nN]eću|[nN]ećeš|[nN]eće|[nN]ećemo|[nN]ećete|[nN]eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
+\b(\w+[eiou]ć)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
 
 
 ## Upozorenje na konstrukciju 'da li'
@@ -64,7 +64,7 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 
 
-## višak riječi, razmaka i pravopisnih znakova...
+## Lodash i ostali višak riječi, razmaka i pravopisnih znakova...
 
 (\w+)(\.\.)(?!\.) -> \1...|\1.      # Unijeli ste svega dvije točke, treba ili jednu ili tri.
 (\w+)(\?\?)(?!\?) -> \1???| \1?     # Unijeli ste dva upitnika, treba ili jednu ili tri.
@@ -94,11 +94,96 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 
 
+## =============================================================================
+## UKLANJANJE PLEONAZAMA I SUVIŠNIH RIJEČI (Pisanje u duhu hrvatskoga jezika)
+## =============================================================================
+
+# 1. 'kako i na koji način' / 'na koji način i kako' -> kako
+\b([kK]ako)\si\sna\skoji\snačin\b -> \1                                      # Pleonazam. Dovoljno je reći samo 'kako'.
+\b([nN]a\skoji\snačin)\si\skako\b -> \1                                      # Pleonazam. Dovoljno je reći 'na koji način' ili 'kako'.
+
+# 2. 'oko cca' / 'cca oko' -> oko / cca (oko i cca znače potpuno istu stvar)
+\b([oO]ko)\s(?:[cC][cC][aA]\.?)\b -> \1                                      # Pleonazam. Izrazi 'oko' i 'cca' imaju isto značenje.
+\b([cC][cC][aA]\.?)\s(oko)\b -> \1                                           # Pleonazam. Izrazi 'cca' i 'oko' imaju isto značenje.
+
+# 3. 'čak štoviše' / 'štoviše čak' -> štoviše / čak
+\b([čČ]ak)\sštoviše\b -> \1                                                  # Pleonazam. Izrazi 'čak' i 'štoviše' znače isto, upotrijebite samo jedan.
+\b([šŠ]toviše)\sčak\b -> \1                                                  # Pleonazam. Izrazi 'štoviše' i 'čak' znače isto, upotrijebite samo jedan.
+
+# 4. 'no međutim' / 'međutim no' -> međutim / no
+\b([nN]o)\smeđutim\b -> \1                                                   # Pleonazam. Veznici 'no' i 'međutim' imaju isto suprotno značenje.
+\b([mM]eđutim)\sno\b -> \1                                                   # Pleonazam. Veznici 'međutim' i 'no' imaju isto suprotno značenje.
+
+# 5. 'zajedno suodlučivati' / 'zajedno surađivati' / 'zajedno sujelovati' (prefiks su- već označava zajedništvo)
+\b([zZ]ajedno)\s(suodluč\w+|surađ\w+|sujelov\w+|suorganiz\w+|supotpi\w+)\b -> \2 # Pleonazam. Prefiks 'su-' već označava da se radnja radi zajedno.
+
+# 6. 'vratiti natrag' / 'uzvratiti natrag' -> vratiti
+\b(vrat\w+|uzvrat\w+)\snatrag\b -> \1                                        # Pleonazam. Glagol 'vratiti' sam po sebi sadrži smjer prema natrag.
+
+# 7. 'sići dolje' / 'popeti se gore' / 'izaći van' / 'ući unutra'
+\b(siđ\w+|siš\w+)\sdolje\b -> \1                                             # Pleonazam. Glagol 'sići' već znači kretanje prema dolje.
+\b(pop\w+\sse)\sgore\b -> \1                                                 # Pleonazam. Glagol 'popeti se' već znači kretanje prema gore.
+\b(izađ\w+|izaš\w+)\svan\b -> \1                                             # Pleonazam. Glagol 'izaći' već znači kretanje prema van.
+\b(uđ\w+|uša\w+)\sunutra\b -> \1                                             # Pleonazam. Glagol 'ući' već znači kretanje prema unutra.
+
+# 8. 'malo pomalo' -> malo-pomalo (pisanje sastavljeno)
+\b([mM]alo)\spomalo\b -> \1pomalo                                            # Izraz 'malo-pomalo' u hrvatskom se jeziku piše sa spojnicom.
+
+# 9. 'potpuno/u potpunosti uništen/neutraliziran' (ako je nešto uništeno, to je apsolutno)
+\b([uU]\spotpunosti|[pP]otpuno)\s(uništ\w+|neutraliz\w+|likvid\w+|is korijen\w+)\b -> \2 # Stilski pleonazam. Glagoli poput 'uništiti' već sami po sebi znače potpunost.
+
+# 10. 'vremensko razdoblje' / 'vremenski period' -> razdoblje / period
+\b([vV]remensk\w*)\s(razdoblj\w*|period\w*)\b -> \2                          # Pleonazam. Razdoblje i period sami po sebi označavaju vrijeme.
+
+# 11. 'izvoziti van' / 'uvoziti unutra'
+\b(izvo\w+)\svan\b -> \1                                                     # Pleonazam. Izvoz već podrazumijeva kretanje prema van.
+\b(uvo\w+)\sunutra\b -> \1                                                   # Pleonazam. Uvoz već podrazumijeva kretanje prema unutra.
+
+# 12. 'mala kućica' / 'stari starac' / 'glavni protagonist'
+\b([mM]ala)\skućic\w*\b -> kućica                                            # Pleonazam. Deminutiv 'kućica' već označava malu kuću.
+\b([sS]tari)\sstar\w*\b -> starac                                            # Pleonazam. Riječ 'starac' već označava osobu koja je stara.
+\b([gG]lavni)\sprotagonist\w*\b -> protagonist                               # Pleonazam. Protagonist je po definiciji glavni lik.
+
+
+
+
+## =============================================================================
+## PEDANTNO ISPRAVLJANJE ODVOJENO PISANOG SUPERLATIVA (Izbjegavanje lažnih uzbuna)
+## =============================================================================
+
+# 1. Pridjevi na -ji, -ja, -je, -ji (npr. naj bolji, naj lošiji, naj noviji, naj manji, naj gori)
+\b([nN]aj)\s(\w+(ij|j)(i|eg|ega|em|emu|im|ih|ima|a|e|oj|u))\b -> \1\2                      # Superlativ se piše sastavljeno.
+
+# 2. Pridjevi na -ši, -ša, -še (npr. naj viši, naj ljepši, naj lakši, naj mekši, naj tiši)
+\b([nN]aj)\s(\w+š(i|eg|ega|em|emu|im|ih|ima|a|e|oj|u))\b -> \1\2                           # Superlativ se piše sastavljeno.
+
+# 3. Pridjevi na -ći, -ća, -će (npr. naj veći, naj kraći, naj slađi, naj žešći)
+\b([nN]aj)\s(\w+ć(i|eg|ega|em|emu|im|ih|ima|a|e|oj|u))\b -> \1\2                           # Superlativ se piše sastavljeno.
+
+# 4. Pridjevi na -ži, -ža, -že (npr. naj duži, naj stroži, naj teži, naj brži, naj niži)
+\b([nN]aj)\s(\w+ž(i|eg|ega|em|emu|im|ih|ima|a|e|oj|u))\b -> \1\2                           # Superlativ se piše sastavljeno.
+
+
+
+
 ## Točka iza razmaka na kraju rečenice
 
 (\w+)\s+\1 -> \1   # Unijeli ste dvaput istu riječ.
-(\w+)\s([\.\,\?\!\:\;])(?![\w\w+]) -> \1\2     # Slučajno ste unijeli bjelinu između posljednje riječi u rečenici i točke.
-(\w+)\s([\.\,\?\!\:\;])(?!\s)(\w+) -> \1\2 \3  # Nista unijeli razmak između kraja prethodne i početka nove rečenice.
+
+# Razdvojeno radi izbjegavanja DuplicateOptionError na novom configparseru
+(\w+)\s(\.)(?![\w\w+]) -> \1\2
+(\w+)\s(,)(?![\w\w+]) -> \1\2
+(\w+)\s(\?)(?![\w\w+]) -> \1\2
+(\w+)\s(\!)(?![\w\w+]) -> \1\2
+(\w+)\s(:)(?![\w\w+]) -> \1\2
+(\w+)\s(;)(?![\w\w+]) -> \1\2
+
+(\w+)\s(\.)(?!\s)(\w+) -> \1\2 \3
+(\w+)\s(,)(?!\s)(\w+) -> \1\2 \3
+(\w+)\s(\?)(?!\s)(\w+) -> \1\2 \3
+(\w+)\s(\!)(?!\s)(\w+) -> \1\2 \3
+(\w+)\s(:)(?!\s)(\w+) -> \1\2 \3
+(\w+)\s(;)(?!\s)(\w+) -> \1\2 \3
 
 
 ## Razmak između kratica
@@ -107,7 +192,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 
-# Ispravljanje izraza minimalno
+# Ispravljanje zareza minimalno (generirano AI-em zbog složenosti)
 ## =============================================================================
 ## OPTIMIZIRANA PRAVILA ZA PISANJE ZAREZA (MINIMALAN RIZIK OD LAŽNIH UZBUNA)
 ## =============================================================================
@@ -142,19 +227,5 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # Hvataju se točne strukture s glagolom "li" ili jasni vremenski/uzročni signali.
 ^([aA]ko\s+\w+\s+li)\s+([^,]+)\b -> \1, \2 # Pogodbena rečenica u inverziji s 'li' odvaja se zarezom.
 ^([bB]udući\s+da)\s+([^,]{15,50})\s+(je|su|odluč\w+|mor\w+|mož\w+)\b -> \1 \2, \3 # Budući da ova uzročna rečenica otvara izričaj (inverzija), provjerite treba li je odvojiti zarezom prije glavnoga glagola.
-
-
-### 6. Brisanje pogrešno unesenih zareza unutar složenih veznika (Čišćenje)
-# Prema pravilima hrvatskoga jezika, ispred složenih veznika (zato što, nakon što, kao što, a da) ne ide zarez ako se ne naglašava uzrok/odnos.
-\b(\w+),\s+(a\s+da)\b -> \1 \2 # Pogrešno stavljen zarez ispred "a da".
-\b(\w+),\s+(zato\s+(?:da|što))\b -> \1 \2 # Pogrešno stavljen zarez ispred "zato što" ili "zato da".
-\b(\w+),\s+(nakon\s+što)\b -> \1 \2 # Pogrešno stavljen zarez ispred "nakon što".
-\b(\w+),\s+(kao\s+što)\b -> \1 \2 # Pogrešno stavljen zarez ispred "kao što".
-
-
-### 7. Vokativi i molbe na početku rečenice
-# Kada rečenica počinje imperativom molbe ili zahvale iza kojih slijedi nastavak misli.
-^([mM]olim|[hH]vala|[oO]prostite|[iI]spričavam\s+se)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\b -> \1, \2 # Nakon uvodnih riječi zahvale ili molbe na početku rečenice piše se zarez.
-
 
 
