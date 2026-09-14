@@ -34,6 +34,7 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 # Ispravak ije i je
 
 ## Slijedeći i sljedeći (generirano pomoću AI-a jer odviše komplicirano za držati u glavi)
+
 ### 1. Muški rod (mjesec, tjedan, dan, korak, tjedan, trenutak, put, tekst, natječaj, tjedan...)
 \b([sS])lijedeć(i|eg|ega|em|emu|im|ih|ima)\s+(mjesec\w*|tjedan\w*|dan\w*|korak\w*|trenut\w*|put\w*|tekst\w*|natječaj\w*|sastank\w*|član\w*|primjer\w*|odlom\w*|petak\w*|subot\w*)\b -> \1ljedeć\2 \3   # Ako ste mislili na ono što treba doći, piše se '\1\2'.
 
@@ -135,6 +136,14 @@ za ništa -> ni za što | nizašto                                              
 p[hH] vrijednost -> pH-vrijednost                                                   # Pokrate se uz glavnu riječ pišu sa spojnicom.
 ([pP]lacebo) (učin\w|efek\w+|pilul\w+) -> \1-\2                                     # Riječ '\' piše se sa spojnicom s riječju '\2'.
 ([pP]op) (kultu\w+) -> \1-\2                                                        # Riječ '\1' piše se sa spojnicom s riječju '\2'.
+
+## Generirano pomoću AI-a jer je odviše komplicirano za držati u glavi
+### Ispravljanje rastavljenog pisanja superlativa (naj + pridjev)
+
+\b([nN]aj)\s+([a-zA-ZčČćĆžŽšŠđĐ]+\d*(?:ji|ja|je|ji|je|ja|jeg|jega|joj|joj|joj|jim|jima|jih|ju|om))\b -> \1\2 # naj bolji > najbolji, naj poznatija > najpoznatija
+\b([nN]aj)\s+([a-zA-ZčČćĆžŽšŠđĐ]+\d*(?:ši|ša|še|šeg|šega|šoj|šim|šima|ših|šu|šom))\b -> \1\2             # Superlativ se piše sastavljeno.
+\b([nN]aj)\s+([a-zA-ZčČćĆžŽšŠđĐ]+\d*(?:ći|ća|će|ćeg|ćega|ćoj|ćim|ćima|ćih|ću|ćom))\b -> \1\2             # Superlativ se piše sastavljeno.
+
 
 
 
