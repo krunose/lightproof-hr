@@ -47,7 +47,7 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 \b([sS])lijedeć(a|e|oj|u|im|ih|ima)(?:\s+(?:ga|je|mu|joj|ih|nas|vas|mi|ti|se))?\s+(godin\w*|stranic\w*|stran\w*|točk\w*|rečenic\w*|faz\w*|sezon\w*|stanic\w*|utakmic\w*|sjednic\w*|generacij\w*|vježb\w*|lekcij\w*|nedjelj\w*|srijed\w*)\b -> \1ljedeć\2 \3   # Ako ste mislili na iduću/narednu, piše se s 'je'.
 
 ### 3. Srednji rod (vremenski i prostorni pojmovi)
-\b([sS])lijedeć(e|eg|ega|em|emu|im|ih|ima)(?:\s+(?:ga|je|mu|joj|ih|nas|vas|mi|ti|se))?\s+(razdoblj\w*|vremen\w*|stoljeć\w*|pitanj\w*|poglavlj\w*|kol\w*|ljet\w*|jutr\w*|mjest\w*|izvješć\w*|pism\w*)\b -> \1ljeđeć\2 \3    # Ako ste mislili na iduće/naredno, piše se s 'je'.
+\b([sS])lijedeć(e|eg|ega|em|emu|im|ih|ima)(?:\s+(?:ga|je|mu|joj|ih|nas|vas|mi|ti|se))?\s+(razdoblj\w*|vremen\w*|stoljeć\w*|pitanj\w*|poglavlj\w*|kol\w*|ljet\w*|jutr\w*|mjest\w*|izvješć\w*|pism\w*)\b -> \1ljedeć\2 \3    # Ako ste mislili na iduće/naredno, piše se s 'je'.
 
 ### Prijedložni izrazi s vremenskim i prostornim značenjem (uvijek ide pridjev 'sljedeći')
 
