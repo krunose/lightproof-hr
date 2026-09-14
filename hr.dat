@@ -85,8 +85,6 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 
 
-
-
 ## zamjena 'k' i 'ka'
 \bk\s([kghKGH]\w+)\b -> ka \1                 # Ako iza 'k' slijedi riječ koja počinje s 'k, g, h', treba pisati 'ka'.
 \bka\s([^kghKGH]\w+)\b -> k \1                 # Ako iza 'ka' slijedi riječ koja ne počinje s 'k, g, h', treba pisati 'k'.
@@ -147,6 +145,46 @@ p[hH] vrijednost -> pH-vrijednost                                               
 \b([nN]aj)\s+([a-zA-ZčČćĆžŽšŠđĐ]+\d*(?:ši|ša|še|šeg|šega|šoj|šim|šima|ših|šu|šom))\b -> \1\2             # Superlativ se piše sastavljeno.
 \b([nN]aj)\s+([a-zA-ZčČćĆžŽšŠđĐ]+\d*(?:ći|ća|će|ćeg|ćega|ćoj|ćim|ćima|ćih|ću|ćom))\b -> \1\2             # Superlativ se piše sastavljeno.
 
+
+
+# Pisanje zareza (generirano pomoću AI-a jer su pravilni izrazi prekomplicirani za držati u glavi)
+
+## Ispravljanje interpunkcije (Zarez ispred veznika)
+
+### 1. Suprotni veznici (s izuzetkom složenog veznika 'a da')
+\b(\w+)\s+(a)(?!\s+da\b)\b -> \1, \2                            # Ispred suprotnog veznika 'a' piše se zarez (izuzeto je 'a da').
+\b(\w+)\s+(ali|nego|već|a kamoli)\b -> \1, \2                  # Ispred suprotnih veznika 'ali', 'nego', 'već' i 'a kamoli' piše se zarez.
+
+### 2. Složeni načinski/dopunski veznik 'a da' (Sigurnosno pravilo protiv lažnih uzbuna)
+\b(\w+),\s+(a\s+da)\b -> \1 \2                                  # Ispred i unutar izraza 'a da' u rečenicama tipa 'napravio je to a da nije bio svjestan' ne piše se zarez.
+
+### 3. Isključni veznici (samo, tek, jedino - kada povezuju rečenice ili u funkciji isključivanja)
+\b(\w+)\s+(samo što|jedino što|tek što)\b -> \1, \2              # Ispred složenih isključnih veznika u rečenici piše se zarez.
+
+### 4. Zaključni veznici (dakle, stoga, zato)
+\b(\w+)\s+(dakle|stoga|zato)\b -> \1, \2                         # Ispred zaključnih veznika u složenoj rečenici piše se zarez.
+
+### 5. Dvostruki veznici u nabrajanju (zarez ide ispred drugog, trećeg itd. člana)
+\b(i|ili|ni|niti)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\s+(i|ili|ni|niti)\b <- word(-2) not in [",", "."] -> \1 \2, \3 # Kod ponovljenih veznika u nabrajanju (npr. 'i... i...'), ispred drugog i svakog sljedećeg ide zarez.
+
+
+## Ispravljanje zareza kod umetnutih rečenica i vokativa (Početak rečenice)
+
+### 6. Vokativi i usklici na početku rečenice (opća imena i česti zazivi)
+^([mM]olim|[hH]vala|[dD]obar dan|[dD]obro jutro|[dD]obra večer|[oO]prostite|[iI]spričavam se)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\b -> \1, \2 # Nakon pozdrava, molbi i zahvala na početku rečenice piše se zarez.
+^([aA]h|[oO]h|[jJ]ao|[eE]j)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\b -> \1, \2 # Nakon usklika na početku rečenice piše se zarez.
+
+
+## Višak i pogrešan razmještaj zareza
+
+### 7. Razmak ispred zareza
+(\w+)\s+([,]) -> \1\2                                            # Slučajno ste unijeli bjelinu između riječi i zareza.
+
+### 8. Nedostaje razmak nakon zareza
+(\w+)(,)([a-zA-ZčČćĆžŽšŠđĐ]+) -> \1\2 \3                         # Niste unijeli razmak nakon zareza.
+
+### 9. Dvostruki zarezi
+([,])\s*([,]) -> \1                                              # Unijeli ste dva zareza zaredom.
 
 
 
