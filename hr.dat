@@ -47,10 +47,18 @@ neprefiksoidi sam|si|je|smo|ste|su|ću|ćeš|će|ćemo|ćete|bih|bio|bila|bilo|b
 
 ##  zamjena 's' i 'sa'
 
-\bs\s([kKpP]?[szšžSZŠŽ]\w+)\b -> sa \1        # Kada riječ iza prijed. 's' počinje sa 's, z, š, ž, ks, ps', treba pisati 'sa'.
-\bsa\s((?![kKpP])[^szšžSZŠŽ][a-z])\b -> s \1  # Kada riječ iza prijed. 'sa' ne počinje sa 's, z, š, ž', treba pisati 's'.
-\bsa\s(([kKpP])[^szšžSZŠŽ]\w+)\b -> s \1      # Kada riječ iza prijed. 'sa' ne počinje sa 'ks, ps', treba pisati 's'.
-\bsa\s(SAD-om) -> s SAD-om                    # Trebalo bi pisati 's SAD-om' jer se čita [es-a-de].
+\b([sS])a\s(SAD-om)\b -> \1 \2                       # sa SAD-om > s SAD-om (čita se [es-a-de])
+\b([sS])a\s(SSSR-om)\b -> \1 \2                      # sa SSSR-om > s SSSR-om (čita se [es-es-es-er])
+\b([sS])\s(SRCE-em)\b -> \1a \2                      # s SRCE-em > sa SRCE-em (čita se [es-er-ce-e])
+\b([sS])\s([szšžSZŠŽ]\w*)\b -> \1a \2                # Kada iza 's' stoji riječ koja počinje na 's, z, š, ž', piše se 'sa'.
+\b([sS])\s([kK][sS]\w*)\b -> \1a \2                  # Kada iza 's' stoji riječ koja počinje na 'ks, kz, kš, kž', piše se 'sa'.
+\b([sS])\s([pP][sS]\w*)\b -> \1a \2                  # Kada iza 's' stoji riječ koja počinje na 'ps, pz, pš, pž', piše se 'sa'.
+
+# 3. Pravilo za skidanje 'sa' (ispred svih ostalih slova)
+\b([sS])a\s(?![szšžSZŠŽ]|[kK][sS]|[pP][sS])([a-zA-ZčČćĆžŽšŠđĐ\-]+)\b -> \1 \2  # sa doktorom > s doktorom, sa Krunom > s Krunom
+
+
+
 
 
 ## zamjena 'k' i 'ka'
