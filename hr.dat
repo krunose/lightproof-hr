@@ -107,103 +107,54 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 
-# Ispravljanje izraza u bolje
+# Ispravljanje izraza minimalno
+## =============================================================================
+## OPTIMIZIRANA PRAVILA ZA PISANJE ZAREZA (MINIMALAN RIZIK OD LAŽNIH UZBUNA)
+## =============================================================================
 
-iznimno često -> vrlo često             # Unijeli ste oksimoron, možda ste mislili:
-Iznimno često -> Vrlo često             # Unijeli ste oksimoron, možda ste mislili:
-[S] obzirom da -> S obzirom na to da    # Bolje je napisati:
-[s] obzirom da -> s obzirom na to da    # Bolje je napisati:
-[n]o međutim -> no|međutim              # Unijeli ste pleonazam, možda ste mislili:
-[N]o međutim -> No|Međutim              # Unijeli ste pleonazam, možda ste mislili:
-oko cca -> oko|cca.|otprilike|približno # Unijeli ste pleonazam, možda ste mislili:
-[k]ako i na koji način -> kako|na koji način # Unijeli ste pleonazam, možda ste mislili:
-[K]ako i na koji način -> Kako|Na koji način    # Unijeli ste pleonazam, možda ste mislili:
-[č]ak štoviše -> čak|štoviše            # Unijeli ste pleonazam, možda ste mislili:
-[Č]ak štoviše -> Čak|Štoviše            # Unijeli ste pleonazam, možda ste mislili:
+### 1. Suprotni veznici u jasnom rečeničnom kontekstu (ali, nego, već)
+# Provjerava se nalaze li se u blizini glagolski oblici kako bi se izbjeglo spajanje samostalnih riječi.
+\b(\w+)\s+(ali|nego|već)\s+(\w+)\b <- word(-1).lower() in ["je", "sam", "smo", "ste", "su", "bio", "bila", "bilo", "ne", "nije"] -> \1, \2 \3 # Provjerite treba li zarez ispred suprotnog veznika ako povezuje rečenice s glagolima.
+
+# Izolirano pravilo za suprotni veznik 'a' (uz izuzimanje čestih spojeva "a da", "a kamoli", "a ne")
+\b(\w+)\s+(a)(?!\s+(?:da|kamoli|ne)\b)\s+(\w+)\b -> \1, \2 \3 # Ispred suprotnog veznika 'a' u pravilu dolazi zarez.
 
 
+### 2. Isključni i zaključni veznici na granicama tvrdnji (dakle, stoga)
+# Kada zaključuju prethodnu misao unutar rečenice, ispred njih je potreban zarez.
+\b(\w+)\s+(dakle|stoga)\b -> \1, \2 # Ispred zaključnih veznika 'dakle' i 'stoga' piše se zarez.
 
-# Brojevi sa spojnicom
-\b(\d[0])\-tih\b -> \1-ih   # Možda ste željeli napisati:
-
-
-# Razmaci između broja i kojega znaka (stavlja se tzv. non-breaking space)
-(\d+)([%‰]) -> \1 \2                        # Iza broja '\1' i znaka '\2' treba pisati bjelinu.
-
-
-# Sastavljeno i nesastavljeno pisanje
-
-za ništa -> ni za što | nizašto                                                     # (1) Ne bih to učinio ni za što. (2) Radio je nizašto.
-p[hH] vrijednost -> pH-vrijednost                                                   # Pokrate se uz glavnu riječ pišu sa spojnicom.
-([pP]lacebo) (učin\w+|efek\w+|pilul\w+) -> \1-\2                                     # Riječ '\1' piše se sa spojnicom s riječju '\2'.
-([pP]op) (kultu\w+) -> \1-\2                                                        # Riječ '\1' piše se sa spojnicom s riječju '\2'.
-
-## Generirano pomoću AI-a jer je odviše komplicirano za držati u glavi
-### Ispravljanje rastavljenog pisanja superlativa (naj + pridjev)
-
-\b([nN]aj)\s+([a-zA-ZčČćĆžŽšŠđĐ]+\d*(?:ji|ja|je|ji|je|ja|jeg|jega|joj|joj|joj|jim|jima|jih|ju|om))\b -> \1\2 # naj bolji > najbolji, naj poznatija > najpoznatija
-\b([nN]aj)\s+([a-zA-ZčČćĆžŽšŠđĐ]+\d*(?:ši|ša|še|šeg|šega|šoj|šim|šima|ših|šu|šom))\b -> \1\2             # Superlativ se piše sastavljeno.
-\b([nN]aj)\s+([a-zA-ZčČćĆžŽšŠđĐ]+\d*(?:ći|ća|će|ćeg|ćega|ćoj|ćim|ćima|ćih|ću|ćom))\b -> \1\2             # Superlativ se piše sastavljeno.
+# Izolirani zaključni veznik 'zato' (izuzima se složeni veznik 'zato što' i 'zato da')
+\b(\w+)\s+(zato)(?!\s+(?:da|što)\b)\b -> \1, \2 # Ako 'zato' djeluje samostalno kao zaključni veznik, ispred njega ide zarez.
 
 
-
-# Pisanje zareza (generirano pomoću AI-a jer su pravilni izrazi prekomplicirani za držati u glavi)
-
-## Ispravljanje interpunkcije (Zarez ispred veznika i unutar rečenice)
-
-### 1. Suprotnost i objašnjenje (uvijek ide zarez: a, ali, nego, već, a kamoli, to jest, odnosno, naime)
-\b(\w+)\s+(a)(?!\s+da\b)\b -> \1, \2                            # Ispred suprotnog veznika 'a' piše se zarez (izuzeto je 'a da').
-\b(\w+)\s+(ali|nego|već|a kamoli)\b -> \1, \2                  # Ispred suprotnih veznika 'ali', 'nego', 'već' i 'a kamoli' piše se zarez.
-\b(\w+)\s+(to jest|tj\.|odnosno|naime)\b -> \1, \2              # Ispred izraza koji uvode naknadno objašnjenje ili dopunu piše se zarez.
-
-### 2. Isključni veznici (samo, tek, jedino - kada povezuju rečenice ili u funkciji isključivanja)
-\b(\w+)\s+(samo što|jedino što|tek što)\b -> \1, \2              # Ispred složenih isključnih veznika u rečenici piše se zarez.
-
-### 3. Zaključni veznici (dakle, stoga, zato - uz izuzetak složenih veznika)
-\b(\w+)\s+(dakle|stoga)\b -> \1, \2                             # Ispred zaključnih veznika 'dakle' i 'stoga' piše se zarez.
-\b(\w+)\s+(zato)(?!\s+(?:da|što)\b)\b -> \1, \2                # Ispred zaključnog veznika 'zato' ide zarez, osim ako je dio složenog veznika 'zato da' ili 'zato što'.
-
-### 4. Dvostruki veznici u nabrajanju (zarez ide ispred drugog, trećeg itd. člana)
-\b(i|ili|ni|niti)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\s+(i|ili|ni|niti)\b <- word(-2) not in [",", "."] -> \1 \2, \3 # Kod ponovljenih veznika u nabrajanju (npr. 'i... i...'), ispred drugog i svakog sljedećeg ide zarez.
+### 3. Objašnjavalački veznici i kratice (to jest, odnosno, naime)
+# Uvode naknadno objašnjenje ili dopunu u rečenici.
+\b(\w+)\s+(to\s+jest|tj\.|odnosno|naime)\b -> \1, \2 # Ispred izraza koji uvode naknadno objašnjenje ili dopunu (tj., odnosno, naime) piše se zarez.
 
 
-## Inverzija i umetnute rečenice (Zahtijevaju zarez na granici rečenica)
-
-### 5. Inverzija (Rečenica počinje zavisnim veznikom, zarez mora odvojiti zavisnu od glavne prije glagola u glavnoj)
-# Pokriva česte početke rečenica: Ako..., Budući da..., Iako..., Nakon što..., Zato što...
-^([aA]ko|[bB]udući\s+da|[iI]ako|[nN]akon\s+što|[zZ]ato\s+što)\s+([^,]+?)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\b <- word(0) not in [","] -> # Upozorenje: Ako rečenica počinje zavisnim veznikom (inverzija), zavisni dio se od glavnog odvaja zarezom.
-
-### 6. Umetnute rečenice uvedene s 'koji', 'čiji', 'što' (Ako prekidaju rečenicu, moraju se odvojiti zarezom)
-\b([kK]oji|[kK]oja|[kK]oje|[čČ]iji|[čČ]ija|[čČ]ije|[šŠ]to)\b <- word(-1) not in [",", "i", "ili", "ni", "niti"] -> # Razmislite o umetanju zareza ispred odnosne zamjenice ako ona uvodi novu umetnutu misao.
+### 4. Dvostruki (rastavljeni) veznici u nabrajanju (i... i..., ili... ili...)
+# Zarez se stavlja tek ispred drugog (i svakog sljedećeg) člana nabrajanja, ako već ne postoji.
+\b(i|ili|ni|niti)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\s+(i|ili|ni|niti)\b <- word(-2) not in [",", "."] -> \1 \2, \3 # Kod ponovljenih veznika u nabrajanju (npr. 'i... i...'), ispred drugog člana ide zarez.
 
 
-## Sigurnosna pravila protiv lažnih uzbuna i brisanje viška zareza ispred složenih veznika
-
-### 7. Uklanjanje zareza unutar i ispred uobičajenih složenih veznika (u normalnom redu riječi)
-\b(\w+),\s+(a\s+da)\b -> \1 \2                                  # Napravio je to a da nije bio svjestan -> bez zareza.
-\b(\w+),\s+(zato\s+(?:da|što))\b -> \1 \2                        # Napravio sam to zato da se mogu vratiti / zato što želim -> bez zareza.
-\b(\w+),\s+(nakon\s+što)\b -> \1 \2                             # Otišao je nakon što je završio posao -> bez zareza.
-\b(\w+),\s+(budući\s+da)\b -> \1 \2                             # To je važno budući da određuje ishod -> bez zareza (ako nije u inverziji).
+### 5. Sigurna inverzija (Pogodbene i uzročne rečenice na početku)
+# Hvataju se točne strukture s glagolom "li" ili jasni vremenski/uzročni signali.
+^([aA]ko\s+\w+\s+li)\s+([^,]+)\b -> \1, \2 # Pogodbena rečenica u inverziji s 'li' odvaja se zarezom.
+^([bB]udući\s+da)\s+([^,]{15,50})\s+(je|su|odluč\w+|mor\w+|mož\w+)\b -> \1 \2, \3 # Budući da ova uzročna rečenica otvara izričaj (inverzija), provjerite treba li je odvojiti zarezom prije glavnoga glagola.
 
 
-## Ispravljanje zareza kod umetnutih rečenica i vokativa (Početak rečenice)
+### 6. Brisanje pogrešno unesenih zareza unutar složenih veznika (Čišćenje)
+# Prema pravilima hrvatskoga jezika, ispred složenih veznika (zato što, nakon što, kao što, a da) ne ide zarez ako se ne naglašava uzrok/odnos.
+\b(\w+),\s+(a\s+da)\b -> \1 \2 # Pogrešno stavljen zarez ispred "a da".
+\b(\w+),\s+(zato\s+(?:da|što))\b -> \1 \2 # Pogrešno stavljen zarez ispred "zato što" ili "zato da".
+\b(\w+),\s+(nakon\s+što)\b -> \1 \2 # Pogrešno stavljen zarez ispred "nakon što".
+\b(\w+),\s+(kao\s+što)\b -> \1 \2 # Pogrešno stavljen zarez ispred "kao što".
 
-### 8. Vokativi i usklici na početku rečenice (opća imena i česti zazivi)
-^([mM]olim|[hH]vala|[dD]obar dan|[dD]obro jutro|[dD]obra večer|[oO]prostite|[iI]spričavam se)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\b -> \1, \2 # Nakon pozdrava, molbi i zahvala na početku rečenice piše se zarez.
-^([aA]h|[oO]h|[jJ]ao|[eE]j)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\b -> \1, \2 # Nakon usklika na početku rečenice piše se zarez.
 
-
-## Višak i pogrešan razmještaj zareza (Tipografske pogreške)
-
-### 9. Razmak ispred zareza
-(\w+)\s+([,]) -> \1\2                                            # Slučajno ste unijeli bjelinu između riječi i zareza.
-
-### 10. Nedostaje razmak nakon zareza
-(\w+)(,)([a-zA-ZčČćĆžŽšŠđĐ]+) -> \1\2 \3                         # Niste unijeli razmak nakon zareza.
-
-### 11. Dvostruki zarezi
-([,])\s*([,]) -> \1                                              # Unijeli ste dva zareza zaredom.
-
+### 7. Vokativi i molbe na početku rečenice
+# Kada rečenica počinje imperativom molbe ili zahvale iza kojih slijedi nastavak misli.
+^([mM]olim|[hH]vala|[oO]prostite|[iI]spričavam\s+se)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\b -> \1, \2 # Nakon uvodnih riječi zahvale ili molbe na početku rečenice piše se zarez.
 
 
 
