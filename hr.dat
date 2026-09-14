@@ -2,7 +2,6 @@
 # Krunoslav Šebetić (2026.) kruno [točka] se [na gmx com]u
 
 
-
 [word]
 
 # prefiksoidi za pozvati se na njih u polju
@@ -11,11 +10,8 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 # negativan uzorak za pregled što stoji iza prefiksoida (ovo ne smije stajati). Koristi se za spajanja prefiksoida s sljedećom riječi ako ne slijedi koja od riječi u nizu
 neprefiksoidi sam|si|je|smo|ste|su|ću|ćeš|će|ćemo|ćete|bih|bio|bila|bilo|bili|bile|bi|bismo|biste|me|te|ga|je|ju|nas|vas|ih|mi|ti|mu|joj|nam|vam|im|se
 
-# oblici nenaglašenoga oblika pomoćnoga glagola htjeti
-nenaghtjeti ću|ćeš|će|ćemo|ćete
 
-
-## Ispravljanje krnjega infinitiva u futurima.
+## Ispravljanje krnjega infinitiva u futurima (jesni oblik nenagl. gl. htjeti)
 
 \b(\w[t])i\s(ću|ćeš|će|ćemo|ćete) -> \1 \2              # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
 \b([ć]u|eš|e|emo|ete)\s(\w+[t])\b -> \1 \2i             # Kada pom. gl. htjeti stoji ispred infinitiva, on ne smije biti u krnjem obliku.
@@ -23,12 +19,14 @@ nenaghtjeti ću|ćeš|će|ćemo|ćete
 \b([ć]u|eš|e|ćemo|ete)\s(\w+[ć])\b -> \1 \2i            # Ako je riječ o infinitivu, treba završavati na '-ći'.
 \b(\w+[t])\s(hoću|hoćeš|hoće|hoćemo|hoćete)\b -> \1i \2 # Ako je riječ o infinitivu, treba završavati na '-ti'.
 \b([hH]oću|oćeš|oće|oćemo|oćete)\s(\w+[t])\b -> \1 \2i  # Ako je riječ o infinitivu, treba završavati na '-ti'.
-# \b(\w+t)\b <- word(-1) not in ["ću", "ćeš", "će", "ćemo", "ćete"] and word(1) not in ["ću", "ćeš", "će", "ćemo", "ćete"] -> \1i # Napisli ste krnji infinitiv, treba stajati '\1i'.
 
+## Ispravljanje krnjega infinitiva u futurima (niječni oblik nenagl. gl. htjeti)
 
-krnjiinfinitivi = analizirat|bježat|bojat|boljet|boravit|brinut|brisat|brojit|budit|bunit|čakat|častit|čavrljat|čekat|čestitat|činit|čistit|čitati|čut|čuvar|darovat|dati|davati|definirat|dijelit|dizat|dirat|dizajnirat|djelovat|dijeliti|dobit|dobivati|dočekat|doći|dodat|dodavat|dodijelit|dodirnut|dogodit|dohvatit|dojavit|dokat|dokazat|doleć|dopustit|donijet|doprijat|doputovat|doradit|doručkovat|dostavit|dostizat|doživjet|dramatizirat|družit|držat|dubit|dugovat|duljit|duplat|dvojit|edukovat|eksplodirat|emitirat|evaluirat|evakuirat|financirat|formirat|fotografirat|funkcionirat|fundamentalizirat|ganut|garantirat|gasit|gatat|generirat|gibat|gledat|glumit|gnjavit|godit|gorjet|gostovat|govorit|gradit|grijat|grijati|grlit|grist|gubit|gural|gurnut|gustit|hvalit|hranit|hraniti|hrabrit|hvaliti|htjet|igrat|imati
+\b(\w+t)(?=\s(?:[nN]eću|ećeš|eće|ećemo|ećete|eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
+\b(\w+t)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
+\b(\w+ć)(?=\s(?:[nN]eću|ećeš|eće|ećemo|ećete|eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
+\b(\w+ć)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
 
-\b({krnjiinfinitivi})\b <- word(-1) != "ću" and word(-1) != "ćeš" and word(-1) != "će" and word(-1) != "ćemo" and word(-1) != "ćete" and word(1) != "ću" and word(1) != "ćeš" and word(1) != "će" and word(1) != "ćemo" and word(1) != "ćete" -> \1i # Napisali ste krnji infinitiv, treba stajati '\1i'.
 
 
 
@@ -109,3 +107,7 @@ p[hH] vrijednost -> pH-vrijednost                                               
 ([pP]op) (kultu\w+) -> \1-\2                                                        # Riječ '\1' piše se sa spojnicom s riječju '\2'.
 # \b{prefiksoidi} ((?!sam|si|je|smo|ste|su|ću|ćeš|će|ćemo|ćete)\w+)\b -> \1\2       # Prefiksoid '\1' se piše sastavljeno s '\2'.
 \b{prefiksoidi}\s+(?!(?:{neprefiksoidi})\b)(\w+)\b -> \1\3                          # Prefiksoid '\1' se piše sastavljeno s '\3'.
+
+
+
+
