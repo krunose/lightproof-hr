@@ -253,8 +253,8 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # Ispravljanje konstrukcija prijedlog + infinitiv
 # =============================================================================
 
-# pravilo samo s upozorenjem, bez pokušaja predlaganja zamjene (smanjuje krive prijedloge i lažne uzbune
-\b(za|kroz|nad|pod|pred|uz|bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto|pri|o|u|na|po|prema|s|sa|među)\s+(\w+(?:iti|ati|eti|vativ|iti|ći))\b -> _ # Stilska pogreška. Izbjegavajte konstrukciju prijedlog + infinitiv (npr. 'za kupiti'). Preformulirajte u glagolsku/odglagolsku imenicu (npr. 'za kupnju/kupovinu') ili zavisnu rečenicu.
+\b(kroz\s+(?:cijele|cijelu|cijelog|čitavu|čitav|čitavog|iduća|sljedeća|protekla|prošla|naredna|zadnja|zadnjih|proteklih|dva|tri|četiri|pet|\d+)?\s*(?:godinu|godine|godina|mjesec|mjeseca|mjeseci|tjedan|tjedna|tjedana|dan|dana|sat|sata|sati|minutu|minuta|sekundu|sekundi|stoljeće|stoljeća|period|razdoblje|povijest|život|vrijeme|ljeto|zimu|proljeće|jesen|siječanj|veljaču|ožujak|travanj|svibanj|lipanj|srpanj|kolovoz|rujan|listopad|studeni|prosinac))\b -> _ # Prijedlog „kroz” primarno ima prostorno značenje (npr. „proći kroz vrata”). Za označavanje vremena upotrijebite: tijekom (uz genitiv), u, za vrijeme ili tijekom čitavog. Primjer: umjesto „kroz cijelu godinu” treba pisati „tijekom cijele godine” ili „u cijeloj godini”.
+
 
 
 # Ispravljanje konstrukcije prijedlog kroz + riječ koja označava vrijeme
@@ -262,7 +262,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 # --- OPĆE PRAVILO: KROZ U VREMENSKOM ZNAČENJU ---
 
-\b(kroz)(?=\s+(cijele|cijelu|cijelog|čitavu|čitav|čitavog|iduća|sljedeća|protekla|prošla|naredna|zadnja|zadnjih|proteklih|dva|tri|četiri|pet|\d+)?\s*(godinu|godine|godina|mjesec|mjeseca|mjeseci|tjedan|tjedna|tjedana|dan|dana|sat|sata|sati|minutu|minuta|sekundu|sekundi|stoljeće|stoljeća|period|razdoblje|povijest|život|vrijeme|ljeto|zimu|proljeće|jesen|siječanj|veljaču|ožujak|travanj|svibanj|lipanj|srpanj|kolovoz|rujan|listopad|studeni|prosinac)\b) -> _ # Prijedlog „kroz” primarno ima prostorno značenje (npr. „proći kroz vrata”). Za označavanje vremena upotrijebite: tijekom (uz genitiv), u, za vrijeme ili tijekom čitavog. Primjer: umjesto „kroz cijelu godinu” treba pisati „tijekom cijele godine” ili „u cijeloj godini”.
+\b(kroz)(?=\s+(cijele|cijelu|cijelog|čitavu|čitav|čitavog|iduća|sljedeća|protekla|prošla|naredna|zadnja|zadnjih|proteklih|dva|tri|četiri|pet|\d+)?\s*(godinu|godine|godina|mjesec|mjeseca|mjeseci|tjedan|tjedna|tjedana|dan|dana|sat|sata|sati|minutu|minuta|sekundu|sekundi|stoljeće|stoljeća|period|razdoblje|povijest|život|vrijeme|ljeto|zimu|proljeće|jesen|siječanj|veljaču|ožujak|travanj|svibanj|lipanj|srpanj|kolovoz|rujan|listopad|studeni|prosinac)\b) -> _ # Prijedlog 'kroz' ima prostorno značenje (npr. „proći kroz vrata”). Preformulirate. Primjer: umjesto „kroz cijelu godinu” treba pisati „tijekom cijele godine” ili „u cijeloj godini”.
 
 
 
