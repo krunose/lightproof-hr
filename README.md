@@ -40,7 +40,7 @@ Problem s originalnim alatom je što se dodatak nije mogao napraviti jer je skri
 6. Spreman dodatak u `.oxt` datotečnom formatu bit će generiran unutar mape `~/lightproof/`.
 
 ---
-**Autor:** Krunoslav Šebetić (2026.) – kruno [točka] se [na gmx com]
+**Autor:** Krunoslav Šebetić (2026.)
 
 **Licenca:** MPL 2.0 / LGPLv3 (Otvoreni kod kompatibilan s LibreOffice ekosustavom)
 
