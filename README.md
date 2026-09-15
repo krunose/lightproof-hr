@@ -41,5 +41,6 @@ Problem s originalnim alatom je što se dodatak nije mogao napraviti jer je skri
 
 ---
 **Autor:** Krunoslav Šebetić (2026.) – kruno [točka] se [na gmx com]
+
 **Licenca:** MPL 2.0 / LGPLv3 (Otvoreni kod kompatibilan s LibreOffice ekosustavom)
 
