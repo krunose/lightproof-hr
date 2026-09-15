@@ -167,7 +167,9 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 \b(vrat\w+|uzvrat\w+)\snatrag\b -> \1                                        # Pleonazam. Glagol 'vratiti' sam po sebi sadrži smjer prema natrag.
 
 ## 7. 'sići dolje' / 'popeti se gore' / 'izaći van' / 'ući unutra'
+
 \b(sići dolje)\b -> sići                                                     # Pleonazam. Glagol 'sići' već znači kretanje prema dolje.
+\b(silaz\w+)\sdolje\b -> \1                                                  # Pleonazam. Glagol 'silaziti' već znači kretanje prema dolje.
 \b(siđ\w+|siš\w+)\sdolje\b -> \1                                             # Pleonazam. Glagol 'sići' već znači kretanje prema dolje.
 \b(pop\w+\sse)\sgore\b -> \1                                                 # Pleonazam. Glagol 'popeti se' već znači kretanje prema gore.
 \b(izađ\w+|izaš\w+)\svan\b -> \1                                             # Pleonazam. Glagol 'izaći' već znači kretanje prema van.
