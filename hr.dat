@@ -41,8 +41,6 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 ## Slijedeći i sljedeći (generirano pomoću AI-a jer odviše komplicirano za držati u glavi)
 
-# Pomoćna grupa za enklitike koje mogu uletjeti u red riječi (npr. sljedeći ga put...)
-# (ga|je|mu|joj|ih|nas|vas|mi|ti|se)
 
 ### 1. Muški rod (vremenski i prostorni pojmovi)
 \b([sS])lijedeć(i|eg|ega|em|emu|im|ih|ima)(?:\s+(?:ga|je|mu|joj|ih|nas|vas|mi|ti|se))?\s+(mjesec\w*|tjedan\w*|dan\w*|korak\w*|trenut\w*|put\w*|tekst\w*|natječaj\w*|sastank\w*|član\w*|odlom\w*|petak\w*|subot\w*)\b -> \1ljedeć\2 \3   # Ako ste mislili na idući/naredni, piše se s 'je'.
@@ -74,7 +72,9 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 (\w+)(\!\!)(?!\!) -> \1!!!| \1!     # Unijeli ste dva upitnika, treba ili jednu ili tri.
 (\w+)\s+\1 -> \1                    # Unijeli ste dvaput istu riječ.
 
+
 [char]
+
 \s{2,3} -> " "                     # Unijeli ste više bjelina, možda ste željeli samo jednu.
 
 
@@ -191,7 +191,12 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 ## 12. 'stari starac' / 'glavni protagonist'
 \b([sS]tari)\sstar\w*\b -> starac                                            # Pleonazam. Riječ 'starac' već označava osobu koja je stara.
 \b([gG]lavni)\sprotagonist\w*\b -> protagonist                               # Pleonazam. Protagonist je po definiciji glavni lik.
+
+## 13. 's obzirom da'
 \bs obzirom da\b -> s obzirom na to da                                       # Konstrukcija zahtijeva prijedlog 'na' pa treba biti:
+
+## 14. 'oko par dana
+\boko par dana\b -> nekoliko dana|par dana|dva dana                          # Pleonazam. Riječ 'oko' i 'par' u ovom kontekstu znače isto.
 
 
 
@@ -280,6 +285,5 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # Hvataju se točne strukture s glagolom "li" ili jasni vremenski/uzročni signali.
 ^([aA]ko\s+\w+\s+li)\s+([^,]+)\b -> \1, \2 # Pogodbena rečenica u inverziji s 'li' odvaja se zarezom.
 ^([bB]udući\s+da)\s+([^,]{15,50})\s+(je|su|odluč\w+|mor\w+|mož\w+)\b -> \1 \2, \3 # Budući da ova uzročna rečenica otvara izričaj inverzija provjerite treba li je odvojiti zarezom prije glavnoga glagola.
-
 
 
