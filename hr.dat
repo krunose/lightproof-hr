@@ -250,6 +250,111 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 
+# Ispravljanje konstrukcija prijedlog + infinitiv
+# =============================================================================
+
+# pravilo samo s upozorenjem, bez pokušaja predlaganja zamjene (smanjuje krive prijedloge i lažne uzbune
+# \b(za|kroz|nad|pod|pred|uz|bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto|pri|o|u|na|po|prema|s|sa|među)\s+(\w+(?:iti|ati|eti|vativ|iti|ći))\b -> _ # Stilska pogreška. Izbjegavajte konstrukciju prijedlog + infinitiv (npr. 'za kupiti'). Preformulirajte u glagolsku/odglagolsku imenicu (npr. 'za kupnju/kupovinu') ili zavisnu rečenicu.
+
+
+
+## 1. AKUZATIV (Prijedlozi: za, kroz, nad, pod, pred, uz)
+## -----------------------------------------------------------------------------
+
+### Fiksne iznimke za sumnjive glagole (moraju biti na prvom mjestu)
+\b(za|kroz|nad|pod|pred|uz)\s+kupiti\b -> \1 kupnju|\1 kupovinu                    # Stilska pogreška. Koristite odglagolsku imenicu.
+\b(za|kroz|nad|pod|pred|uz)\s+prodati\b -> \1 prodaju                               # Stilska pogreška. Koristite odglagolsku imenicu.
+\b(za|kroz|nad|pod|pred|uz)\s+popraviti\b -> \1 popravak                             # Stilska pogreška. Koristite odglagolsku imenicu.
+\b(za|kroz|nad|pod|pred|uz)\s+odmoriti\b -> \1 odmor                                 # Stilska pogreška. Koristite odglagolsku imenicu.
+\b(za|kroz|nad|pod|pred|uz)\s+pregledati\b -> \1 pregled                             # Stilska pogreška. Koristite odglagolsku imenicu.
+\b(za|kroz|nad|pod|pred|uz)\s+voziti\b -> \1 vožnju                                 # Stilska pogreška. Koristite odglagolsku imenicu.
+\b(za|kroz|nad|pod|pred|uz)\s+jesti\b -> \1 jelo                                    # Stilska pogreška. Koristite odglagolsku imenicu.
+\b(za|kroz|nad|pod|pred|uz)\s+piti\b -> \1 piće                                     # Stilska pogreška. Koristite odglagolsku imenicu.
+\b(za|kroz|nad|pod|pred|uz)\s+platiti\b -> \1 plaćanje                              # Stilska pogreška. Koristite glagolsku imenicu.
+\b(za|kroz|nad|pod|pred|uz)\s+ići\b -> _                                            # Stilska pogreška. Konstrukcija s 'ići' je neispravna, preformulirajte rečenicu.
+
+### Opća pravila (za glagole koji imaju pravilnu tvorbu na -nje)
+#\b(za|kroz|nad|pod|pred|uz)\s+(\w+d)iti\b -> \1 \2đenje                             # Stilska pogreška. Koristite glagolsku imenicu (jotacija d > đ, npr. rađenje).
+#\b(za|kroz|nad|pod|pred|uz)\s+(\w+t)iti\b -> \1 \2ćanje                             # Stilska pogreška. Koristite glagolsku imenicu (jotacija t > ć, npr. plaćanje).
+#\b(za|kroz|nad|pod|pred|uz)\s+(\w+z)iti\b -> \1 \2oženje                            # Stilska pogreška. Koristite glagolsku imenicu (jotacija z > ž, npr. voženje).
+\b(za|kroz|nad|pod|pred|uz)\s+(\w+)gati\b -> \1 \2žanje                             # Stilska pogreška. Koristite glagolsku imenicu (palatalizacija g > ž, npr. polaganje).
+\b(za|kroz|nad|pod|pred|uz)\s+(\w+)ati\b -> \1 \2anje                               # Stilska pogreška. Koristite glagolsku imenicu u akuzativu (npr. čitanje).
+\b(za|kroz|nad|pod|pred|uz)\s+(\w+)iti\b -> \1 \2jenje                              # Stilska pogreška. Koristite glagolsku imenicu u akuzativu.
+
+
+## 2. GENITIV (Prijedlozi: bez, radi, zbog, nakon, prije, tijekom, uslijed, od, do, iz, pokraj, pored, povodom, uoči, namjesto, umjesto)
+## -----------------------------------------------------------------------------
+
+### Fiksne iznimke za sumnjive glagole (moraju biti na prvom mjestu)
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+kupiti\b -> \1 kupnje|\1 kupovine
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+prodati\b -> \1 prodaje
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+popraviti\b -> \1 popravka
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+odmoriti\b -> \1 odmora
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+pregledati\b -> \1 pregleda
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+voziti\b -> \1 vožnje
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+jesti\b -> \1 jela
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+piti\b -> \1 pića
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+platiti\b -> \1 plaćanja
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+ići\b -> _ # Preformulirajte (npr. prije odlaska, nakon polaska).
+
+### Opća pravila (za glagole koji imaju pravilnu tvorbu na -nje)
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+(\w+d)iti\b -> \1 \2đenja # Prijedlog traži genitiv imenice (npr. rađenja).
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+(\w+t)iti\b -> \1 \2ćanja # Prijedlog traži genitiv imenice (npr. plaćanja).
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+(\w+z)iti\b -> \1 \2oženja # Prijedlog traži genitiv imenice (npr. voženja).
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+(\w+)gati\b -> \1 \2žanja # Prijedlog traži genitiv imenice (npr. polaganja).
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+(\w+)ati\b -> \1 \2anja # Koristite glagolsku imenicu u genitivu (npr. čitanja).
+\b(bez|radi|zbog|nakon|prije|tijekom|uslijed|od|do|iz|pokraj|pored|povodom|uoči|namjesto|umjesto)\s+(\w+)iti\b -> \1 \2jenja # Koristite glagolsku imenicu u genitivu.
+
+
+## 3. LOKATIV (Prijedlozi: pri, o, u, na, po, prema)
+## -----------------------------------------------------------------------------
+
+### Fiksne iznimke za sumnjive glagole (moraju biti na prvom mjestu)
+\b(pri|o|u|na|po|prema)\s+kupiti\b -> \1 kupnji|\1 kupovini
+\b(pri|o|u|na|po|prema)\s+prodati\b -> \1 prodaji
+\b(pri|o|u|na|po|prema)\s+popraviti\b -> \1 popravku
+\b(pri|o|u|na|po|prema)\s+odmoriti\b -> \1 odmoru
+\b(pri|o|u|na|po|prema)\s+pregledati\b -> \1 pregledu
+\b(pri|o|u|na|po|prema)\s+voziti\b -> \1 vožnji
+\b(pri|o|u|na|po|prema)\s+jesti\b -> \1 jelu
+\b(pri|o|u|na|po|prema)\s+piti\b -> \1 piću
+\b(pri|o|u|na|po|prema)\s+platiti\b -> \1 plaćanju
+\b(pri|o|u|na|po|prema)\s+ići\b -> _ # Preformulirajte (npr. pri odlasku, prema polasku).
+
+### Opća pravila (za glagole koji imaju pravilnu tvorbu na -nje)
+\b(pri|o|u|na|po|prema)\s+(\w+d)iti\b -> \1 \2đenju                             # Prijedlog traži lokativ imenice (npr. rađenju).
+\b(pri|o|u|na|po|prema)\s+(\w+t)iti\b -> \1 \2ćanju                             # Prijedlog traži lokativ imenice (npr. plaćanju).
+\b(pri|o|u|na|po|prema)\s+(\w+z)iti\b -> \1 \2oženju                            # Prijedlog traži lokativ imenice (npr. voženju).
+\b(pri|o|u|na|po|prema)\s+(\w+)gati\b -> \1 \2žanju                             # Prijedlog traži lokativ imenice (npr. polaganju).
+\b(pri|o|u|na|po|prema)\s+(\w+)ati\b -> \1 \2anju                               # Koristite glagolsku imenicu u lokativu (npr. čitanju).
+\b(pri|o|u|na|po|prema)\s+(\w+)iti\b -> \1 \2jenju                              # Koristite glagolsku imenicu u lokativu.
+
+
+## 4. INSTRUMENTAL (Prijedlozi: s, sa, među)
+## -----------------------------------------------------------------------------
+
+### Fiksne iznimke za sumnjive glagole (moraju biti na prvom mjestu)
+\b(s|sa|među)\s+kupiti\b -> \1 kupnjom|\1 kupovinom
+\b(s|sa|među)\s+prodati\b -> \1 prodajom
+\b(s|sa|među)\s+popraviti\b -> \1 popravkom
+\b(s|sa|među)\s+odmoriti\b -> \1 odmorom
+\b(s|sa|među)\s+pregledati\b -> \1 pregledom
+\b(s|sa|među)\s+voziti\b -> \1 vožnjom
+\b(s|sa|među)\s+jesti\b -> \1 jelom
+\b(s|sa|među)\s+piti\b -> \1 pićem
+\b(s|sa|među)\s+platiti\b -> \1 plaćanjem
+\b(s|sa|među)\s+ići\b -> _ # Preformulirajte (npr. s odlaskom).
+
+### Opća pravila (za glagole koji imaju pravilnu tvorbu na -nje)
+\b(s|sa|među)\s+(\w+d)iti\b -> \1 \2đenjem                                      # Prijedlog traži instrumental imenice (npr. rađenjem).
+\b(s|sa|među)\s+(\w+t)iti\b -> \1 \2ćanjem                                      # Prijedlog traži instrumental imenice (npr. plaćanjem).
+\b(s|sa|među)\s+(\w+z)iti\b -> \1 \2oženjem                                     # Prijedlog traži instrumental imenice (npr. voženjem).
+\b(s|sa|među)\s+(\w+)gati\b -> \1 \2žanjem                                      # Prijedlog traži instrumental imenice (npr. polaganjem).
+\b(s|sa|među)\s+(\w+)ati\b -> \1 \2anjem                                        # Koristite glagolsku imenicu u instrumentalu (npr. čitanjem).
+\b(s|sa|među)\s+(\w+)iti\b -> \1 \2jenjem                                       # Koristite glagolsku imenicu u instrumentalu.
+
+
+
 # Ispravljanje zareza minimalno (generirano AI-em zbog složenosti)
 # =============================================================================
 
