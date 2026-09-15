@@ -54,13 +54,13 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 ### Prijedložni izrazi s vremenskim i prostornim značenjem (uvijek ide pridjev 'sljedeći')
 
 ### 4. Konstrukcije s prijedlozima "u" i "na" (npr. u sljedećem koraku, na sljedećoj stranici)
-\b([uU]|[nN]a)\s+([sS])lijedeć(eg|ega|em|emu|im|ih|ima|oj|u|e)\b -> \1 \2ljeđeć\3   # U ovom slučaju je riječ o pridjevu (idući), piše se s 'je'.
+\b([uU]|[nN]a)\s+([sS])lijedeć(eg|ega|em|emu|im|ih|ima|oj|u|e)\b -> \1 \2ljedeć\3   # U ovom slučaju je riječ o pridjevu (idući), piše se s 'je'.
 
 ### 5. Konstrukcije s prijedlozima koji traže genitiv: "tijekom", "nakon", "kroz", "poslije" (npr. nakon sljedećeg sastanka)
 \b([tT]ijekom|[nN]akon|[kK]roz|[pP]oslije)\s+([sS])lijedeć(eg|ega|ih|e|a)\b -> \1 \2ljedeć\3 # U ovom slučaju je riječ o pridjevu (idući), piše se s 'je'.
 
 ### 6. Konstrukcija s prijedlogom "za" (npr. rezervirano za sljedeći tjedan)
-\b([zZ]a)\s+([sS])lijedeć(i|eg|ega|em|im|ih|a|e|u)\b -> \1 \2ljeđeć\3   # U ovom slučaju je riječ o pridjevu (idući), piše se s 'je'.
+\b([zZ]a)\s+([sS])lijedeć(i|eg|ega|em|im|ih|a|e|u)\b -> \1 \2ljedeć\3   # U ovom slučaju je riječ o pridjevu (idući), piše se s 'je'.
 
 
 
