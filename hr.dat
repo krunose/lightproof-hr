@@ -185,9 +185,10 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 \b(izvo\w+)\svan\b -> \1                                                     # Pleonazam. Izvoz već podrazumijeva kretanje prema van.
 \b(uvo\w+)\sunutra\b -> \1                                                   # Pleonazam. Uvoz već podrazumijeva kretanje prema unutra.
 
-## 12. 'mala kućica' / 'stari starac' / 'glavni protagonist'
+## 12. 'stari starac' / 'glavni protagonist'
 \b([sS]tari)\sstar\w*\b -> starac                                            # Pleonazam. Riječ 'starac' već označava osobu koja je stara.
 \b([gG]lavni)\sprotagonist\w*\b -> protagonist                               # Pleonazam. Protagonist je po definiciji glavni lik.
+\bs obzirom da\b -> s obzirom na to da                                       # Konstrukcija zahtijeva prijedlog 'na' pa treba biti:
 
 
 
