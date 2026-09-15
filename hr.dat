@@ -179,7 +179,6 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 \b(uvo\w+)\sunutra\b -> \1                                                   # Pleonazam. Uvoz već podrazumijeva kretanje prema unutra.
 
 ## 12. 'mala kućica' / 'stari starac' / 'glavni protagonist'
-\b([mM]ala)\skućic\w*\b -> kućica                                            # Pleonazam. Deminutiv 'kućica' već označava malu kuću.
 \b([sS]tari)\sstar\w*\b -> starac                                            # Pleonazam. Riječ 'starac' već označava osobu koja je stara.
 \b([gG]lavni)\sprotagonist\w*\b -> protagonist                               # Pleonazam. Protagonist je po definiciji glavni lik.
 
@@ -202,6 +201,13 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 ## 4. Pridjevi na -ži, -ža, -že (npr. naj duži, naj stroži, naj teži, naj brži, naj niži)
 \b([nN]aj)\s(\w+ž(i|eg|ega|em|emu|im|ih|ima|a|e|oj|u))\b -> \1\2                           # Superlativ se piše sastavljeno.
+
+
+
+# Ispravak odvojenoga pisanja prefiksoida
+# ============================================================================
+
+\b{prefiksoidi}\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- spell(\1 + \2) -> \1\2   # Spaja prefiksoid s riječi samo ako je rezultat gramatički ispravna riječ.
 
 
 
@@ -242,7 +248,8 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 ## 2. Isključni i zaključni veznici na granicama tvrdnji (dakle, stoga)
 # Kada zaključuju prethodnu misao unutar rečenice, ispred njih je potreban zarez.
-\b(\w+)\s+(dakle|stoga)\b -> \1, \2 # Ispred zaključnih veznika 'dakle' i 'stoga' piše se zarez.
+\b(\w+)\s+(dakle|stoga)\b <- word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su", "bio", "bila", "bilo", "ja", "ti", "on", "ona", "ono", "mi", "vi", "oni", "ne", "nije"] -> _ # Ako 'dakle' ili 'stoga' uvode zavisnu ili zaključnu rečenicu, odvojite ih zarezom. Ako su umetnuti u rečenicu (npr. 'On je dakle došao'), zarez se ne piše.
+
 
 # Izolirani zaključni veznik 'zato' (izuzima se složeni veznik 'zato što' i 'zato da')
 \b(\w+)\s+(zato)(?!\s+(da|što)\b)\b <- word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su", "ću", "ćeš", "će", "ćemo", "ćete", "bih", "bi", "bismo", "biste", "to", "ga", "je", "mu", "joj", "ih", "nas", "vas", "mi", "ti", "se"] -> \1, \2 # Ako 'zato' djeluje samostalno kao zaključni veznik, ispred njega ide zarez.
