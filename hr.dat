@@ -200,7 +200,7 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 \b([gG]lavni)\sprotagonist\w*\b -> protagonist                               # Pleonazam. Protagonist je po definiciji glavni lik.
 
 ## 13. 's obzirom da'
-\bs obzirom da\b -> s obzirom na to da                                       # Konstrukcija zahtijeva prijedlog 'na' pa treba biti:
+\b([sS]) obzirom da\b -> \1 obzirom na to da                                       # Konstrukcija zahtijeva prijedlog 'na' pa treba biti:
 
 ## 14. 'oko par dana
 \boko par dana\b -> nekoliko dana|par dana|dva dana                          # Pleonazam. Riječ 'oko' i 'par' u ovom kontekstu znače isto.
