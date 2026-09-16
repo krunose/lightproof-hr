@@ -337,10 +337,3 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 \b(i|ili|ni|niti)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\s+(i|ili|ni|niti)\b <- word(-2) not in [",", "."] -> \1 \2, \3 # Kod ponovljenih veznika u nabrajanju, ispred drugog člana ide zarez.
 
 
-## 5. Sigurna inverzija (Pogodbene i uzročne rečenice na početku)
-# Rečenice u inverziji obvezno se odvajaju zarezom.
-^([aA]ko\s+\w+\s+li)\s+([^,]+)\b -> \1, \2 # Pogodbena rečenica u inverziji s 'li' odvaja se zarezom.
-^([bB]udući\s+da)\s+([^,]{15,50})\s+(je|su|odluč\w+|mor\w+|mož\w+)\b -> \1 \2, \3 # Kada uzročna rečenica s 'budući da' otvara izričaj (inverzija), odvaja se zarezom prije glavnoga glagola.
-
-
-
