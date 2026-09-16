@@ -9,16 +9,21 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 
 # Ispravak krnjega infinitiva
-#===========================================
+# ===========================================
+
+# Samostalno hvatanje krnjega infinitiva
+
+\b(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)(?!\s(ću|ćeš|će|cemo|ćete|hocu|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete))\b <- word(-1) not in ["ću", "ćeš", "će", "ćemo", "ćete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete", "neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i   # Ako se radi o infinitivu, treba pisati:
+
 
 ## Ispravljanje krnjega infinitiva u futurima (jesni oblik nenagl. gl. htjeti)
 
-\b(\w+(e|s|a|i|je|u|iva|ava|eva|ira|izira)t)i\s(ću|ćeš|će|ćemo|ćete) -> \1 \3              # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
-\b(ću|ćeš|će|ćemo|ćete)\s(\w+(e|s|a|i|je|u|iva|ava|eva|ira|izira)t)\b -> \1 \2i             # Kada pom. gl. htjeti stoji ispred infinitiva, on ne smije biti u krnjem obliku.
+\b(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)i\s(ću|ćeš|će|ćemo|ćete) -> \1 \3              # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
+\b(ću|ćeš|će|ćemo|ćete)\s(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)\b -> \1 \2i             # Kada pom. gl. htjeti stoji ispred infinitiva, on ne smije biti u krnjem obliku.
 \b(\w+[eiou]ć)\s(ću|ćeš|će|ćemo|ćete)\b -> \1i \2           # Ako je riječ o infinitivu, treba završavati na '-ći'.
 \b(ću|ćeš|će|ćemo|ćete)\s(\w+[eiou]ć)\b -> \1 \2i            # Ako je riječ o infinitivu, treba završavati na '-ći'.
-\b(\w+(e|s|a|i|je|u|iva|ava|eva|ira|izira)t)\s(hoću|hoćeš|hoće|hoćemo|hoćete)\b -> \1i \3 # Ako je riječ o infinitivu, treba završavati na '-ti'.
-\b([hH]oću|[hH]oćeš|[hH]oće|[hH]oćemo|[hH]oćete)\s(\w+(e|s|a|i|je|u|iva|ava|eva|ira|izira)t)\b -> \1 \2i  # Ako je riječ o infinitivu, treba završavati na '-ti'.
+\b(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)\s(hoću|hoćeš|hoće|hoćemo|hoćete)\b -> \1i \3 # Ako je riječ o infinitivu, treba završavati na '-ti'.
+\b([hH]oću|[hH]oćeš|[hH]oće|[hH]oćemo|[hH]oćete)\s(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)\b -> \1 \2i  # Ako je riječ o infinitivu, treba završavati na '-ti'.
 
 
 
