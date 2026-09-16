@@ -13,8 +13,8 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 ## Ispravljanje krnjega infinitiva u futurima (jesni oblik nenagl. gl. htjeti)
 
-\b(\w+[aeiounj]t)i\s(ću|ćeš|će|ćemo|ćete) -> \1 \2              # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
-\b(ću|ćeš|će|ćemo|ćete)\s(\w+[aeiounj]t)\b -> \1 \2i             # Kada pom. gl. htjeti stoji ispred infinitiva, on ne smije biti u krnjem obliku.
+\b(\w+(?:[aeiou]|av|ev|iv)at)i\s(ću|ćeš|će|ćemo|ćete) -> \1 \2
+\b(ću|ćeš|će|ćemo|ćete)\s(\w+(?:[aeiou]|av|ev|iv)at)\b -> \1 \2i
 \b(\w+[eiou]ć)\s(ću|ćeš|će|ćemo|ćete)\b -> \1i \2           # Ako je riječ o infinitivu, treba završavati na '-ći'.
 \b(ću|ćeš|će|ćemo|ćete)\s(\w+[eiou]ć)\b -> \1 \2i            # Ako je riječ o infinitivu, treba završavati na '-ći'.
 \b(\w+[aeiounj]t)\s(hoću|hoćeš|hoće|hoćemo|hoćete)\b -> \1i \2 # Ako je riječ o infinitivu, treba završavati na '-ti'.
@@ -22,10 +22,11 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 ## Ispravljanje krnjega infinitiva u futurima (niječni oblik nenagl. gl. htjeti)
 
-\b(\w+[aeiounj]t)(?=\s(?:[nN]eću|[nN]ećeš|[nN]eće|[nN]ećemo|[nN]ećete|[nN]eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
-\b(\w+[aeiounj]t)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
-\b(\w+[eiou]ć)(?=\s(?:[nN]eću|[nN]ećeš|[nN]eće|[nN]ećemo|[nN]ećete|[nN]eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
-\b(\w+[eiou]ć)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
+\b(\w+(?:[aeiou]|av|ev|iv)at)(?=\s[nN]eće?(?:š|mo|te)?)\b -> \1i
+\b(\w+(?:[aeiou]|av|ev|iv)at)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i
+\b(\w+[eiou]ć)(?=\s[nN]eće?(?:š|mo|te)?)\b -> \1i
+\b(\w+[eiou]ć)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i
+
 
 
 
