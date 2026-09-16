@@ -320,8 +320,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 ## 2. Isključni i zaključni veznici na granicama tvrdnji (dakle, stoga)
-# Kada zaključuju prethodnu misao unutar rečenice, ispred njih je potreban zarez.
-\b(\w+)\s+(dakle|stoga)\b <- word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su", "bio", "bila", "bilo", "ja", "ti", "on", "ona", "ono", "mi", "vi", "oni", "ne", "nije"] -> \1, \2 # Ako 'dakle' ili 'stoga' uvode zaključnu rečenicu, odvojite ih zarezom.
+([^,\s.?!:;]+)\s+(dakle|stoga)\b -> \1, \2 # Ako 'dakle' ili 'stoga' uvode zaključnu rečenicu, odvojite ih zarezom.
 
 # Izolirani zaključni veznik 'zato' (izuzima se složeni veznik 'zato što' i 'zato da')
 ([^,\s]+)\s+(zato)(?!\s+(da|što)\b) -> \1, \2 # Ako 'zato' djeluje samostalno kao zaključni veznik, ispred njega ide zarez.
