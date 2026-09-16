@@ -327,13 +327,4 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 \b(\w+)\s+(zato)(?!\s+(da|što)\b)\b <- word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su", "ću", "ćeš", "će", "ćemo", "ćete", "bih", "bi", "bismo", "biste", "to", "ga", "je", "mu", "joj", "ih", "nas", "vas", "mi", "ti", "se"] -> \1, \2 # Ako 'zato' djeluje samostalno kao zaključni veznik, ispred njega ide zarez.
 
 
-## 3. Objašnjavalački veznici i kratice (to jest, odnosno, naime)
-# Uvode naknadno objašnjenje ili dopunu u rečenici.
-\b(\w+)\s+(to\s+jest|tj\.|odnosno|naime)\b -> \1, \2 # Ispred izraza koji uvode naknadno objašnjenje ili dopunu (tj., odnosno, naime) piše se zarez.
-
-
-## 4. Dvostruki (rastavljeni) veznici u nabrajanju (i... i..., ili... ili...)
-# Zarez se stavlja tek ispred drugog (i svakog sljedećeg) člana nabrajanja, ako već ne postoji.
-\b(i|ili|ni|niti)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\s+(i|ili|ni|niti)\b <- word(-2) not in [",", "."] -> \1 \2, \3 # Kod ponovljenih veznika u nabrajanju, ispred drugog člana ide zarez.
-
 
