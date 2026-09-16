@@ -13,7 +13,24 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 # Samostalno hvatanje krnjega infinitiva
 
-\b(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)(?!\s(ću|ćeš|će|cemo|ćete|hocu|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete))\b <- word(-1) not in ["ću", "ćeš", "će", "ćemo", "ćete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete", "neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i   # Ako se radi o infinitivu, treba pisati:
+#\b(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)(?!\s(ću|ćeš|će|cemo|ćete|hocu|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete))\b <- word(-1) not in ["ću", "ćeš", "će", "ćemo", "ćete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete", "neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i   # Ako se radi o infinitivu, treba pisati:
+
+
+## 1. Nakon glagola MORATI (moram, moraš...)
+\b(\w+(s|a|i|je|u|iva|ava|eva|ira|izira)t)\b <- word(-1).lower() in ["moram", "moraš", "mora", "moramo", "morate", "moraju"] -> \1i # Nakon glagola 'morati' infinitiv ne smije biti krnji.
+
+## 2. Nakon glagola TREBATI (trebam, trebaš... i beslično 'treba')
+\b(\w+(s|a|i|je|u|iva|ava|eva|ira|izira)t)\b <- word(-1).lower() in ["trebam", "trebaš", "treba", "trebamo", "trebate", "trebaju"] -> \1i # Nakon glagola 'trebati' infinitiv ne smije biti krnji.
+
+## 3. Nakon glagola ŽELJETI i HTJETI (želim, hoću, želi...)
+\b(\w+(s|a|i|je|u|iva|ava|eva|ira|izira)t)\b <- word(-1).lower() in ["želim", "želiš", "želi", "želimo", "želite", "žele", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete", "hoće"] -> \1i # Nakon glagola želje/namjere infinitiv ne smije biti krnji.
+
+## 4. Nakon glagola MOĆI i SMJETI (mogu, smijem...)
+\b(\w+(s|a|i|je|u|iva|ava|eva|ira|izira)t)\b <- word(-1).lower() in ["mogu", "možeš", "može", "možemo", "možete", "mogu", "smijem", "smiješ", "smije", "smijemo", "smijete", "smiju"] -> \1i # Nakon glagola mogućnosti/dopuštenja infinitiv ne smije biti krnji.
+
+## 5. Nakon faznih glagola (početi, prestati, nastaviti...)
+\b(\w+(s|a|i|je|u|iva|ava|eva|ira|izira)t)\b <- word(-1).lower() in ["počnem", "počneš", "počne", "počnemo", "počnete", "počnu", "počinjem", "počidneš", "počinje", "počinjemo", "počinjete", "počinju", "prestanem", "prestaneš", "prestane", "prestanemo", "prestanete", "prestanu", "prestajem", "prestaješ", "prestaje", "prestajemo", "prestajete", "prestaju", "nastavim", "nastaviš", "nastavi", "nastavimo", "nastavite", "nastave", "nastavljam", "nastavljaš", "nastavlja", "nastavljamo", "nastavljate", "nastavljaju"] -> \1i # Nakon glagola početka, prekida ili nastavka radnje infinitiv ne smije biti krnji.
+
 
 
 ## Ispravljanje krnjega infinitiva u futurima (jesni oblik nenagl. gl. htjeti)
