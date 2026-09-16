@@ -15,6 +15,8 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 #\b(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)(?!\s(ću|ćeš|će|cemo|ćete|hocu|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete))\b <- word(-1) not in ["ću", "ćeš", "će", "ćemo", "ćete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete", "neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i   # Ako se radi o infinitivu, treba pisati:
 
+## Glagoli na -ti
+# ------------------
 
 ## 1. MODALNI GLAGOLI (morati, trebati, moći, smjeti - prezent i perfekt)
 \b(\w+(s|a|i|je|u|iva|ava|eva|ira|izira)t)\b <- word(-1).lower() in ["moram", "moraš", "mora", "moramo", "morate", "moraju", "morao", "morala", "moralo", "morali", "morale", "trebam", "trebaš", "treba", "trebamo", "trebate", "trebaju", "trebao", "trebala", "trebalo", "trebali", "trebale", "mogu", "možeš", "može", "možemo", "možete", "mogu", "mogao", "mogla", "moglo", "mogli", "mogle", "smijem", "smiješ", "smije", "smijemo", "smijete", "smiju", "smio", "smjela", "smjelo", "smjeli", "smjele"] -> \1i # Nakon modalnih glagola infinitiv mora biti puni.
@@ -30,6 +32,26 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 ## 5. GLAGOLI KRETANJA (ići, doći, odlaziti, žuriti, trčati... - prezent i perfekt)
 \b(\w+(s|a|i|je|u|iva|ava|eva|ira|izira)t)\b <- word(-1).lower() in ["idem", "ideš", "ide", "idemo", "idete", "idu", "išao", "išla", "išlo", "išli", "išle", "dođem", "dođeš", "dođe", "dođemo", "dođete", "dođu", "došao", "došla", "došlo", "došli", "došle", "odlazim", "odlaziš", "odlazi", "odlazimo", "odlazite", "odlaze", "odlazio", "odlazila", "odlazilo", "odlazili", "odlazile", "žurim", "žuriš", "žuri", "žurimo", "žurite", "žure", "žurio", "žurila", "žurilo", "žurili", "žurile", "trčim", "trčiš", "trči", "trčimo", "trčite", "trče", "trčao", "trčala", "trčalo", "trčali", "trčale"] -> \1i # Nakon glagola kretanja koji traže dopunu infinitiv mora biti puni.
+
+## Glagoli na ći
+# ----------------------------------
+
+
+## 1. MODALNI GLAGOLI uz glagole na -ći (npr. moram ić -> moram ići, mogao doć -> mogao doći)
+\b(\w+[aeiou]ć)\b <- word(-1).lower() in ["moram", "moraš", "mora", "moramo", "morate", "moraju", "morao", "morala", "moralo", "morali", "morale", "trebam", "trebaš", "treba", "trebamo", "trebate", "trebaju", "trebao", "trebala", "trebalo", "trebali", "trebale", "mogu", "možeš", "može", "možemo", "možete", "mogu", "mogao", "mogla", "moglo", "mogli", "mogle", "smijem", "smiješ", "smije", "smijemo", "smijete", "smiju", "smio", "smjela", "smjelo", "smjeli", "smjele"] -> \1i # Nakon modalnih glagola infinitiv na -ći mora biti puni.
+
+## 2. GLAGOLI VOLJE, NAMJERE I OSJEĆAJA uz glagole na -ći (npr. želim doć -> želim doći, htio reć -> htio reći)
+\b(\w+[aeiou]ć)\b <- word(-1).lower() in ["hoću", "hoćeš", "hoće", "hoćemo", "hoćete", "htio", "htjela", "htjelo", "htjeli", "htjele", "želim", "želiš", "želi", "želimo", "želite", "žele", "želio", "željela", "željelo", "željeli", "željele", "volim", "voliš", "voli", "volimo", "volite", "vole", "volio", "voljela", "voljelo", "voljeli", "voljele", "mrzim", "mrziš", "mrzi", "mrzimo", "mrzite", "mrze", "mrzio", "mrzila", "mrzilo", "mrzili", "mrzile", "planiram", "planiraš", "planira", "planiramo", "planirate", "planiraju", "planirao", "planirala", "planiralo", "planirali", "planirale"] -> \1i # Nakon glagola volje i osjećaja infinitiv na -ći mora biti puni.
+
+## 3. FAZNI GLAGOLI uz glagole na -ći (npr. počeo teć -> počeo teći, prestao ić -> prestao ići)
+\b(\w+[aeiou]ć)\b <- word(-1).lower() in ["počnem", "počneš", "počne", "počnemo", "počnete", "počnu", "počinjem", "počidneš", "počinje", "počinjemo", "počinjete", "počinju", "počeo", "počela", "počelo", "počeli", "počele", "počinjao", "počinjala", "počinjalo", "počinjali", "počinjale", "prestanem", "prestaneš", "prestane", "prestanemo", "prestanete", "prestanu", "prestajem", "prestaješ", "prestaje", "prestajemo", "prestajete", "prestaju", "prestao", "prestala", "prestalo", "prestali", "prestale", "nastavim", "nastaviš", "nastavi", "nastavimo", "nastavite", "nastave", "nastavljam", "nastavljaš", "nastavlja", "nastavljamo", "nastavljate", "nastavljaju", "nastavio", "nastavila", "nastavilo", "nastavili", "nastavile"] -> \1i # Nakon faznih glagola infinitiv na -ći mora biti puni.
+
+## 4. GLAGOLI POKUŠAJA, USPJEHA I MIŠLJENJA uz glagole na -ći (npr. pokušaj doć -> pokušaj doći, uspio pobjeći)
+\b(\w+[aeiou]ć)\b <- word(-1).lower() in ["pokušam", "pokušaš", "pokuša", "pokušamo", "pokušate", "pokušaju", "pokušao", "pokušala", "pokušalo", "pokušali", "pokušale", "uspijem", "uspiješ", "uspije", "uspijemo", "uspijete", "uspiju", "uspio", "uspjela", "uspjelo", "uspjeli", "uspjele", "odlučim", "odlučiš", "odluči", "odlučimo", "odlučite", "odluče", "odlučio", "odlučila", "odlučilo", "odlučili", "odlučile", "mislim", "misliš", "misli", "mislimo", "mislite", "misle", "mislio", "mislila", "mislilo", "mislili", "mislile", "znam", "znaš", "zna", "znamo", "znate", "znaju", "znao", "znala", "znalo", "znali", "znale"] -> \1i # Nakon glagola pokušaja i mišljenja infinitiv na -ći mora biti puni.
+
+## 5. GLAGOLI KRETANJA uz glagole na -ći (npr. idem leć -> idem leći, došao pomoći)
+\b(\w+[aeiou]ć)\b <- word(-1).lower() in ["idem", "ideš", "ide", "idemo", "idete", "idu", "išao", "išla", "išlo", "išli", "išle", "dođem", "dođeš", "dođe", "dođemo", "dođete", "dođu", "došao", "došla", "došlo", "došli", "došle", "odlazim", "odlaziš", "odlazi", "odlazimo", "odlazite", "odlaze", "odlazio", "odlazila", "odlazilo", "odlazili", "odlazile", "žurim", "žuriš", "žuri", "žurimo", "žurite", "žure", "žurio", "žurila", "žurilo", "žurili", "žurile", "trčim", "trčiš", "trči", "trčimo", "trčite", "trče", "trčao", "trčala", "trčalo", "trčali", "trčale"] -> \1i # Nakon glagola kretanja infinitiv na -ći mora biti puni.
+
 
 
 
