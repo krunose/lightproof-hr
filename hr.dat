@@ -75,8 +75,8 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 #=======================================================================
 
 (\w+)(\.\.)(?!\.) -> \1...|\1.      # Unijeli ste svega dvije točke, treba ili jednu ili tri.
-(\w+)(\?\?)(?!\?) -> \1???| \1?     # Unijeli ste dva upitnika, treba ili jednu ili tri.
-(\w+)(\!\!)(?!\!) -> \1!!!| \1!     # Unijeli ste dva upitnika, treba ili jednu ili tri.
+(\w+)(\?\?)(?!\?) -> \1???|\1?     # Unijeli ste dva upitnika, treba ili jednu ili tri.
+(\w+)(\!\!)(?!\!) -> \1!!!|\1!     # Unijeli ste dva upitnika, treba ili jednu ili tri.
 (\w+)\s+\1 -> \1                    # Unijeli ste dvaput istu riječ.
 
 
