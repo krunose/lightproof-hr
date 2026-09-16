@@ -253,35 +253,75 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # Ispravljanje konstrukcija prijedlog + infinitiv
 # =============================================================================
 
-\b(kroz\s+(?:cijele|cijelu|cijelog|čitavu|čitav|čitavog|iduća|sljedeća|protekla|prošla|naredna|zadnja|zadnjih|proteklih|dva|tri|četiri|pet|\d+)?\s*(?:godinu|godine|godina|mjesec|mjeseca|mjeseci|tjedan|tjedna|tjedana|dan|dana|sat|sata|sati|minutu|minuta|sekundu|sekundi|stoljeće|stoljeća|period|razdoblje|povijest|život|vrijeme|ljeto|zimu|proljeće|jesen|siječanj|veljaču|ožujak|travanj|svibanj|lipanj|srpanj|kolovoz|rujan|listopad|studeni|prosinac))\b -> _ # Prijedlog „kroz” primarno ima prostorno značenje (npr. „proći kroz vrata”). Za označavanje vremena upotrijebite: tijekom (uz genitiv), u, za vrijeme ili tijekom čitavog. Primjer: umjesto „kroz cijelu godinu” treba pisati „tijekom cijele godine” ili „u cijeloj godini”.
+## 1. Slučaj: prijedlog + infinitiv na -ti (strogo definirani glagolski morfemi i sufiksi)
+# Pokriva: -ati, -iti, -jeti, -uti, -ivati, -avati, -evati, -irati, -izirati
+\b(za|bez|umjesto|osim)\s+(\w+(?:ati|iti|jeti|uti|ivati|avati|evati|irati|izirati))\b -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskoga standardnog jezika. Umjesto 'za učiti' ili 'za raditi' pravilno je upotrijebiti glagolsku imenicu: 'za učenje', 'za rad' ili preformulirati rečenicu.
+
+## 2. Slučaj: prijedlog + povratna zamjenica "se" + infinitiv na -ti
+# Primjer: 'za se pripremiti' umjesto 'za pripremu'
+\b(za|bez|umjesto|osim)\s+se\s+(\w+(?:ati|iti|jeti|uti|ivati|avati|evati|irati|izirati))\b -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za se pripremiti' pravilno je koristiti glagolsku imenicu: 'za pripremu' ili preformulirati rečenicu.
+
+## 3. Slučaj: prijedlog + infinitiv na -ti + povratna zamjenica "se"
+# Primjer: 'za pripremiti se' umjesto 'za pripremu'
+\b(za|bez|umjesto|osim)\s+(\w+(?:ati|iti|jeti|uti|ivati|avati|evati|irati|izirati))\s+se\b -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za pripremiti se' pravilno je koristiti glagolsku imenicu: 'za pripremu' ili preformulirati rečenicu.
+
+
+## 4. Slučaj: prijedlog + infinitiv na -ći (s eliminacijom lažnih uzbuna na imenice)
+# Obvezni samoglasnik ispred -ći (-ući, -eći, -ići, -aći) uz izuzimanje čestih imenica u lokativu/genitivu
+\b(za|bez|umjesto|osim)\s+(\w+[aeiou]ći)\b <- word(0).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri", "kući", "odjeći", "nesreći", "sreći", "ravnoteži"] -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskoga standardnog jezika. Umjesto 'za ići' ili 'bez reći' pravilno je upotrijebiti glagolsku imenicu ili odgovarajući izraz: 'za odlazak', 'bez riječi' ili preformulirati rečenicu.
+
+## 5. Slučaj: prijedlog + povratni oblici s infinitivom na -ći
+# Primjeri: 'za se obući', 'za obući se' -> pretvara se u upozorenje
+\b(za|bez|umjesto|osim)\s+se\s+(\w+[aeiou]ći)\b <- word(0).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri"] -> _ # Izbjegavajte konstrukciju prijedlog + infinitiv. Umjesto 'za se obući' ili 'za obući se' pravilno je reći 'za odijevanje' ili preformulirati rečenicu.
+\b(za|bez|umjesto|osim)\s+(\w+[aeiou]ći)\s+se\b <- word(-1).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri"] -> _ # Izbjegavajte konstrukciju prijedlog + infinitiv. Umjesto 'za obući se' pravilno je reći 'za odijevanje' ili preformulirati rečenicu.
 
 
 
 # Ispravljanje konstrukcije prijedlog kroz + riječ koja označava vrijeme
 # =============================================================================
 
-# --- OPĆE PRAVILO: KROZ U VREMENSKOM ZNAČENJU ---
-
 \b(kroz)(?=\s+(cijele|cijelu|cijelog|čitavu|čitav|čitavog|iduća|sljedeća|protekla|prošla|naredna|zadnja|zadnjih|proteklih|dva|tri|četiri|pet|\d+)?\s*(godinu|godine|godina|mjesec|mjeseca|mjeseci|tjedan|tjedna|tjedana|dan|dana|sat|sata|sati|minutu|minuta|sekundu|sekundi|stoljeće|stoljeća|period|razdoblje|povijest|život|vrijeme|ljeto|zimu|proljeće|jesen|siječanj|veljaču|ožujak|travanj|svibanj|lipanj|srpanj|kolovoz|rujan|listopad|studeni|prosinac)\b) -> _ # Prijedlog 'kroz' ima prostorno značenje (npr. „proći kroz vrata”). Preformulirate. Primjer: umjesto „kroz cijelu godinu” treba pisati „tijekom cijele godine” ili „u cijeloj godini”.
 
 
 
-# Ispravljanje zareza minimalno (generirano AI-em zbog složenosti)
+# Ispravljanje pogrešne uporabe pomoćnoga glagola 'je' uz povratnu zamjenicu 'se'
 # =============================================================================
 
+## 1. Slučaj: glagolski pridjev radni + se je (npr. 'vratio se je', 'gradila se je' -> 'vratio se', 'gradila se')
+\b(\w+o|\w+ao|\w+la|\w+lo|\w+li|\w+le)\s+se\s+je\b -> \1 se                     # Pomoćni glagol 'je' se izostavlja uz povratnu zamjenicu 'se' i glagolski pridjev radni.
+
+## 2. Slučaj: se je + glagolski pridjev radni (npr. 'on se je vratio', 'kuća se je gradila')
+\bse\s+je\s+(\w+o|\w+ao|\w+la|\w+lo|\w+li|\w+le)\b -> se \1               # Izbacivanje suvišnog 'je' ispred glagolskog pridjeva radnog (perfekt/pasiv).
+
+## 3. Slučaj: glagolski prilog sadašnji + se je (npr. 'smijući se je ušao' -> 'smijući se ušao')
+\b(\w+ući|\w+eći|\w+ći)\s+se\s+je\b -> \1 se                              # Uz glagolski prilog sadašnji ne dolazi pomoćni glagol 'je'.
+
+## 4. Slučaj: se je + glagolski prilog sadašnji (npr. 'on se je smijući okrenuo')
+\bse\s+je\s+(\w+ući|\w+eći|\w+ći)\b -> se \1                             # Izbacivanje 'je' ispred glagolskog priloga sadašnjeg.
+
+## 5. Slučaj: glagolski prilog prošli + se je (npr. 'vrativši se je okrenuo' -> 'vrativši se okrenuo')
+\b(\w+vši|\w+avši)\s+se\s+je\b -> \1 se                                   # Uz glagolski prilog prošli nikada ne dolazi pomoćni glagol 'je'.
+
+## 6. Slučaj: se je + glagolski prilog prošli (npr. 'on se je vrativši primirio')
+\bse\s+je\s+(\w+vši|\w+avši)\b -> se \1                                    # Izbacivanje suvišnog pomoćnog glagola 'je' ispred glagolskog priloga prošlog.
+
+
+
+
+# Ispravljanje zareza minimalno
+# =============================================================================
 
 ## 1. Suprotni veznici u jasnom rečeničnom kontekstu (ali, nego, već)
-# Provjerava se nalaze li se u blizini glagolski oblici kako bi se izbjeglo spajanje samostalnih riječi.
-\b(\w+)\s+(ali|nego|već)\s+(\w+)\b <- word(-1).lower() in ["je", "sam", "smo", "ste", "su", "bio", "bila", "bilo", "ne", "nije"] -> \1, \2 \3 # Provjerite treba li zarez ispred suprotnog veznika ako povezuje rečenice s glagolima.
+# Provjerava se nalaze li se ispred veznika glagolski oblici kako bi se osiguralo da povezuju rečenice, a ne samo riječi.
+\b(\w+)\s+(ali|nego|već)\s+(\w+)\b <- word(-1).lower() in ["je", "sam", "smo", "ste", "su", "bio", "bila", "bilo", "ne", "nije", "neće", "nemoj"] -> \1, \2 \3 # Ispred suprotnog veznika koji povezuje rečenice piše se zarez.
 
 # Izolirano pravilo za suprotni veznik 'a' (uz izuzimanje čestih spojeva "a da", "a kamoli", "a ne")
-\b(\w+)\s+(a)(?!\s+(da|kamoli|ne)\b)\s+(\w+)\b <- word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su", "ću", "ćeš", "će", "ćemo", "ćete", "bih", "bi", "bismo", "biste", "ne"] -> \1, \2 \3 # Ispred suprotnog veznika a u pravilu dolazi zarez.
+\b(\w+)\s+(a)(?!\s+(da|kamoli|ne)\b)\s+(\w+)\b <- word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su", "ću", "ćeš", "će", "ćemo", "ćete", "bih", "bi", "bismo", "biste", "ne", "i", "ili", "ni", "niti"] -> \1, \2 \3 # Ispred suprotnog veznika a u pravilu dolazi zarez ako odvaja dvije rečenice.
 
 
 ## 2. Isključni i zaključni veznici na granicama tvrdnji (dakle, stoga)
 # Kada zaključuju prethodnu misao unutar rečenice, ispred njih je potreban zarez.
-\b(\w+)\s+(dakle|stoga)\b <- word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su", "bio", "bila", "bilo", "ja", "ti", "on", "ona", "ono", "mi", "vi", "oni", "ne", "nije"] -> _ # Ako 'dakle' ili 'stoga' uvode zavisnu ili zaključnu rečenicu, odvojite ih zarezom. Ako su umetnuti u rečenicu (npr. 'On je dakle došao'), zarez se ne piše.
-
+\b(\w+)\s+(dakle|stoga)\b <- word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su", "bio", "bila", "bilo", "ja", "ti", "on", "ona", "ono", "mi", "vi", "oni", "ne", "nije"] -> \1, \2 # Ako 'dakle' ili 'stoga' uvode zaključnu rečenicu, odvojite ih zarezom.
 
 # Izolirani zaključni veznik 'zato' (izuzima se složeni veznik 'zato što' i 'zato da')
 \b(\w+)\s+(zato)(?!\s+(da|što)\b)\b <- word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su", "ću", "ćeš", "će", "ćemo", "ćete", "bih", "bi", "bismo", "biste", "to", "ga", "je", "mu", "joj", "ih", "nas", "vas", "mi", "ti", "se"] -> \1, \2 # Ako 'zato' djeluje samostalno kao zaključni veznik, ispred njega ide zarez.
@@ -289,17 +329,18 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 ## 3. Objašnjavalački veznici i kratice (to jest, odnosno, naime)
 # Uvode naknadno objašnjenje ili dopunu u rečenici.
-\b(\w+)\s+(to\s+jest|tj\.|odnosno|naime)\b -> \1, \2 # Ispred izraza koji uvode naknadno objašnjenje ili dopunu tj. odnosno naime piše se zarez.
+\b(\w+)\s+(to\s+jest|tj\.|odnosno|naime)\b -> \1, \2 # Ispred izraza koji uvode naknadno objašnjenje ili dopunu (tj., odnosno, naime) piše se zarez.
 
 
 ## 4. Dvostruki (rastavljeni) veznici u nabrajanju (i... i..., ili... ili...)
 # Zarez se stavlja tek ispred drugog (i svakog sljedećeg) člana nabrajanja, ako već ne postoji.
-\b(i|ili|ni|niti)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\s+(i|ili|ni|niti)\b <- word(-2) not in [",", "."] -> \1 \2, \3 # Kod ponovljenih veznika u nabrajanju npr. 'i... i...', ispred drugog člana ide zarez.
+\b(i|ili|ni|niti)\s+([a-zA-ZčČćĆžŽšŠđĐ\-]+)\s+(i|ili|ni|niti)\b <- word(-2) not in [",", "."] -> \1 \2, \3 # Kod ponovljenih veznika u nabrajanju, ispred drugog člana ide zarez.
 
 
 ## 5. Sigurna inverzija (Pogodbene i uzročne rečenice na početku)
-# Hvataju se točne strukture s glagolom "li" ili jasni vremenski/uzročni signali.
+# Rečenice u inverziji obvezno se odvajaju zarezom.
 ^([aA]ko\s+\w+\s+li)\s+([^,]+)\b -> \1, \2 # Pogodbena rečenica u inverziji s 'li' odvaja se zarezom.
-^([bB]udući\s+da)\s+([^,]{15,50})\s+(je|su|odluč\w+|mor\w+|mož\w+)\b -> \1 \2, \3 # Budući da ova uzročna rečenica otvara izričaj inverzija provjerite treba li je odvojiti zarezom prije glavnoga glagola.
+^([bB]udući\s+da)\s+([^,]{15,50})\s+(je|su|odluč\w+|mor\w+|mož\w+)\b -> \1 \2, \3 # Kada uzročna rečenica s 'budući da' otvara izričaj (inverzija), odvaja se zarezom prije glavnoga glagola.
+
 
 
