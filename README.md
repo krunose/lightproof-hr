@@ -13,7 +13,7 @@ Alat je kalibriran za prepoznavanje najčešćih jezičnih i stilskih previda u 
 
 Dodatak je spakiran kao službeni **OXT paket** i spreman je za instalaciju na svim operacijskim sustavima koji podržavaju LibreOffice (v4.0 ili noviji).
 
-1. Preuzmite dodatak sa [LibreOffice Extensions platforme](https://extensions.libreoffice.org/en) ili izravno sa [GitHub-repozitorija](https://github.com/krunose/lightproof-hr).
+1. Preuzmite dodatak sa [LibreOffice Extensions platforme](https://extensions.libreoffice.org/en) ili izravno sa [GitHub repozitorija](https://github.com/krunose/lightproof-hr).
 2. Instalirajte dodatak dvoklikom na datoteku.
 3. Ponovno pokrenite LibreOffice.
 
