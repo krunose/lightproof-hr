@@ -315,9 +315,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # Provjerava se nalaze li se ispred veznika glagolski oblici kako bi se osiguralo da povezuju rečenice, a ne samo riječi.
 \b(\w+)\s+(ali|nego|već)\s+(\w+)\b <- word(-1).lower() in ["je", "sam", "smo", "ste", "su", "bio", "bila", "bilo", "ne", "nije", "neće", "nemoj"] -> \1, \2 \3 # Ispred suprotnog veznika koji povezuje rečenice piše se zarez.
 
-# Izolirano pravilo za suprotni veznik 'a' (uz izuzimanje čestih spojeva "a da", "a kamoli", "a ne")
-\b(\w+)\s+(a)(?!\s+(da|kamoli|ne)\b)\s+(\w+)\b <- word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su", "ću", "ćeš", "će", "ćemo", "ćete", "bih", "bi", "bismo", "biste", "ne", "i", "ili", "ni", "niti"] -> \1, \2 \3 # Ispred suprotnog veznika a u pravilu dolazi zarez ako odvaja dvije rečenice.
-
+([^,\s.?!:;]+)\s+(a)(?!\s+(da|kamoli|ne)\b)\b -> \1, \2 # Ispred suprotnog veznika 'a' dolazi zarez ako odvaja rečenice.
 
 ## 2. Isključni i zaključni veznici na granicama tvrdnji (dakle, stoga)
 ([^,\s.?!:;]+)\s+(dakle|stoga)\b -> \1, \2 # Ako 'dakle' ili 'stoga' uvode zaključnu rečenicu, odvojite ih zarezom.
