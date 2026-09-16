@@ -31,6 +31,10 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 ## 5. Nakon faznih glagola (početi, prestati, nastaviti...)
 \b(\w+(s|a|i|je|u|iva|ava|eva|ira|izira)t)\b <- word(-1).lower() in ["počnem", "počneš", "počne", "počnemo", "počnete", "počnu", "počinjem", "počidneš", "počinje", "počinjemo", "počinjete", "počinju", "prestanem", "prestaneš", "prestane", "prestanemo", "prestanete", "prestanu", "prestajem", "prestaješ", "prestaje", "prestajemo", "prestajete", "prestaju", "nastavim", "nastaviš", "nastavi", "nastavimo", "nastavite", "nastave", "nastavljam", "nastavljaš", "nastavlja", "nastavljamo", "nastavljate", "nastavljaju"] -> \1i # Nakon glagola početka, prekida ili nastavka radnje infinitiv ne smije biti krnji.
 
+## 6. Slučaj: Perfekt modalnih glagola (npr. htio/morala/trebali + krnji infinitiv)
+\b(\w+(s|a|i|je|u|iva|ava|eva|ira|izira)t)\b <- word(-1).lower() in ["htio", "htjela", "htjelo", "htjeli", "htjele", "morao", "morala", "moralo", "morali", "morale", "trebao", "trebala", "trebalo", "trebali", "trebale", "mogao", "mogla", "moglo", "mogli", "mogle", "smio", "smjela", "smjelo", "smjeli", "smjele"] -> \1i # Nakon modalnih glagola u perfektu infinitiv ne smije biti krnji.
+
+
 
 
 ## Ispravljanje krnjega infinitiva u futurima (jesni oblik nenagl. gl. htjeti)
