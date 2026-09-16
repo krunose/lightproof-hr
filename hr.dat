@@ -269,7 +269,7 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 # Ispravak odvojenoga pisanja prefiksoida
 # ============================================================================
 
-\b{prefiksoidi}\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- spell(\1 + \2) -> \1\2   # Spaja prefiksoid s riječi samo ako je rezultat gramatički ispravna riječ.
+\b{prefiksoidi}\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- spell(\1 + \2) -> \1\2   # Prefiksoid '\1' i riječ  '\2' pišu se sastavljeno.
 
 
 
