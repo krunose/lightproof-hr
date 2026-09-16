@@ -13,28 +13,21 @@ Alat je kalibriran za prepoznavanje najčešćih jezičnih i stilskih previda u 
 
 Dodatak je spakiran kao službeni **OXT paket** i spreman je za instalaciju na svim operacijskim sustavima koji podržavaju LibreOffice (v4.0 ili noviji).
 
-1. Preuzmite najnoviju verziju dodatka iz [LibreOffice Extensions platforme](https://libreoffice.org) ili izravno iz našeg [GitHub izdanja (Releases)](https://github.com).
-2. Dvaput kliknite na preuzetu `.oxt` datoteku.
-3. LibreOffice će automatski otvoriti *Upravitelj upravljačkih programa (Extension Manager)* i instalirati dodatak.
-4. Ponovno pokrenite LibreOffice i provjera teksta će postati aktivna.
-
-### Alternativni način instalacije (iz izvornog kôda)
-1. Preuzmite `Lightproof_hr-0.1.zip` iz repozitorija.
-2. Preimenujte datoteku u `Lightproof_hr-0.1.oxt`.
-3. Instalirajte dodatak običnim dvoklikom.
-4. Ponovno pokrenite LibreOffice.
+1. Preuzmite dodatak sa [LibreOffice Extensions platforme](https://extensions.libreoffice.org/en) ili izravno sa [GitHub-repozitorija](https://github.com/krunose/lightproof-hr).
+2. Instalirajte dodatak dvoklikom na datoteku.
+3. Ponovno pokrenite LibreOffice.
 
 ## Postupak pripreme i izrada dodatka za LibreOffice
 
-Problem s originalnim alatom je što se dodatak nije mogao napraviti jer je skripta `make.py` izvorno napisana za `Python 2`. Zbog promjena parametara u Pythonu 3, skriptu sam uspješno prilagodio i modernizirao pomoću AI-a, koji je ujedno pomogao generirati i `hr.cfg` datoteku.
+Problem s originalnim alatom je što se dodatak nije mogao napraviti jer je skripta `make.py` izvorno napisana za `Python 2`. Zbog promjena parametara u Pythonu 3, skriptu sam uspješno prilagodio i modernizirao pomoću AI-a, koji je ujedno pomogao generirati i `hr.cfg` datoteku. Dakle tko želi raditi pravila i treba ih kompajlirati zbog testa, mora preuzeti `make.py` iz repozitorija, odnosno treba mu `lightproof.zip`. Više o tome u sljedećm dijelu.
 
-### Kako sami možete kompajlirati dodatak:
+### Kako samostalno kompajlirati dodatak
 1. Klonirajte repozitorij s [karelin/lightproof](https://github.com).
-2. Zamijenite skriptu `make.py` onom koja se nalazi u [mojem repozitoriju](https://github.com).
+2. Zamijenite skriptu `make.py` onom koja se nalazi u [mojem repozitoriju](https://github.com/krunose/lightproof-hr).
 3. Dodajte mapu `lightproof/src/hr/`.
 4. U nju smjestite vlastite datoteke `hr.dat` i `hr.cfg`.
 5. Iz korijenske mape `lightproof` pokrenite skriptu naredbom:
-   ```bash
+   ```python
    python3 make.py src/hr/hr.cfg
    ```
 6. Spreman dodatak u `.oxt` datotečnom formatu bit će generiran unutar mape `~/lightproof/`.
