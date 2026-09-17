@@ -33,6 +33,7 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 ## 5. GLAGOLI KRETANJA (ići, doći, odlaziti, žuriti, trčati... - prezent i perfekt)
 \b(\w+(s|a|i|je|u|iva|ava|eva|ira|izira)t)\b <- word(-1).lower() in ["idem", "ideš", "ide", "idemo", "idete", "idu", "išao", "išla", "išlo", "išli", "išle", "dođem", "dođeš", "dođe", "dođemo", "dođete", "dođu", "došao", "došla", "došlo", "došli", "došle", "odlazim", "odlaziš", "odlazi", "odlazimo", "odlazite", "odlaze", "odlazio", "odlazila", "odlazilo", "odlazili", "odlazile", "žurim", "žuriš", "žuri", "žurimo", "žurite", "žure", "žurio", "žurila", "žurilo", "žurili", "žurile", "trčim", "trčiš", "trči", "trčimo", "trčite", "trče", "trčao", "trčala", "trčalo", "trčali", "trčale"] -> \1i # Nakon glagola kretanja koji traže dopunu infinitiv mora biti puni.
 
+
 ## Glagoli na ći
 # ----------------------------------
 
@@ -53,8 +54,6 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 \b(\w+[aeiou]ć)\b <- word(-1).lower() in ["idem", "ideš", "ide", "idemo", "idete", "idu", "išao", "išla", "išlo", "išli", "išle", "dođem", "dođeš", "dođe", "dođemo", "dođete", "dođu", "došao", "došla", "došlo", "došli", "došle", "odlazim", "odlaziš", "odlazi", "odlazimo", "odlazite", "odlaze", "odlazio", "odlazila", "odlazilo", "odlazili", "odlazile", "žurim", "žuriš", "žuri", "žurimo", "žurite", "žure", "žurio", "žurila", "žurilo", "žurili", "žurile", "trčim", "trčiš", "trči", "trčimo", "trčite", "trče", "trčao", "trčala", "trčalo", "trčali", "trčale"] -> \1i # Nakon glagola kretanja infinitiv na -ći mora biti puni.
 
 
-
-
 ## Ispravljanje krnjega infinitiva u futurima (jesni oblik nenagl. gl. htjeti)
 
 \b(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)i\s(ću|ćeš|će|ćemo|ćete) -> \1 \3              # Kada infinitiv stoji ispred pom. gl. htjeti, mora biti u krnjem obliku.
@@ -63,7 +62,6 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 \b(ću|ćeš|će|ćemo|ćete)\s(\w+[eiou]ć)\b -> \1 \2i            # Ako je riječ o infinitivu, treba završavati na '-ći'.
 \b(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)\s(hoću|hoćeš|hoće|hoćemo|hoćete)\b -> \1i \3 # Ako je riječ o infinitivu, treba završavati na '-ti'.
 \b([hH]oću|[hH]oćeš|[hH]oće|[hH]oćemo|[hH]oćete)\s(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)\b -> \1 \2i  # Ako je riječ o infinitivu, treba završavati na '-ti'.
-
 
 
 ## Ispravljanje krnjega infinitiva u futurima (niječni oblik nenagl. gl. htjeti)
@@ -86,7 +84,6 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 #===========================================
 
 ## Slijedeći i sljedeći (generirano pomoću AI-a jer odviše komplicirano za držati u glavi)
-
 
 ### 1. Muški rod (vremenski i prostorni pojmovi)
 \b([sS])lijedeć(i|eg|ega|em|emu|im|ih|ima)(?:\s+(?:ga|je|mu|joj|ih|nas|vas|mi|ti|se))?\s+(mjesec\w*|tjedan\w*|dan\w*|korak\w*|trenut\w*|put\w*|tekst\w*|natječaj\w*|sastank\w*|član\w*|odlom\w*|petak\w*|subot\w*)\b -> \1ljedeć\2 \3   # Ako ste mislili na idući/naredni, piše se s 'je'.
@@ -114,18 +111,12 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 #=======================================================================
 
 (\w+)(\.\.)(?!\.) -> \1...|\1.      # Unijeli ste svega dvije točke, treba ili jednu ili tri.
-(\w+)(\?\?)(?!\?) -> \1???|\1?     # Unijeli ste dva upitnika, treba ili jednu ili tri.
-(\w+)(\!\!)(?!\!) -> \1!!!|\1!     # Unijeli ste dva upitnika, treba ili jednu ili tri.
+(\w+)(\?\?)(?!\?) -> \1???|\1?      # Unijeli ste dva upitnika, treba ili jednu ili tri.
+(\w+)(\!\!)(?!\!) -> \1!!!|\1!      # Unijeli ste dva upitnika, treba ili jednu ili tri.
 (\w+)\s+\1 -> \1                    # Unijeli ste dvaput istu riječ.
 
 
-[char]
 
-\s{2,3} -> " "                     # Unijeli ste više bjelina, možda ste željeli samo jednu.
-
-
-
-[word]
 
 #  zamjena 's' i 'sa'
 #===========================================
@@ -183,7 +174,6 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 ## 1. lice jednine (ja) -> provjera rastavljenog pisanja 'bi h'
 \bbi\s+(h)\b -> bih # Pogrešan rastavljeni oblik 'bi h', piše se zajedno 'bih'.
-
 
 
 
@@ -246,9 +236,6 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 
 
-
-
-
 # Ispravak odvojenoga pisanja superlativa (Izbjegavanje lažnih uzbuna)
 # =============================================================================
 
@@ -273,7 +260,6 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 
 
-
 # Razdvojeno radi izbjegavanja DuplicateOptionError na novom configparseru
 (\w+)\s(\.)(?![\w\w+]) -> \1\2
 (\w+)\s(,)(?![\w\w+]) -> \1\2
@@ -290,7 +276,9 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 (\w+)\s(;)(?!\s)(\w+) -> \1\2 \3
 
 
-## Razmak između kratica
+
+# Razmak između kratica
+# =============================================================================
 
 n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
@@ -353,7 +341,6 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 
-
 # Ispravljanje zareza minimalno
 # =============================================================================
 
@@ -367,6 +354,17 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 # Izolirani zaključni veznik 'zato' (izuzima se složeni veznik 'zato što' i 'zato da')
 ([^,\s]+)\s+(zato)(?!\s+(da|što)\b) -> \1, \2 # Ako 'zato' djeluje samostalno kao zaključni veznik, ispred njega ide zarez.
+
+
+
+[char]
+
+
+# Ispravljanje dvostrukog ili trostrukog razmaka
+# ============================================================================
+
+\s{2,3} -> " "                     # Unijeli ste više bjelina, možda ste željeli samo jednu.
+
 
 
 
