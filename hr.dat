@@ -13,7 +13,7 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 # Samostalno hvatanje krnjega infinitiva
 
-#\b(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)(?!\s(ću|ćeš|će|cemo|ćete|hocu|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete))\b <- word(-1) not in ["ću", "ćeš", "će", "ćemo", "ćete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete", "neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i   # Ako se radi o infinitivu, treba pisati:
+\b(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)\b <- morph(\1, "po:glagol", False) -> \1i # Infinitiv u hrvatskome mora završavati na '-ti'.
 
 ## Glagoli na -ti
 # ------------------
