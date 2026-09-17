@@ -250,6 +250,10 @@ oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 # Pozivanje Calc funkcije "PROPER", na kraju iz "ak", mora ići zarez (nije greška) da bi se znalo da je riječ o torku (tuple)
 Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|stotinj)ak -> =calc("PROPER", (\1 + "ak",))   # Pleonazam. I 'oko' i '\1' znače isto, treba pisati:
 
+## 17. zato jer > zato što|jer
+\bzato jer\b -> zato što|jer            # Gomilanje istoznačnih veznika, zamijenite:
+\bZato jer\b -> Zato što|Budući da      # Gomilanje istoznačnih veznika, zamijenite:
+
 
 
 # Ispravak odvojenoga pisanja superlativa (Izbjegavanje lažnih uzbuna)
@@ -369,7 +373,8 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 ([^,\s.?!:;]+)\s+(dakle|stoga)\b -> \1, \2 # Ako 'dakle' ili 'stoga' uvode zaključnu rečenicu, odvojite ih zarezom.
 
 # Izolirani zaključni veznik 'zato' (izuzima se složeni veznik 'zato što' i 'zato da')
-([^,\s]+)\s+(zato)(?!\s+(da|što)\b) -> \1, \2 # Ako 'zato' djeluje samostalno kao zaključni veznik, ispred njega ide zarez.
+## Dodana i nepravilna veza 'zato jer' zato što se često griješi pa ne želimo da se aktivira ovo pravilo, nego ono o ispravljanju 'zato jer' > 'zato što'
+([^,\s]+)\s+(zato)(?!\s+(da|što|jer)\b) -> \1, \2 # Ako 'zato' djeluje samostalno kao zaključni veznik, ispred njega ide zarez.
 
 
 
