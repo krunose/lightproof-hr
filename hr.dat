@@ -66,8 +66,8 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 ## Ispravljanje krnjega infinitiva u futurima (niječni oblik nenagl. gl. htjeti)
 
-\b(\w+(s|a|i|je|u|iva|ava|eva|ira|izira)t)(?=\s(?:[nN]eću|[nN]ećeš|[nN]eće|[nN]ećemo|[nN]ećete|[nN]eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
-\b(\w+(s|a|i|je|u|iva|ava|eva|ira|izira)t)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
+\b(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)(?=\s(?:[nN]eću|[nN]ećeš|[nN]eće|[nN]ećemo|[nN]ećete|[nN]eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
+\b(\w+(izira|ira|eva|ava|iva|je|u|i|a|s|e)t)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
 \b(\w+[eiou]ć)(?=\s(?:[nN]eću|[nN]ećeš|[nN]eće|[nN]ećemo|[nN]ećete|[nN]eće))\b -> \1i   # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora zavšravati na -ti.
 \b(\w+[eiou]ć)\b <- word(-1).lower() in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # Kada je riječ o niječnom obliku pom. gl. htjeti, infinitiv mora završavati na -ti.
 
