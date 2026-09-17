@@ -235,7 +235,7 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 \boko par dana\b -> nekoliko dana|par dana|dva dana                          # Pleonazam. Riječ 'oko' i 'par' u ovom kontekstu znače isto.
 
 ## 15. 'prvi|drugi|svaki puta'
-([pP]rvi|[Dd]rugi|[tT]reći|[sS]vaki|[pP]rošli|[sS]ljedeći) puta -> \1 put    # Imenica u službi priloga je u krivom padžeu, treba pisati:
+([pP]rvi|[Dd]rugi|[tT]reći|[sS]vaki|[pP]rošli|[sS]ljedeći|[pP]osljednji) puta -> \1 put    # Imenica u službi priloga je u krivom padžeu, treba pisati:
 
 
 
