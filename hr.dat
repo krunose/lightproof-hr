@@ -314,16 +314,16 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # =============================================================================
 
 ## 1. Slučaj: prijedlog + infinitiv na -ti (strogo definirani glagolski morfemi i sufiksi)
-# Pokriva: -ati, -iti, -jeti, -uti, -ivati, -avati, -evati, -irati, -izirati
-\b(za|bez|umjesto|osim)\s+(\w+(?:ati|iti|jeti|uti|ivati|avati|evati|irati|izirati))\b -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskoga standardnog jezika. Umjesto 'za učiti' ili 'za raditi' pravilno je upotrijebiti glagolsku imenicu: 'za učenje', 'za rad' ili preformulirati rečenicu.
+# Pokriva: - sti -ati, -iti, -jeti, -uti, -ivati, -avati, -evati, -irati, -izirati
+\b(za|bez|umjesto|osim)\s+(\w+(?:izirati|irati|evati|avati|ivati|jeti|eti|uti|iti|ati|sti))\b -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskoga standardnog jezika. Umjesto 'za učiti' ili 'za raditi' pravilno je upotrijebiti glagolsku imenicu: 'za učenje', 'za rad' ili preformulirati rečenicu.
 
 ## 2. Slučaj: prijedlog + povratna zamjenica "se" + infinitiv na -ti
 # Primjer: 'za se pripremiti' umjesto 'za pripremu'
-\b(za|bez|umjesto|osim)\s+se\s+(\w+(?:ati|iti|jeti|uti|ivati|avati|evati|irati|izirati))\b -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za se pripremiti' pravilno je koristiti glagolsku imenicu: 'za pripremu' ili preformulirati rečenicu.
+\b(za|bez|umjesto|osim)\s+se\s+(\w+(?:izirati|irati|evati|avati|ivati|jeti|eti|uti|iti|ati|sti))\b -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za se pripremiti' pravilno je koristiti glagolsku imenicu: 'za pripremu' ili preformulirati rečenicu.
 
 ## 3. Slučaj: prijedlog + infinitiv na -ti + povratna zamjenica "se"
 # Primjer: 'za pripremiti se' umjesto 'za pripremu'
-\b(za|bez|umjesto|osim)\s+(\w+(?:ati|iti|jeti|uti|ivati|avati|evati|irati|izirati))\s+se\b -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za pripremiti se' pravilno je koristiti glagolsku imenicu: 'za pripremu' ili preformulirati rečenicu.
+\b(za|bez|umjesto|osim)\s+(\w+(?:izirati|irati|evati|avati|ivati|jeti|eti|uti|iti|ati|sti))\s+se\b -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za pripremiti se' pravilno je koristiti glagolsku imenicu: 'za pripremu' ili preformulirati rečenicu.
 
 
 ## 4. Slučaj: prijedlog + infinitiv na -ći (s eliminacijom lažnih uzbuna na imenice)
