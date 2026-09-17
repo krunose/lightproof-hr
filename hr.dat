@@ -279,6 +279,12 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 \b{prefiksoidi}\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- spell(\1 + \2) -> \1\2   # Prefiksoid '\1' i riječ  '\2' pišu se sastavljeno.
 
 
+# Ispravak odvojenoga pisanja polusloženica
+# ===========================================================================
+
+\b(\w+)\s(\w+)\b <- spell(\1 + "-" + \2) -> \1-\2                   # Riječ je o polusloženici, treba pisati sa spojnicom.
+
+
 
 # Razdvojeno radi izbjegavanja DuplicateOptionError na novom configparseru
 (\w+)\s(\.)(?![\w\w+]) -> \1\2
