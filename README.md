@@ -47,6 +47,7 @@ Problem je s alatom iz repozitorija [github.com/karelin/lightproof](https://gith
 3. Dodajte mapu `lightproof/src/hr/`.
 4. U nju smjestite vlastite datoteke `hr.dat` i `hr.cfg`.
 5. Iz korijenske mape `lightproof` pokrenite skriptu naredbom:
+
    ```python
    python3 make.py src/hr/hr.cfg
    ```
