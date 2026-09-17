@@ -1,25 +1,45 @@
 # Jednostavna računalna provjera pravopisa i gramatike hrvatskoga jezika LightProofom
 
-**LightProof je jednostavan alat za provjeru gramatike, tipografije i stila baziran na pravilnim izrazima (regular expression).**
+LightProof je računalni alat ugrađen u LibreOffice i služi za računalnu provjeru gramatike, pravopisa i stila. Dobra je dopuna Hunspellu jer dok potonji provjerava riječi isključivo u izolaciji, LightProof nudi ograničenu mogućnost provjeravanja okoline i konteksta. Temelji se na pravilnim izrazima (engl. regular expressions) i ne razumije duboku semantičku i gramatičku strukturu rečenice, pa određene pravopisno-gramatičke pa i stilske probleme njime nije jednostavno ili nije uopće mguće riješiti, recimo pisanje zareza u hrvatskome jeziku.
 
-Ovaj dodatak omogućuje brzu, laganu i nativnu provjeru teksta izravno unutar programa LibreOffice Writer, prilagođenu svakodnevnim potrebama izvornih govornika hrvatskoga jezika. Pitanja, komentare i prijedloge možete ostaviti na [ask.libreoffice.org](https://ask.libreoffice.org/t/provjera-gramatike-tipografije-i-stila-lightproofom-za-hrvatski-jezik/137656).
+Ovaj repozitorij sadrži dodatak (`OXT datoteka`) koji omogućuje brzu i jednostavnu integraciju pravila za provjeru gramatike, pravopisa i stila (`hr.dat`) u LibreOffice Writer.
 
-Alat je kalibriran za prepoznavanje najčešćih jezičnih i stilskih previda u praksi:
-* **Gramatika i oblici:** Krnji infinitiv u futurima (*radit ću* vs. *neću raditi*), pravilna uporaba enklitika u kondicionalu (*mi bismo*, *vi biste*) i ispravak konstrukcije *da li*.
-* **Stil i pleonazmi:** Uklanjanje suvišnih riječi i dvostrukih izraza (*no međutim*, *čak štoviše*, *oko cca*, *vremensko razdoblje*, *sići dolje*).
-* **Pravopis i tipografija:** Spajanje odvojeno pisanog superlativa (*naj bolji* -> *najbolji*), ispravak alternacija *ije/je* u pridjevu *sljedeći*, pravilna uporaba prijedloga *s/sa* (uključujući izuzetak *sa mnom*) te uklanjanje višestrukih razmaka i interpunkcijskih znakova.
+Ambicija ovoga projekta nije napraviti sveobuhvatnu provjeru pravopisa i gramatike jer to s obzirom na vrijeme, ljudstvo, ovaj alat, ali i druge alate koji su nam na raspolaganju (rječnik nije označen) jednostavno nije moguće. Ovo je samo mala (pri)pomoć svakome tko je želi. Nešto čemu ne treba bezrezervno vjerovati, ali će (možda) ipak nekome biti od koristi. Pitanja, komentare i prijedloge možete ostaviti na [ask.libreoffice.org](https://ask.libreoffice.org/t/provjera-gramatike-tipografije-i-stila-lightproofom-za-hrvatski-jezik/137656).
 
-## Instalacija i preuzimanje
+## Instalacija i pokretanje
 
-Dodatak je spakiran kao službeni **OXT paket** i spreman je za instalaciju na svim operacijskim sustavima koji podržavaju LibreOffice (v4.0 ili noviji).
+Dodatak je pripremljen kao **OXT datoteka** i spreman je za instalaciju na svim operacijskim sustavima koji podržavaju LibreOffice (v4.0 ili noviji).
 
-1. Preuzmite dodatak sa [LibreOffice Extensions platforme](https://extensions.libreoffice.org/en) ili izravno sa [GitHub repozitorija](https://github.com/krunose/lightproof-hr).
+1. Preuzmite dodatak s platforme [LibreOffice Extensions](https://extensions.libreoffice.org/en) ili izravno sa [GitHub repozitorija](https://github.com/krunose/lightproof-hr).
 2. Instalirajte dodatak dvoklikom na datoteku.
 3. Ponovno pokrenite LibreOffice.
 
-## Postupak pripreme i izrada dodatka za LibreOffice
+Trenutačno najnovija inačica dodatka nije u službenom LibreOfficeovu repozitoriju dodataka jer **da bi dodatak od inačice 0.5 nadalje radio kako je zamišljeno, potrebno je preuzeti (djelomično) označen Hunspellov rječnik za hrvatski jezik s [github.com/krunose/hunspell-hr](https://github.com/krunose/hunspell-hr)!** Onaj Hunspellov rječnik koji *već imate na računalu* nije označen i dodatak od inačice 0.5 (uključujući i nju) neće raditi.
 
-Problem s originalnim alatom je što se dodatak nije mogao napraviti jer je skripta `make.py` izvorno napisana za `Python 2`. Zbog promjena parametara u Pythonu 3, skriptu sam uspješno prilagodio i modernizirao pomoću AI-a, koji je ujedno pomogao generirati i `hr.cfg` datoteku. Dakle tko želi raditi pravila i treba ih kompajlirati zbog testa, mora preuzeti `make.py` iz repozitorija, odnosno treba mu `lightproof.zip`. Više o tome u sljedećm dijelu.
+### Instalacija Hunspellovog rječnika
+
+1. preuzmite datoteke `hr_HR.dic` i `hr_HR.aff` s ponuđenoga mrežnoga mjesta
+2. smjestite ih u mapu `/usr/share/hunspell` koristite li GNU/Linux Debian 13 (za drugo ne znam)
+3. ponovno pokrenite LibreOffice
+
+
+## Kako ova pravila pokušavaju pomoći
+
+1. Ispraviti probleme u pisanju infinitiva u futuru I.
+2. Sastavljeno i nesastavljeno pisanje
+3. Upozoriti na konstrukciju 'da li'
+4. Donekle razlikovati 'slijedeći' i 'sljedeći'
+5. Pomoći oko pleonazama
+6. Ispravak pisanja 's/sa' i 'k/ka'
+7. Kondicional: mi bi > mi bismo
+8. Klasični tipfeleri
+
+
+## Za one koji žele znati više
+
+### Postupak pripreme i izrada dodatka za LibreOffice
+
+Problem je s alatom iz repozitorija [github.com/karelin/lightproof](https://github.com/karelin/lightproof) to što se dodatak nije mogao napraviti jer je skripta `make.py` izvorno napisana za `Python 2`. Zbog promjena (nekih) parametara u Pythonu 3, skriptu sam uspješno prilagodio i modernizirao pomoću AI-a, koji je ujedno pomogao generirati i `hr.cfg` datoteku. Dakle tko želi raditi pravila i treba ih kompajlirati zbog testa, mora preuzeti `make.py` iz **ovoga repozitorija**, odnosno treba mu `lightproof.zip`. Više o tome u sljedećm dijelu.
 
 ### Kako samostalno kompajlirati dodatak
 1. Klonirajte repozitorij s [karelin/lightproof](https://github.com).
