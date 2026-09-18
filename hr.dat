@@ -340,6 +340,19 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 
+# Ispravljanje pogrešne padežne veze uz prijedloge 'unatoč' i 'usprkos' (zahtijevaju dativ)
+# =============================================================================
+
+## 1. Slučaj: Prijedlog + pridjev + imenica (Pokriva muški, srednji i ženski rod u genitivu)
+\b([uU]natoč|[uU]sprkos)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- ((morph(\2, "og|oga", False) or morph(\2, "a", False)) and morph(\3, "a", False) and not morph(\3, "u", False)) or (morph(\2, "e", False) and morph(\3, "e", False) and not morph(\3, "oj", False)) -> _ # Prijedlozi 'unatoč' i 'usprkos' zahtijevaju dativ. Provjerite padež pridjeva i imenice (npr. 'unatoč lošem vremenu' / 'unatoč lošoj sreći', a ne 'lošeg vremena' / 'loše sreće').
+
+## 2. Slučaj: Samostalna imenica odmah iza prijedloga (Pokriva muški, srednji i ženski rod u genitivu)
+\b([uU]natoč|[uU]sprkos)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- (morph(\2, "a", False) and not morph(\2, "u", False)) or (morph(\2, "e", False) and not morph(\2, "oj", False) and not \2.lower() in ["mehatronika", "točke", "rečenice", "faze"]) -> _ # Prijedlozi 'unatoč' i 'usprkos' u hrvatskome standardnom jeziku zahtijevaju dativ (komu/čemu), a ne genitiv. Umjesto 'unatoč problema/sreće' pravilno je 'unatoč problemima/sreći'.
+
+
+
+
+
 # Ispravljanje zareza minimalno
 # =============================================================================
 
