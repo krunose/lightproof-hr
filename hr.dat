@@ -83,8 +83,6 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 \b(trebam|trebaš|trebamo|trebate|trebaju)\s+(\w+)\b <- morph(\2, "po:glagol", False) -> = "treba " + \2 # Kada glagol 'trebati' dolazi ispred infinitiva, mora biti bezličan (uvijek glasi 'treba'). Primjer: umjesto 'trebamo raditi' pravilno je 'treba raditi'.
 
 
-
-
 # Ispravljanje konstrukcije prijedlog 'kroz' + riječ koja označava vrijeme
 # =============================================================================
 
@@ -398,7 +396,11 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # =============================================================================
 
 ## 1. Suprotni veznici u jasnom rečeničnom kontekstu (ali, nego, već)
-([^,\s.?!:;]+)\s+(ali|nego)\b <- not word(-1) in ["prije", "ne"] and not word(0) in ["samo"] -> \1, \2 # Ispred suprotnog veznika (ali, nego) unutar rečenice piše se zarez.
+## Suprotni veznici (Osigurano od lažnih uzbuna u svim dugim i ugniježđenim "ne samo... nego" konstrukcijama)
+## Suprotni veznici (Potpuno osigurano od lažnih uzbuna u svim ugniježđenim "ne samo... nego/već" konstrukcijama)
+([^,\s.?!:;]+)\s+(ali|nego|već)\b <- not word(-1) in ["prije"] and not (\2 in ["nego", "već"] and "ne samo" in sentence[:start]) -> \1, \2 # Ispred suprotnog veznika piše se zarez.
+
+
 
 
 ([^,\s.?!:;]+)\s+(a)(?!\s+(da|kamoli|ne)\b)\b -> \1, \2 # Ispred suprotnog veznika 'a' dolazi zarez ako odvaja rečenice.
