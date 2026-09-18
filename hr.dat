@@ -18,10 +18,34 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 # ===========================================
 
 # Hvatanje samostalnoga krnjega infinitiva
+#\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1i # Infinitiv u hrvatskome treba završavati na '-ti' ili '-ći'.
 
-\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete", "neš", "neć"] -> \1i # Infinitiv u hrvatskome treba završavati na '-ti' ili '-ći'.
+#\b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete"] -> \1  # Iza pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
 
-\b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete"] -> \1  # Iza pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
+
+# 1. KORAK: Uklanjanje suvišne zamjenice 'si' (Mora ići na sam vrh!)
+
+## glagol na -t + ću/ćeš/će + si (npr. kupit ću si -> kupit ću)
+\b(\w+t)\s+(ću|ćeš|će|ćemo|ćete)\s+si\b <- morph(\1, "po:glagol", False) -> \1 \2 # Zamjenica 'si' je uz ovaj glagol u standardnom jeziku suvišna.
+
+## ću/ćeš/će + si + infinitiv (npr. ću si kupiti -> ću kupiti)
+\b(ću|ćeš|će|ćemo|ćete)\s+si\s+(\w+ti)\b <- morph(\2, "po:glagol", False) -> \1 \2 # Zamjenica 'si' je uz ovaj glagol u standardnom jeziku suvišna.
+
+
+# 2. KORAK: Ispravak krnjega i punog infinitiva (Svi oblici glagola htjeti)
+
+## Krnji infinitiv na -t (Osigurano od svih oblika htjeti i homonima ispit/nacrt)
+\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] and not \1.lower() in ["ispit", "nacrt", "jest"] -> \1i # Infinitiv u hrvatskome treba završavati na '-ti' ili '-ći'.
+
+## Puni infinitiv na -ti ispred svih oblika glagola htjeti
+\b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1 # Iza pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
+
+
+# 3. KORAK: Niječni i povratni futur (Kontekstualna pravila)
+
+## Puni infinitiv u niječnom povratnom futuru (npr. neću se vratit -> neću se vratiti)
+\b(neću|nećeš|neće|nećemo|nećete)\s+(se|si)\s+(\w+t)\b <- morph(\3, "po:glagol", False) -> \1 \2 \3i # U niječnom futuru s povratnom zamjenicom infinitiv mora biti puni (-ti).
+
 
 
 # Upozorenje na konstrukciju 'da li'
