@@ -19,7 +19,7 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 
 # Hvatanje samostalnoga krnjega infinitiva
 
-\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete"] -> \1i # Infinitiv u hrvatskome treba završavati na '-ti' ili '-ći'.
+\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete", "neš", "neć"] -> \1i # Infinitiv u hrvatskome treba završavati na '-ti' ili '-ći'.
 
 \b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete"] -> \1  # Iza pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
 
@@ -374,7 +374,8 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # =============================================================================
 
 ## 1. Suprotni veznici u jasnom rečeničnom kontekstu (ali, nego, već)
-([^,\s.?!:;]+)\s+(ali|nego)\b <- not word(-1) in ["prije"] -> \1, \2 # Ispred suprotnog veznika (ali, nego, već) unutar rečenice piše se zarez.
+([^,\s.?!:;]+)\s+(ali|nego)\b <- not word(-1) in ["prije", "ne"] and not word(0) in ["samo"] -> \1, \2 # Ispred suprotnog veznika (ali, nego) unutar rečenice piše se zarez.
+
 
 ([^,\s.?!:;]+)\s+(a)(?!\s+(da|kamoli|ne)\b)\b -> \1, \2 # Ispred suprotnog veznika 'a' dolazi zarez ako odvaja rečenice.
 
