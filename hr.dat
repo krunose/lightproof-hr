@@ -52,6 +52,15 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 
 
 
+
+# Ispravak pogrešne promjene glagola 'trebati' kroz lica ispred infinitiva
+# =============================================================================
+
+\b(trebam|trebaš|trebamo|trebate|trebaju)\s+(\w+)\b <- morph(\2, "po:glagol", False) -> = "treba " + \2 # Kada glagol 'trebati' dolazi ispred infinitiva, mora biti bezličan (uvijek glasi 'treba'). Primjer: umjesto 'trebamo raditi' pravilno je 'treba raditi'.
+
+
+
+
 # Ispravljanje konstrukcije prijedlog 'kroz' + riječ koja označava vrijeme
 # =============================================================================
 
