@@ -399,7 +399,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 ## Razmak nakon interpunkciojskoga znaka
-([a-zA-ZčČćĆžŽšŠđĐ\d]+)([\.\!\?])([a-zA-ZčČćĆžŽšŠđĐ\d]+) <- not \3.lower() in ["com", "hr", "org", "net", "edu", "gov", "info"] -> = \1 + \2 + " " + \3.capitalize() # Nedostaje razmak nakon interpunkcije?
+([a-zA-ZčČćĆžŽšŠđĐ\d]+)([\.\!\?])([a-zA-ZčČćĆžŽšŠđĐ]+) <- not \3.lower() in ["com", "hr", "org", "net", "edu", "gov", "info"] -> = \1 + \2 + " " + \3.capitalize() # Nedostaje razmak nakon interpunkcije?
 
 ([a-zA-ZčČćĆžŽšŠđĐ\d]+)([,:;])([a-zA-ZčČćĆžŽšŠđĐ\d]+) -> =\1 + \2 + " " + \3     # Iza pravopisnoga znaka niste unijeli razmak.
 
