@@ -48,7 +48,7 @@ Problem je s alatom iz repozitorija [github.com/karelin/lightproof](https://gith
 4. U nju smjestite vlastite datoteke `hr.dat` i `hr.cfg`.
 5. Iz korijenske mape `lightproof` pokrenite skriptu naredbom:
 
-   ```python
+   ```bash
    python3 make.py src/hr/hr.cfg
    ```
 6. Spreman dodatak u `.oxt` datotečnom formatu bit će generiran unutar mape `~/lightproof/`.
