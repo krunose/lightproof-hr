@@ -13,7 +13,7 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 # Hvatanje samostalnoga krnjega infinitiva
 
-\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete"] -> \1i # Infinitiv u hrvatskome mora završavati na '-ti' ili '-ći'.
+\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete"] -> \1i # Infinitiv u hrvatskome treba završavati na '-ti' ili '-ći'.
 
 \b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete"] -> \1  # Iza pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
 
@@ -332,11 +332,18 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 [char]
 
 
-# Ispravljanje dvostrukog ili trostrukog razmaka
+# Ispravljanje dvostrukog ili trostrukog razmaka, spajanje dviju rečenica i slično
 # ============================================================================
 
+
+## Dvostruki razmak
 \s{2,3} -> " "                     # Unijeli ste više bjelina, možda ste željeli samo jednu.
 
+
+## Razmak nakon interpunkciojskoga znaka
+([a-zA-ZčČćĆžŽšŠđĐ\d]+)([\.\!\?])([a-zA-ZčČćĆžŽšŠđĐ\d]+) <- not \3.lower() in ["com", "hr", "org", "net", "edu", "gov", "info"] -> = \1 + \2 + " " + \3.capitalize() # Nedostaje razmak nakon interpunkcije?
+
+([a-zA-ZčČćĆžŽšŠđĐ\d]+)([,:;])([a-zA-ZčČćĆžŽšŠđĐ\d]+) -> =\1 + \2 + " " + \3     # Iza pravopisnoga znaka niste unijeli razmak.
 
 
 
