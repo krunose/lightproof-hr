@@ -25,6 +25,34 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 
 
 
+# Ispravljanje konstrukcija prijedlog + infinitiv
+# =============================================================================
+
+## 1. Slučaj: prijedlog + infinitiv na -ti
+\b(za|bez|umjesto|osim)\s+(\w+t)i\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskoga standardnog jezika. Umjesto 'za učiti' pravilno je upotrijebiti glagolsku imenicu ('za učenje') ili preformulirati rečenicu.
+
+## 2. Slučaj: prijedlog + povratna zamjenica "se" + infinitiv na -ti
+\b(za|bez|umjesto|osim)\s+se\s+(\w+t)i\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za se pripremiti' pravilno je koristiti glagolsku imenicu ('za pripremu') ili preformulirati rečenicu.
+
+## 3. Slučaj: prijedlog + infinitiv na -ti + povratna zamjenica "se"
+\b(za|bez|umjesto|osim)\s+(\w+t)i\s+se\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za pripremiti se' pravilno je koristiti glagolsku imenicu ('za pripremu') ili preformulirati rečenicu.
+
+## 4. Slučaj: prijedlog + infinitiv na -ći (s eliminacijom lažnih uzbuna na imenice u lokativu/genitivu)
+\b(za|bez|umjesto|osim)\s+(\w+ći)\b <- morph(\2, "po:glagol", False) and word(0).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri", "kući", "odjeći", "nesreći", "sreći", "ravnoteži"] -> _ # Konstrukcija prijedlog + infinitiv na -ći nije u duhu hrvatskoga standardnog jezika. Preformulirajte rečenicu ili upotrijebite glagolsku imenicu.
+
+## 5. Slučaj: prijedlog + povratni oblici s infinitivom na -ći
+\b(za|bez|umjesto|osim)\s+se\s+(\w+ći)\b <- morph(\2, "po:glagol", False) and word(0).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri"] -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
+\b(za|bez|umjesto|osim)\s+(\w+ći)\s+se\b <- morph(\2, "po:glagol", False) and word(-1).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri"] -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
+
+
+
+# Ispravljanje konstrukcije prijedlog 'kroz' + riječ koja označava vrijeme
+# =============================================================================
+
+\b(kroz)(?=\s+(cijele|cijelu|cijelog|čitavu|čitav|čitavog|iduća|sljedeća|protekla|prošla|naredna|zadnja|zadnjih|proteklih|dva|tri|četiri|pet|\d+)?\s*(godinu|godine|godina|mjesec|mjeseca|mjeseci|tjedan|tjedna|tjedana|dan|dana|sat|sata|sati|minutu|minuta|sekundu|sekundi|stoljeće|stoljeća|period|razdoblje|povijest|život|vrijeme|ljeto|zimu|proljeće|jesen|siječanj|veljaču|ožujak|travanj|svibanj|lipanj|srpanj|kolovoz|rujan|listopad|studeni|prosinac)\b) -> _ # Prijedlog 'kroz' ima primarno prostorno značenje (npr. „proći kroz vrata”). U vremenskom kontekstu trebate preformulirati izraz. Primjer: umjesto „kroz cijelu godinu” pravilno je pisati „tijekom cijele godine” ili „u cijeloj godini”.
+
+
+
 # Ispravak ije i je
 #===========================================
 
