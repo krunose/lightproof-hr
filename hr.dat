@@ -121,6 +121,10 @@ prefiksoidi aero|akro|alto|andro|aritmo|austro|avio|biblio|bruto|daktilo|dija|eg
 # Veliko i malo slovo
 #===========================================
 
+## Ispravak pisanja imena jezika (malo početno slovo) - Preskače početak rečenice/odlomka
+
+(?<!^[.\s])\b([A-ZČĆŽŠĐ]\w+(?:ski|ški|čki))\s+(jezik\w*|tečaj\w*|rječnik\w*|gramatik\w*|govor\w*)\b <- word(-1) not in ["", ".", "!", "?"] -> = \1.lower() + " " + \2 # Nazivi jezika i pridjevi na -ski, -ški, -čki pišu se malim slovom (npr. 'hrvatski jezik'). | VAŽNO: Veliko slovo je dopušteno SAMO ako je riječ o službenom nazivu nastavnog predmeta u školi (npr. 'Hrvatski jezik' u rasporedu sati) ili ako je riječ na početku rečenice.
+
 
 
 
@@ -260,19 +264,19 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 
 
 # Razdvojeno radi izbjegavanja DuplicateOptionError na novom configparseru
-(\w+)\s(\.)(?![\w\w+]) -> \1\2
-(\w+)\s(,)(?![\w\w+]) -> \1\2
-(\w+)\s(\?)(?![\w\w+]) -> \1\2
-(\w+)\s(\!)(?![\w\w+]) -> \1\2
-(\w+)\s(:)(?![\w\w+]) -> \1\2
-(\w+)\s(;)(?![\w\w+]) -> \1\2
+(\w+)\s(\.)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
+(\w+)\s(,)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
+(\w+)\s(\?)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
+(\w+)\s(\!)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
+(\w+)\s(:)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
+(\w+)\s(;)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
 
-(\w+)\s(\.)(?!\s)(\w+) -> \1\2 \3
-(\w+)\s(,)(?!\s)(\w+) -> \1\2 \3
-(\w+)\s(\?)(?!\s)(\w+) -> \1\2 \3
-(\w+)\s(\!)(?!\s)(\w+) -> \1\2 \3
-(\w+)\s(:)(?!\s)(\w+) -> \1\2 \3
-(\w+)\s(;)(?!\s)(\w+) -> \1\2 \3
+(\w+)\s(\.)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
+(\w+)\s(,)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
+(\w+)\s(\?)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
+(\w+)\s(\!)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
+(\w+)\s(:)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
+(\w+)\s(;)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
 
 
 
@@ -348,8 +352,6 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 ## 2. Slučaj: Samostalna imenica odmah iza prijedloga (Pokriva muški, srednji i ženski rod u genitivu)
 \b([uU]natoč|[uU]sprkos)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- (morph(\2, "a", False) and not morph(\2, "u", False)) or (morph(\2, "e", False) and not morph(\2, "oj", False) and not \2.lower() in ["mehatronika", "točke", "rečenice", "faze"]) -> _ # Prijedlozi 'unatoč' i 'usprkos' u hrvatskome standardnom jeziku zahtijevaju dativ (komu/čemu), a ne genitiv. Umjesto 'unatoč problema/sreće' pravilno je 'unatoč problemima/sreći'.
-
-
 
 
 
