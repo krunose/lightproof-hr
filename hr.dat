@@ -274,7 +274,7 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 # Ispravak odvojenoga pisanja polusloženica
 # ===========================================================================
 
-\b(\w+)\s(\w+)\b <- spell(\1 + "-" + \2) -> \1-\2                   # Riječ je o polusloženici, treba pisati sa spojnicom.
+\b(\w+)\s([a-zA-ZčćžšđŠĐŽĆČ]+)\b <- spell(\1 + "-" + \2) -> \1-\2                   # Riječ je o polusloženici, treba pisati sa spojnicom.
 
 
 
