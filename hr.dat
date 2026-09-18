@@ -374,7 +374,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # =============================================================================
 
 ## 1. Suprotni veznici u jasnom rečeničnom kontekstu (ali, nego, već)
-([^,\s.?!:;]+)\s+(ali|nego|već)\b -> \1, \2 # Ispred suprotnog veznika (ali, nego, već) unutar rečenice piše se zarez.
+([^,\s.?!:;]+)\s+(ali|nego)\b -> \1, \2 # Ispred suprotnog veznika (ali, nego, već) unutar rečenice piše se zarez.
 
 ([^,\s.?!:;]+)\s+(a)(?!\s+(da|kamoli|ne)\b)\b -> \1, \2 # Ispred suprotnog veznika 'a' dolazi zarez ako odvaja rečenice.
 
