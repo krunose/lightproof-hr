@@ -151,6 +151,9 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 # 4. Pretvaranje 'sa' u 's' ako riječ ne počinje na sporne suglasnike I ako riječ nije 'mnom'
 \b([sS])a\s(?![szšžSZŠŽ]|[kK][sS]|[pP][sS])(?!\bmnom\b)([a-zA-ZčČćĆžŽšŠđĐ\-]+)\b -> \1 \2  # Ako riječ iza 'sa' ne počinje sa 's, z, ž, š, ks, ps' i nije 'mnom', nema potrebe pisati 'sa'.
 
+# 5. Ispravak nakon provjere pravopisa > s menom > s mnom > sa mnom
+([sS]) mnom -> \1a mnom     # Ispravno je pisati:
+
 
 
 # Zamjena 'k' i 'ka'
