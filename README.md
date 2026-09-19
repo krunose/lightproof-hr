@@ -27,7 +27,7 @@ Trenutačno najnovija inačica dodatka nije u službenom LibreOfficeovu repozito
 1. preuzmite datoteke `hr_HR.dic` i `hr_HR.aff` s ponuđenoga mrežnoga mjesta
 2. smjestite ih u mapu
     - `/usr/share/hunspell` koristite li GNU/Linux
-    - `C:\Program Files\LibreOffice\share\extensions\` i pronađite mapu s jezičnim paketima i u njih smjestite ov dvije datoteke.
+    - `C:\Program Files\LibreOffice\4\user\wordbook\` i pronađite mapu s jezičnim paketima i u njih smjestite ov dvije datoteke.
 3. ponovno pokrenite LibreOffice
 
 
