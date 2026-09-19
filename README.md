@@ -19,7 +19,9 @@ Trenutačno najnovija inačica dodatka nije u službenom LibreOfficeovu repozito
 ### Instalacija Hunspellovog rječnika
 
 1. preuzmite datoteke `hr_HR.dic` i `hr_HR.aff` s ponuđenoga mrežnoga mjesta
-2. smjestite ih u mapu `/usr/share/hunspell` koristite li GNU/Linux Debian 13 (za drugo ne znam)
+2. smjestite ih u mapu
+    - `/usr/share/hunspell` koristite li GNU/Linux
+    - `C:\Program Files\LibreOffice\share\extensions\` i pronađite mapu s jezičnim paketima i u njih smjestite ov dvije datoteke.
 3. ponovno pokrenite LibreOffice
 
 
