@@ -158,8 +158,10 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 
 # Zamjena 'k' i 'ka'
 #===========================================
-\bk\s([kghKGH]\w+)\b -> ka \1                 # Ako iza 'k' slijedi riječ koja počinje s 'k, g, h', treba pisati 'ka'.
-\bka\s([^kghKGH]\w+)\b -> k \1                 # Ako iza 'ka' slijedi riječ koja ne počinje s 'k, g, h', treba pisati 'k'.
+\bk\s([kghKGH]\w+)\b -> ka \1                   # Ako iza 'k' slijedi riječ koja počinje s 'k, g, h', treba pisati 'ka'.
+#\bka\s([^kghKGH]\w+)\b -> k \1                 # Ako iza 'ka' slijedi riječ koja ne počinje s 'k, g, h', treba pisati 'k'.
+\bka\s+((?![kghKGH])[a-zžšđčćA-ZŽŠĐČĆ]+)\b -> k \1  # Ako iza 'ka' ne slijedi riječ na 'k, g ili h', piše se 'k'.
+
 
 
 # Veliko i malo slovo
