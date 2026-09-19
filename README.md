@@ -1,5 +1,9 @@
 # Jednostavna računalna provjera pravopisa i gramatike hrvatskoga jezika LightProofom
 
+> [!WARNING]
+> **OVISNOST O RJEČNIKU (Inačica 0.5.5.9):** 
+> Ovaj dodatak više NE RADI na bazi čistog teksta. Pravila se pokreću isključivo ako vaš LibreOffice koristi tagirani hrvatski rječnik. Prije instalacije ovog dodatka, obavezno osvježite svoj Hunspell rječnik datotekama iz repozitorija [hunspell-hr](https://github.com).
+
 LightProof je računalni alat ugrađen u LibreOffice i služi za računalnu provjeru gramatike, pravopisa i stila. Dobra je dopuna Hunspellu jer dok potonji provjerava riječi isključivo u izolaciji, LightProof nudi ograničenu mogućnost provjeravanja okoline i konteksta. Temelji se na pravilnim izrazima (engl. regular expressions) i ne razumije duboku semantičku i gramatičku strukturu rečenice, pa određene pravopisno-gramatičke pa i stilske probleme njime nije jednostavno ili nije uopće mguće riješiti, recimo pisanje zareza u hrvatskome jeziku.
 
 Ovaj repozitorij sadrži dodatak (`OXT datoteka`) koji omogućuje brzu i jednostavnu integraciju pravila za provjeru gramatike, pravopisa i stila (`hr.dat`) u LibreOffice Writer.
