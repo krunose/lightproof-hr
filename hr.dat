@@ -18,7 +18,7 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 # ===========================================
 
 # Hvatanje samostalnoga krnjega infinitiva
-#\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1i # Infinitiv u hrvatskome treba završavati na '-ti' ili '-ći'.
+#\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1i # Ako je riječ o infinitivu, mora završavati na '-ti' ili '-ći'.
 
 #\b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete"] -> \1  # Iza pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
 
@@ -79,6 +79,10 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 
 # Ispravak pogrešne promjene glagola 'trebati' kroz lica ispred infinitiva
 # =============================================================================
+
+# Izbačeno 'ono' jer može biti i pokazna zamjenica
+\b(ja|ti|on|ona|mi|vi|oni|one)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> treba \3     # Glagol trebati ispred infinitiva je bezličan.
+\b(Ja|Ti|On|Ona|Mi|Vi|Oni|One)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> Treba \3     # Glagol trebati ispred infinitiva je bezličan.
 
 \b(trebam|trebaš|trebamo|trebate|trebaju)\s+(\w+)\b <- morph(\2, "po:glagol", False) -> = "treba " + \2 # Kada glagol 'trebati' dolazi ispred infinitiva, mora biti bezličan (uvijek glasi 'treba'). Primjer: umjesto 'trebamo raditi' pravilno je 'treba raditi'.
 
