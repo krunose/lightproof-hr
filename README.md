@@ -1,8 +1,8 @@
 # Jednostavna računalna provjera pravopisa i gramatike hrvatskoga jezika LightProofom
 
 > [!WARNING]
-> **OVISNOST O RJEČNIKU (Inačica 0.5.5.9):** 
-> Ovaj dodatak više NE RADI na bazi čistog teksta. Pravila se pokreću isključivo ako vaš LibreOffice koristi tagirani hrvatski rječnik. Prije instalacije ovog dodatka, obavezno osvježite svoj Hunspell rječnik datotekama iz repozitorija [hunspell-hr](https://github.com).
+> **OVISNOST O NOVOM RJEČNIKU ZA PROVJERU PRAVOPISA:** 
+> Ovaj dodatak više NE RADI na principu čistih pravilnih izraza. Uspjelo se označiti (POS tag) glagole u Hunspellovu rječniku. Pravila će od **inačice 0.5.5.9** raditi isključivo ako vaš LibreOffice koristi tagiran hrvatski rječnik. **Prije instalacije ovog dodatka**, obavezno osvježite svoj Hunspell rječnik datotekama iz repozitorija [hunspell-hr](https://github.com).
 
 ---
 
