@@ -160,7 +160,8 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 
 ## Ispravak pisanja imena jezika (malo početno slovo) - Preskače početak rečenice/odlomka
 
-(?<!^[.\s])\b([A-ZČĆŽŠĐ]\w+(?:ski|ški|čki))\s+(jezik\w*|tečaj\w*|rječnik\w*|gramatik\w*|govor\w*)\b <- word(-1) not in ["", ".", "!", "?"] -> = \1.lower() + " " + \2 # Nazivi jezika i pridjevi na -ski, -ški, -čki pišu se malim slovom (npr. 'hrvatski jezik'). | VAŽNO: Veliko slovo je dopušteno SAMO ako je riječ o službenom nazivu nastavnog predmeta u školi (npr. 'Hrvatski jezik' u rasporedu sati) ili ako je riječ na početku rečenice.
+#(?<!^[.\s])\b([A-ZČĆŽŠĐ]\w+(?:ski|ški|čki))\s+(jezik\w*|tečaj\w*|rječnik\w*|gramatik\w*|govor\w*)\b <- word(-1) not in ["", ".", "!", "?"] -> = \1.lower() + " " + \2 # Nazivi jezika pišu se malim slovom, osim ako nije početak rečenice ili službeni naziv šk. predmeta.
+(?<!^[.\s])\b([A-ZČĆŽŠĐ]\w+(?:sk|šk|čk)(?:i|a|e|o|g|m|h|im|oj|u|og|oga|om|emu))\s+(jezik|jezika|jeziku|jezikom|jezici|jezika|jezicima|jezike|tečaj|tečaja|tečaju|tečajem|tečajevi|tečajeva|tečajevima|tečajeve|rječnik|rječnika|rječniku|rječnikom|rječnici|rječnika|rječnicima|rječnike|gramatika|gramatike|gramatici|gramatiku|gramatikom|gramatike|gramatika|gramatikama|govor|govora|govoru|govorom|govori|govora|govorima|govore)\b <- word(-1) not in ["", ".", "!", "?", "«", "»", "\"", "“", "("] -> = \1.lower() + " " + \2 # Nazivi jezika malim slovom, osim ako nije riječ o nazivu šk. predmeta ili same knjige/priručnika.
 
 
 
