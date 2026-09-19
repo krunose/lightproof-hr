@@ -2,7 +2,7 @@
 
 > [!WARNING]
 > **OVISNOST O NOVOM RJEČNIKU ZA PROVJERU PRAVOPISA:** 
-> Ovaj dodatak više NE RADI na principu čistih pravilnih izraza. Uspjelo se označiti (POS tag) glagole u Hunspellovu rječniku. Pravila će od **inačice 0.5.5.9** raditi isključivo ako vaš LibreOffice koristi tagiran hrvatski rječnik. **Prije instalacije ovog dodatka**, obavezno osvježite svoj Hunspell rječnik datotekama iz repozitorija [hunspell-hr](https://github.com).
+> Ovaj dodatak više **neradi** na principu čistih pravilnih izraza (regexp). Uspjelo se označiti (POS tag) infinitive u Hunspellovu rječniku. Pravila će od **inačice 0.5.5.9** raditi isključivo ako vaš LibreOffice koristi tagiran hrvatski rječnik. **Prije instalacije ovog dodatka**, obavezno osvježite svoj Hunspell rječnik datotekama iz repozitorija [hunspell-hr](https://github.com).
 
 ---
 
