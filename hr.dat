@@ -35,7 +35,7 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 # 2. KORAK: Ispravak krnjega i punog infinitiva (Svi oblici glagola htjeti)
 
 ## Krnji infinitiv na -t (Osigurano od svih oblika htjeti i homonima ispit/nacrt)
-\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] and not \1.lower() in ["ispit", "nacrt", "jest"] -> \1i # Infinitiv u hrvatskome treba završavati na '-ti' ili '-ći'.
+\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] and not \1.lower() in ["ispit", "nacrt", "jest", "dobit"] -> \1i # Infinitiv u hrvatskome treba završavati na '-ti' ili '-ći'.
 
 ## Puni infinitiv na -ti ispred svih oblika glagola htjeti
 \b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1 # Iza pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
