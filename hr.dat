@@ -311,7 +311,8 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 # Ispravak odvojenoga pisanja prefiksoida
 # ============================================================================
 
-\b([a-zA-ZčČćĆžŽšŠđĐ]+)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- \1.lower() in popis_prefiksoida and spell(\1 + \2) -> \1\2   # Prefiksoid '\1' i riječ  '\2' pišu se sastavljeno.
+#\b([a-zA-ZčČćĆžŽšŠđĐ]+)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- \1.lower() in popis_prefiksoida and spell(\1 + \2) -> \1\2   # Prefiksoid '\1' i riječ  '\2' pišu se sastavljeno.
+\b([a-zA-ZčČćĆžŽšŠđĐ]+)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- \2.lower() not in ["li"] and \1.lower() in popis_prefiksoida and spell(\1 + \2) -> \1\2   # Prefiksoid '\1' i riječ  '\2' pišu se sastavljeno.
 
 
 # Ispravak odvojenoga pisanja polusloženica
