@@ -186,11 +186,18 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 # Ispravljanje pogrešne uporabe 'bi' u kondicionalu (bismo/biste)
 #===========================================
 
+# rastavljanje bismo i biste na bi smo i bi ste.
 \b([bB]i)\s(smo|ste)\b -> \1\2   # Pogrešno je rastavljati aorist gl. 'biti', piše se sastavljeno.
 
-\b(?<=[mM]i\s)(bi)\b(?!\s+(?:smo|ste)\b) -> bismo # Uz zamjenicu 'mi' u aoristu gl. 'biti' uvijek ide 'bismo'.
-\b(?<=[vV]i\s)(bi)\b(?!\s+(?:smo|ste)\b) -> biste # Uz zamjenicu 'vi' u aoristu gl. 'biti' uvijek ide 'biste'.
+# zamjenica ispred pom. gl. biti
+\b(?<=[mM]i\s)(bi)\b(?!\s+(?:smo|ste)\b) -> bismo # Uz zamjenicu 'mi' aorist gl. 'biti' glasi 'bismo'.
+\b(?<=[vV]i\s)(bi)\b(?!\s+(?:smo|ste)\b) -> biste # Uz zamjenicu 'vi' aorist gl. 'biti' glasi 'biste'.
 
+# Uz negaciju kada je zamjenica ispred pom. gl. biti
+\b(?<=[mM]i\sne\s)(bi)\b(?!\s+(?:smo|ste)\b) -> bismo # Uz zamjenicu 'mi' aorist gl. 'biti' glasi 'bismo'.
+\b(?<=[vV]i\sne\s)(bi)\b(?!\s+(?:smo|ste)\b) -> biste # Uz zamjenicu 'vi' aorist gl. 'biti' glasi 'biste'.
+
+# zamjenica iza pom. gl. biti
 \b(bi)(?=(\smi\s))(?!\s(smo|ste))\b -> bismo      # Uz zamjenicu 'mi' u aoristu gl. 'biti' uvijek ide 'bismo'.
 \b(bi)(?=(\svi\s))(?!\s(smo|ste))\b -> biste      # Uz zamjenicu 'vi' u aoristu gl. 'biti' uvijek ide 'biste'.
 
