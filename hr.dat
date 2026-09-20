@@ -80,9 +80,8 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 # Ispravak pogrešne promjene glagola 'trebati' kroz lica ispred infinitiva
 # =============================================================================
 
-# Izbačeno 'ono' jer može biti i pokazna zamjenica
-\b(ja|ti|on|ona|mi|vi|oni|one)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> treba \3     # Glagol trebati ispred infinitiva je bezličan.
-\b(Ja|Ti|On|Ona|Mi|Vi|Oni|One)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> Treba \3     # Glagol trebati ispred infinitiva je bezličan.
+\b(ja|ti|on|ona|ono|mi|vi|oni|one)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> treba \3     # Glagol trebati ispred infinitiva je bezličan.
+\b(Ja|Ti|On|Ona|Ono|Mi|Vi|Oni|One)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> Treba \3     # Glagol trebati ispred infinitiva je bezličan.
 
 \b(trebam|trebaš|trebamo|trebate|trebaju)\s+(\w+)\b <- morph(\2, "po:glagol", False) -> = "treba " + \2 # Kada glagol 'trebati' dolazi ispred infinitiva, mora biti bezličan (uvijek glasi 'treba'). Primjer: umjesto 'trebamo raditi' pravilno je 'treba raditi'.
 
@@ -90,6 +89,7 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 # Ispravljanje konstrukcije prijedlog 'kroz' + riječ koja označava vrijeme
 # =============================================================================
 
+# Ovo pravilo treba razraditi na (barem) dva dijela: prvi dio: kroz godinu|kroz ožujak... a durgi dio: kroz cijelu godinu|kroz iduće ljeto
 \b(kroz)(?=\s+(cijele|cijelu|cijelog|čitavu|čitav|čitavog|iduća|sljedeća|protekla|prošla|naredna|zadnja|zadnjih|proteklih|dva|tri|četiri|pet|\d+)?\s*(godinu|godine|godina|mjesec|mjeseca|mjeseci|tjedan|tjedna|tjedana|dan|dana|sat|sata|sati|minutu|minuta|sekundu|sekundi|stoljeće|stoljeća|period|razdoblje|povijest|život|vrijeme|ljeto|zimu|proljeće|jesen|siječanj|veljaču|ožujak|travanj|svibanj|lipanj|srpanj|kolovoz|rujan|listopad|studeni|prosinac)\b) -> _ # Prijedlog 'kroz' ima primarno prostorno značenje (npr. „proći kroz vrata”). U vremenskom kontekstu trebate preformulirati izraz. Primjer: umjesto „kroz cijelu godinu” pravilno je pisati „tijekom cijele godine” ili „u cijeloj godini”.
 
 
