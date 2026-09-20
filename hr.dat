@@ -186,18 +186,27 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 # Ispravljanje pogrešne uporabe 'bi' u kondicionalu (bismo/biste)
 #===========================================
 
+\b([bB]i)\s(smo|ste)\b -> \1\2   # Pogrešno je rastavljati aorist gl. 'biti', piše se sastavljeno.
+
+\b(?<=[mM]i\s)(bi)\b(?!\s+(?:smo|ste)\b) -> bismo # Uz zamjenicu 'mi' u aoristu gl. 'biti' uvijek ide 'bismo'.
+\b(?<=[vV]i\s)(bi)\b(?!\s+(?:smo|ste)\b) -> biste # Uz zamjenicu 'vi' u aoristu gl. 'biti' uvijek ide 'biste'.
+
+\b(bi)(?=(\smi\s))(?!\s(smo|ste))\b -> bismo      # Uz zamjenicu 'mi' u aoristu gl. 'biti' uvijek ide 'bismo'.
+\b(bi)(?=(\svi\s))(?!\s(smo|ste))\b -> biste      # Uz zamjenicu 'vi' u aoristu gl. 'biti' uvijek ide 'biste'.
+
+
 
 ## 1. lice množine (mi) -> mora biti 'bismo'
-\bbi\s+(smo)\b -> bi\1 # Pogrešan rastavljeni oblik 'bi smo', piše se zajedno 'bismo'.
-\b([mM]i)\s+bi\b <- word(1) not in ["smo"] -> \1 bismo # Uz zamjenicu 'mi' u kondicionalu uvijek ide 'bismo'.
-\bbi\smi -> bimo mi     # Uz zamjenicu 'mi' u kondicionalnu uvijek ide 'bismo'.
-\b(bismo|bi)\s+(morali|mogli|htjeli|smjeli|znali|išli|radili|bili|vidjeli|čuli|rekli|uzeli|dali|suosjeć\w+|pokuša\w+|napravi\w+|odluči\w+|pazi\w+)\b <- word(-2).lower() in ["da", "kako", "kad", "kada", "ako"] -> bismo \2 # U namjernim i pogodbenim rečenicama u 1. licu množine koristi se 'bismo'.
+#\bbi\s+(smo)\b -> bi\1 # Pogrešan rastavljeni oblik 'bi smo', piše se zajedno 'bismo'.
+#\b([mM]i)\s+bi\b <- word(1) not in ["smo"] -> \1 bismo # Uz zamjenicu 'mi' u kondicionalu uvijek ide 'bismo'.
+#\bbi\smi -> bimo mi     # Uz zamjenicu 'mi' u kondicionalnu uvijek ide 'bismo'.
+#\b(bismo|bi)\s+(morali|mogli|htjeli|smjeli|znali|išli|radili|bili|vidjeli|čuli|rekli|uzeli|dali|suosjeć\w+|pokuša\w+|napravi\w+|odluči\w+|pazi\w+)\b <- word(-2).lower() in ["da", "kako", "kad", "kada", "ako"] -> bismo \2 # U namjernim i pogodbenim rečenicama u 1. licu množine koristi se 'bismo'.
 
 ## 2. lice množine (vi) -> mora biti 'biste'
-\bbi\s+(ste)\b -> bi\1 # Pogrešan rastavljeni oblik 'bi ste', piše se zajedno 'biste'.
-\b([vV]i)\s+bi\b <- word(1) not in ["ste"] -> \1 biste # Uz zamjenicu 'vi' u kondicionalu uvijek ide 'biste'.
-\bbi\svi -> biste vi     # Uz zamjenicu 'vi' u kondicionalnu uvijek ide 'biste'.
-\b(biste|bi)\s+(morali|mogli|htjeli|smjeli|znali|išli|radili|bili|vidjeli|čuli|rekli|uzeli|dali|suosjeć\w+|pokuša\w+|napravi\w+|odluči\w+|pazi\w+)\b <- word(-2).lower() in ["da", "kako", "kad", "kada", "ako"] -> biste \2 # U namjernim i pogodbenim rečenicama u 2. licu množine koristi se 'biste'.
+#\bbi\s+(ste)\b -> bi\1 # Pogrešan rastavljeni oblik 'bi ste', piše se zajedno 'biste'.
+#\b([vV]i)\s+bi\b <- word(1) not in ["ste"] -> \1 biste # Uz zamjenicu 'vi' u kondicionalu uvijek ide 'biste'.
+#\bbi\svi -> biste vi     # Uz zamjenicu 'vi' u kondicionalnu uvijek ide 'biste'.
+#\b(biste|bi)\s+(morali|mogli|htjeli|smjeli|znali|išli|radili|bili|vidjeli|čuli|rekli|uzeli|dali|suosjeć\w+|pokuša\w+|napravi\w+|odluči\w+|pazi\w+)\b <- word(-2).lower() in ["da", "kako", "kad", "kada", "ako"] -> biste \2 # U namjernim i pogodbenim rečenicama u 2. licu množine koristi se 'biste'.
 
 
 
