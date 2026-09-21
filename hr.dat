@@ -89,7 +89,7 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 # Ispravljanje konstrukcije prijedlog 'kroz' + riječ koja označava vrijeme
 # =============================================================================
 
-# Ovo pravilo treba razraditi na (barem) dva dijela: prvi dio: kroz godinu|kroz ožujak... a durgi dio: kroz cijelu godinu|kroz iduće ljeto
+#!!! Ovo pravilo treba razraditi na (barem) dva dijela: prvi dio: kroz godinu|kroz ožujak... a durgi dio: kroz cijelu godinu|kroz iduće ljeto
 \b(kroz)(?=\s+(cijele|cijelu|cijelog|čitavu|čitav|čitavog|iduća|sljedeća|protekla|prošla|naredna|zadnja|zadnjih|proteklih|dva|tri|četiri|pet|\d+)?\s*(godinu|godine|godina|mjesec|mjeseca|mjeseci|tjedan|tjedna|tjedana|dan|dana|sat|sata|sati|minutu|minuta|sekundu|sekundi|stoljeće|stoljeća|period|razdoblje|povijest|život|vrijeme|ljeto|zimu|proljeće|jesen|siječanj|veljaču|ožujak|travanj|svibanj|lipanj|srpanj|kolovoz|rujan|listopad|studeni|prosinac)\b) -> _ # Prijedlog 'kroz' ima primarno prostorno značenje (npr. „proći kroz vrata”). U vremenskom kontekstu trebate preformulirati izraz. Primjer: umjesto „kroz cijelu godinu” pravilno je pisati „tijekom cijele godine” ili „u cijeloj godini”.
 
 
@@ -169,8 +169,7 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 
 ## Ispravak pisanja imena jezika (malo početno slovo) - Preskače početak rečenice/odlomka
 
-#(?<!^[.\s])\b([A-ZČĆŽŠĐ]\w+(?:ski|ški|čki))\s+(jezik\w*|tečaj\w*|rječnik\w*|gramatik\w*|govor\w*)\b <- word(-1) not in ["", ".", "!", "?"] -> = \1.lower() + " " + \2 # Nazivi jezika pišu se malim slovom, osim ako nije početak rečenice ili službeni naziv šk. predmeta.
-(?<!^[.\s])\b([A-ZČĆŽŠĐ]\w+(?:sk|šk|čk)(?:i|a|e|o|g|m|h|im|oj|u|og|oga|om|emu))\s+(jezik|jezika|jeziku|jezikom|jezici|jezika|jezicima|jezike|tečaj|tečaja|tečaju|tečajem|tečajevi|tečajeva|tečajevima|tečajeve|rječnik|rječnika|rječniku|rječnikom|rječnici|rječnika|rječnicima|rječnike|gramatika|gramatike|gramatici|gramatiku|gramatikom|gramatike|gramatika|gramatikama|govor|govora|govoru|govorom|govori|govora|govorima|govore)\b <- word(-1) not in ["", ".", "!", "?", "«", "»", "\"", "“", "("] -> = \1.lower() + " " + \2 # Nazivi jezika malim slovom, osim ako nije riječ o nazivu šk. predmeta ili same knjige/priručnika.
+(?<![.?!]\s)([A-ZČĆŽŠĐ]\w+(?:ski|ški|čki|a|e|o|g|m|h|im|oj|u|og|oga|om|emu))\s+(jezik|jezika|jeziku|jezikom|jezici|jezika|jezicima|jezike|tečaj|tečaja|tečaju|tečajem|tečajevi|tečajeva|tečajevima|tečajeve|rječnik|rječnika|rječniku|rječnikom|rječnici|rječnika|rječnicima|rječnike|gramatika|gramatike|gramatici|gramatiku|gramatikom|gramatike|gramatika|gramatikama|govor|govora|govoru|govorom|govori|govora|govorima|govore)\b <- word(-1) not in ["", ".", "!", "?", "«", "»", "\"", "“", "("] -> = \1.lower() + " " + \2 # Nazivi jezika malim slovom, osim ako nije riječ o nazivu šk. predmeta ili same knjige/priručnika.
 
 
 
@@ -322,8 +321,7 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 \b([a-zA-ZčČćĆžŽšŠđĐ]+)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- \2.lower() not in ["li"] and \1.lower() in popis_prefiksoida and spell(\1 + \2) -> \1\2   # Prefiksoid '\1' i riječ  '\2' pišu se sastavljeno.
 
 
-# Ispravak odvojenoga pisanja polusloženica
-# ===========================================================================
+# Ispravak odvojenoga pisanja polusloženica ===========================================================================
 
 \b(\w+)\s([a-zA-ZčćžšđŠĐŽĆČ]+)\b <- spell(\1 + "-" + \2) -> \1-\2                   # Riječ je o polusloženici, treba pisati sa spojnicom.
 
@@ -452,7 +450,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 \s{2,3} -> " "                     # Unijeli ste više bjelina, možda ste željeli samo jednu.
 
 
-## Razmak nakon interpunkcijskog znaka
+## Razmak i veliko slovo nakon interpunkcijskog znaka
 ([a-zA-ZčČćĆžŽšŠđĐ]+)([\.\!\?])([a-zA-ZčČćĆžŽšŠđĐ]+) <- not \3.lower() in ["com", "hr", "org", "net", "edu", "gov", "info", "com.hr", "pdf", "docx", "txt", "xlsx", "pptx", "jpg", "jpeg", "png", "gif", "mp3", "wav", "mp4", "mkv", "zip", "rar", "exe", "apk", "oxt", "odt", "ods", "odp", "odg"] -> = \1 + \2 + " " + \3.capitalize() # Nedostaje razmak nakon interpunkcije?
 
 ([a-zA-ZčČćĆžŽšŠđĐ\d]+)([,:;])([a-zA-ZčČćĆžŽšŠđĐ\d]+) -> =\1 + \2 + " " + \3     # Iza pravopisnoga znaka niste unijeli razmak.
