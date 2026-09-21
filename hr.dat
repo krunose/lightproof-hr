@@ -201,7 +201,6 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 \b(bi)(?=(\svi\s))(?!\s(smo|ste))\b -> biste      # Uz zamjenicu 'vi' u aoristu gl. 'biti' uvijek ide 'biste'.
 
 
-
 ## 1. lice množine (mi) -> mora biti 'bismo'
 #\bbi\s+(smo)\b -> bi\1 # Pogrešan rastavljeni oblik 'bi smo', piše se zajedno 'bismo'.
 #\b([mM]i)\s+bi\b <- word(1) not in ["smo"] -> \1 bismo # Uz zamjenicu 'mi' u kondicionalu uvijek ide 'bismo'.
@@ -295,6 +294,9 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 \bzato jer\b -> zato što|jer            # Gomilanje istoznačnih veznika, zamijenite:
 \bZato jer\b -> Zato što|Budući da      # Gomilanje istoznačnih veznika, zamijenite:
 
+## 18. s nikim > ni s kim
+\bs nikim\b -> ni s kim                 # Pravilno je pisati:
+
 
 
 # Ispravak odvojenoga pisanja superlativa (Izbjegavanje lažnih uzbuna)
@@ -321,7 +323,8 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 \b([a-zA-ZčČćĆžŽšŠđĐ]+)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- \2.lower() not in ["li"] and \1.lower() in popis_prefiksoida and spell(\1 + \2) -> \1\2   # Prefiksoid '\1' i riječ  '\2' pišu se sastavljeno.
 
 
-# Ispravak odvojenoga pisanja polusloženica ===========================================================================
+# Ispravak odvojenoga pisanja polusloženica
+# ==============================================================================
 
 \b(\w+)\s([a-zA-ZčćžšđŠĐŽĆČ]+)\b <- spell(\1 + "-" + \2) -> \1-\2                   # Riječ je o polusloženici, treba pisati sa spojnicom.
 
