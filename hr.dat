@@ -337,23 +337,6 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 
 
 
-# Razdvojeno radi izbjegavanja DuplicateOptionError na novom configparseru
-(\w+)\s(\.)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
-(\w+)\s(,)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
-(\w+)\s(\?)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
-(\w+)\s(\!)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
-(\w+)\s(:)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
-(\w+)\s(;)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
-
-(\w+)\s(\.)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
-(\w+)\s(,)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
-(\w+)\s(\?)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
-(\w+)\s(\!)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
-(\w+)\s(:)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
-(\w+)\s(;)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
-
-
-
 # Razmak između kratica
 # =============================================================================
 
@@ -455,15 +438,24 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # Ispravljanje dvostrukog ili trostrukog razmaka, spajanje dviju rečenica i slično
 # ============================================================================
 
-
 ## Dvostruki razmak
 \s{2,3} -> " "                     # Unijeli ste više bjelina, možda ste željeli samo jednu.
 
+(\w+)\s(\.)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
+(\w+)\s(,)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
+(\w+)\s(\?)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
+(\w+)\s(\!)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
+(\w+)\s(:)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
+(\w+)\s(;)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
 
-## Razmak i veliko slovo nakon interpunkcijskog znaka
-([a-zA-ZčČćĆžŽšŠđĐ]+)([\.\!\?])([a-zA-ZčČćĆžŽšŠđĐ]+) <- not \3.lower() in ["com", "hr", "org", "net", "edu", "gov", "info", "com.hr", "pdf", "docx", "txt", "xlsx", "pptx", "jpg", "jpeg", "png", "gif", "mp3", "wav", "mp4", "mkv", "zip", "rar", "exe", "apk", "oxt", "odt", "ods", "odp", "odg"] -> = \1 + \2 + " " + \3.capitalize() # Nedostaje razmak nakon interpunkcije?
+(\w+)\s(\.)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
+(\w+)\s(,)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
+(\w+)\s(\?)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
+(\w+)\s(\!)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
+(\w+)\s(:)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
+(\w+)\s(;)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
 
-([a-zA-ZčČćĆžŽšŠđĐ\d]+)([,:;])([a-zA-ZčČćĆžŽšŠđĐ\d]+) -> =\1 + \2 + " " + \3     # Iza pravopisnoga znaka niste unijeli razmak.
+
 
 
 
