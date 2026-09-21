@@ -221,9 +221,6 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 #\b(biste|bi)\s+(morali|mogli|htjeli|smjeli|znali|išli|radili|bili|vidjeli|čuli|rekli|uzeli|dali|suosjeć\w+|pokuša\w+|napravi\w+|odluči\w+|pazi\w+)\b <- word(-2).lower() in ["da", "kako", "kad", "kada", "ako"] -> biste \2 # U namjernim i pogodbenim rečenicama u 2. licu množine koristi se 'biste'.
 
 
-
-
-
 # Uklanjanje pleonazama i ispravljanje jezičnih konstrukcija (Pisanje u duhu hrvatskoga jezika)
 ## =============================================================================
 
@@ -448,7 +445,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 (\w+)\s(:)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
 (\w+)\s(;)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
 
-(\w+)\s(\.)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
+(\w+)\s(\.)(?!\s)(\w+) -> = \1 + \2 + " " + \3.capitalize()  # Možda ste željeli napisati:
 (\w+)\s(,)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
 (\w+)\s(\?)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
 (\w+)\s(\!)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
