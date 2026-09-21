@@ -17,14 +17,10 @@ Ambicija ovoga projekta nije napraviti sveobuhvatnu provjeru pravopisa i gramati
 Dodatak je pripremljen kao **OXT datoteka** i spreman je za instalaciju na svim operacijskim sustavima koji podržavaju LibreOffice (v4.0 ili noviji).
 
 1. Izbrišite dodatak s rječnikom za računalnu provjeru pravopisa hrvatskoga jezika koji sada imate. Ponovno pokrenite LibreOffice.
-2. Preuzmite i dvoklikom instalirajte rječnik [Hunspell-hr-v2.1-20260921.oxt](https://github.com/krunose/hunspell-hr/tree/master/tools) s GitHuba; ili ga potražite na [extensions.libreoffice.org](https://extensions.libreoffice.org/). Ponovno pokrenite LibreOffice.
+2. Preuzmite i dvoklikom instalirajte rječnik [`Hunspell-hr-v2.1-20260921.oxt`](https://github.com/krunose/hunspell-hr/tree/master/tools) s GitHuba; ili ga potražite na [`extensions.libreoffice.org`](https://extensions.libreoffice.org/). Ponovno pokrenite LibreOffice.
 3. Preuzmite odavde dodatak [`Lightproof_hr-0.5.5.29.oxt`](https://github.com/krunose/lightproof-hr/blob/main/Lightproof_hr-0.5.5.29.oxt) i instalirajte dvoklikom. Ponovno pokrenite LibreOffice.
 
 Ako ste slijedili upute i pazili na redoslijed. Pravila za provjeru gramatike moraju raditi.
-
-1. ~Preuzmite dodatak s platforme [LibreOffice Extensions](https://extensions.libreoffice.org/en) ili izravno sa [GitHub repozitorija](https://github.com/krunose/lightproof-hr).~
-2. ~Instalirajte dodatak dvoklikom na datoteku.~
-3. ~Ponovno pokrenite LibreOffice.~
 
 Trenutačno najnovija inačica dodatka nije u službenom LibreOfficeovu repozitoriju dodataka jer **da bi dodatak od inačice 0.5 nadalje radio kako je zamišljeno, potrebno je preuzeti (djelomično) označen Hunspellov rječnik za hrvatski jezik s [github.com/krunose/hunspell-hr](https://github.com/krunose/hunspell-hr)!** Onaj Hunspellov rječnik koji *već imate na računalu* nije označen i dodatak od inačice 0.5 (uključujući i nju) neće raditi.
 
