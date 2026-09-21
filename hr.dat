@@ -445,7 +445,8 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 (\w+)\s(:)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
 (\w+)\s(;)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
 
-(\w+)\s(\.)(?!\s)(\w+) -> = \1 + \2 + " " + \3.capitalize()  # Možda ste željeli napisati:
+(\w+)\s(\.)(?!\s)(\w+) <- \3.lower() in ["com", "hr", "org", "net", "edu", "gov", "info", "com.hr", "pdf", "docx", "txt", "xlsx", "pptx", "jpg", "jpeg", "png", "gif", "mp3", "wav", "mp4", "mkv", "zip", "rar", "exe", "apk", "oxt", "odt", "ods", "odp", "odg"] -> \1\2\3 # Možda ste željeli napisati:
+(\w+)\s(\.)(?!\s)(\w+) <- \3.lower() not in ["com", "hr", "org", "net", "edu", "gov", "info", "com.hr", "pdf", "docx", "txt", "xlsx", "pptx", "jpg", "jpeg", "png", "gif", "mp3", "wav", "mp4", "mkv", "zip", "rar", "exe", "apk", "oxt", "odt", "ods", "odp", "odg"] -> = \1 + \2 + " " + \3.capitalize()  # Možda ste željeli napisati:
 (\w+)\s(,)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
 (\w+)\s(\?)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
 (\w+)\s(\!)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
