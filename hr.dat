@@ -68,10 +68,11 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 \b(za|bez|umjesto|osim)\s+(\w+t)i\s+se\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za pripremiti se' pravilno je koristiti glagolsku imenicu ('za pripremu') ili preformulirati rečenicu.
 
 ## 4. Slučaj: prijedlog + infinitiv na -ći (s eliminacijom lažnih uzbuna na imenice u lokativu/genitivu)
-\b(za|bez|umjesto|osim)\s+(\w+ći)\b <- morph(\2, "po:glagol", False) and word(0).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri", "kući", "odjeći", "nesreći", "sreći", "ravnoteži"] -> _ # Konstrukcija prijedlog + infinitiv na -ći nije u duhu hrvatskoga standardnog jezika. Preformulirajte rečenicu ili upotrijebite glagolsku imenicu.
+\b(za|bez|umjesto|osim)\s+(\w+ći)\b <- morph(\2, "po:glagol", False) and \2.lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri"] -> _ # Konstrukcija prijedlog + infinitiv na -ći nije u duhu hrvatskoga standardnog jezika. Preformulirajte rečenicu ili upotrijebite glagolsku imenicu.
 
 ## 5. Slučaj: prijedlog + povratni oblici s infinitivom na -ći
 \b(za|bez|umjesto|osim)\s+se\s+(\w+ći)\b <- morph(\2, "po:glagol", False) and word(0).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri"] -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
+
 \b(za|bez|umjesto|osim)\s+(\w+ći)\s+se\b <- morph(\2, "po:glagol", False) and word(-1).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri"] -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
 
 
