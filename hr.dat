@@ -358,26 +358,26 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # =============================================================================
 
 ## 1. Slučaj: prijedlog + infinitiv na -ti (strogo definirani glagolski morfemi i sufiksi)
-# Pokriva: - sti -ati, -iti, -jeti, -uti, -ivati, -avati, -evati, -irati, -izirati
-\b(za|bez|umjesto|osim)\s+(\w+(?:izirati|irati|evati|avati|ivati|jeti|eti|uti|iti|ati|sti))\b -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskoga standardnog jezika. Umjesto 'za učiti' ili 'za raditi' pravilno je upotrijebiti glagolsku imenicu: 'za učenje', 'za rad' ili preformulirati rečenicu.
+\b(za|bez|umjesto|osim)\s+(\w+ti)\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskoga standardnog jezika. Umjesto 'za učiti' ili 'za raditi' pravilno je upotrijebiti glagolsku imenicu: 'za učenje', 'za rad' ili preformulirati rečenicu.
 
 ## 2. Slučaj: prijedlog + povratna zamjenica "se" + infinitiv na -ti
 # Primjer: 'za se pripremiti' umjesto 'za pripremu'
-\b(za|bez|umjesto|osim)\s+se\s+(\w+(?:izirati|irati|evati|avati|ivati|jeti|eti|uti|iti|ati|sti))\b -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za se pripremiti' pravilno je koristiti glagolsku imenicu: 'za pripremu' ili preformulirati rečenicu.
+\b(za|bez|umjesto|osim)\s+se\s+(\w+ti)\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za se pripremiti' pravilno je koristiti glagolsku imenicu: 'za pripremu' ili preformulirati rečenicu.
 
 ## 3. Slučaj: prijedlog + infinitiv na -ti + povratna zamjenica "se"
 # Primjer: 'za pripremiti se' umjesto 'za pripremu'
-\b(za|bez|umjesto|osim)\s+(\w+(?:izirati|irati|evati|avati|ivati|jeti|eti|uti|iti|ati|sti))\s+se\b -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za pripremiti se' pravilno je koristiti glagolsku imenicu: 'za pripremu' ili preformulirati rečenicu.
+\b(za|bez|umjesto|osim)\s+(\w+ti)\s+se\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za pripremiti se' pravilno je koristiti glagolsku imenicu: 'za pripremu' ili preformulirati rečenicu.
 
-
+# ima imenica koje završavaju na -ći pa LightProof ne zna je li riječ o glagolu ili imenici ('pomoći' - 'pomognem'... naspram 'pomoć' - 'pomoću'), to će davati lažne uzbune
 ## 4. Slučaj: prijedlog + infinitiv na -ći (s eliminacijom lažnih uzbuna na imenice)
 # Obvezni samoglasnik ispred -ći (-ući, -eći, -ići, -aći) uz izuzimanje čestih imenica u lokativu/genitivu
-\b(za|bez|umjesto|osim)\s+(\w+[aeiou]ći)\b <- word(0).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri", "kući", "odjeći", "nesreći", "sreći", "ravnoteži"] -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskoga standardnog jezika. Umjesto 'za ići' ili 'bez reći' pravilno je upotrijebiti glagolsku imenicu ili odgovarajući izraz: 'za odlazak', 'bez riječi' ili preformulirati rečenicu.
+\b(za|bez|umjesto|osim)\s+(\w+[aeiou]ći)\b <- morph(\2, "po:glagol", False) and \2.lower() not in ["pomoći", "noći", "peći", "moći"] -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskog jezika. Pravilno je upotrijebiti glagolsku imenicu ili preformulirati rečenicu.
 
 ## 5. Slučaj: prijedlog + povratni oblici s infinitivom na -ći
 # Primjeri: 'za se obući', 'za obući se' -> pretvara se u upozorenje
-\b(za|bez|umjesto|osim)\s+se\s+(\w+[aeiou]ći)\b <- word(0).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri"] -> _ # Izbjegavajte konstrukciju prijedlog + infinitiv. Umjesto 'za se obući' ili 'za obući se' pravilno je reći 'za odijevanje' ili preformulirati rečenicu.
-\b(za|bez|umjesto|osim)\s+(\w+[aeiou]ći)\s+se\b <- word(-1).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri"] -> _ # Izbjegavajte konstrukciju prijedlog + infinitiv. Umjesto 'za obući se' pravilno je reći 'za odijevanje' ili preformulirati rečenicu.
+\b(za|bez|umjesto|osim)\s+se\s+(\w+[aeiou]ći)\b <- morph(\2, "po:glagol", False) and \2.lower() not in ["pomoći", "noći", "peći", "moći"] -> _ # Izbjegavajte konstrukciju prijedlog + infinitiv. Umjesto 'za se obući' ili 'za obući se' pravilno je reći 'za odijevanje' ili preformulirati rečenicu.
+
+\b(za|bez|umjesto|osim)\s+(\w+[aeiou]ći)\s+se <- morph(\2, "po:glagol", False) and \2.lower() not in ["pomoći", "noći", "peći", "moći"] -> _ # Izbjegavajte konstrukciju prijedlog + infinitiv. Umjesto 'za obući se' pravilno je reći 'za odijevanje' ili preformulirati rečenicu.
 
 
 
