@@ -28,6 +28,7 @@ Trenutačno najnovija inačica dodatka nije u službenom LibreOfficeovu repozito
 2. smjestite ih u mapu
     - `/usr/share/hunspell` koristite li GNU/Linux
     - `C:\Users\VAŠE_KORISNIČKO_IME\AppData\Roaming\LibreOffice\4\user\wordbook\` i pronađite mapu s jezičnim paketima i u njih smjestite ove dvije datoteke.
+    - na macOS-u su to datoteke `~/Library/Application Support/LibreOffice/4/user/wordbook/` za aktivnu instalaciju LibreOfficea ili `~/Library/Spelling/` za provjeru na razini cijeloga sustava (sve aplikacije)
 3. ponovno pokrenite LibreOffice
 
 
