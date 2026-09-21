@@ -78,13 +78,19 @@ popis_prefiksoida = set(["aero", "akro", "alto", "andro", "aritmo", "austro", "a
 
 
 
-# Ispravak pogrešne promjene glagola 'trebati' kroz lica ispred infinitiva
+# Ispravak pogrešne promjene glagola 'trebati' kroz lica ispred infinitiva (bezlični trebati)
 # =============================================================================
 
 \b(ja|ti|on|ona|ono|mi|vi|oni|one)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> treba \3     # Glagol trebati ispred infinitiva je bezličan.
+
 \b(Ja|Ti|On|Ona|Ono|Mi|Vi|Oni|One)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> Treba \3     # Glagol trebati ispred infinitiva je bezličan.
 
 \b(trebam|trebaš|trebamo|trebate|trebaju)\s+(\w+)\b <- morph(\2, "po:glagol", False) -> = "treba " + \2 # Kada glagol 'trebati' dolazi ispred infinitiva, mora biti bezličan (uvijek glasi 'treba'). Primjer: umjesto 'trebamo raditi' pravilno je 'treba raditi'.
+
+\b(sam|si|je|smo|ste|su)\s+(trebao|trebala|trebalo|trebali|trebale)\s+(\w+)\b <- morph(\3, "po:glagol", False) -> _ # Kada glagol 'trebati' dolazi ispred infinitiva u prošlom vremenu, mora biti bezličan (uvijek glasi 'trebalo je'). Preformulirajte rečenicu.
+
+\b(trebao|trebala|trebalo|trebali|trebale)\s+(sam|si|je|smo|ste|su)\s+(\w+)\b <- morph(\3, "po:glagol", False) -> _ # Kada glagol 'trebati' dolazi ispred infinitiva u prošlom vremenu, mora biti bezličan (uvijek glasi 'trebalo je'). Preformulirajte rečenicu.
+
 
 
 # Ispravljanje konstrukcije prijedlog 'kroz' + riječ koja označava vrijeme
