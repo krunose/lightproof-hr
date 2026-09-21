@@ -39,9 +39,12 @@ Trenutačno najnovija inačica dodatka nije u službenom LibreOfficeovu repozito
 3. Upozoriti na konstrukciju 'da li'
 4. Donekle razlikovati 'slijedeći' i 'sljedeći'
 5. Pomoći oko pleonazama
-6. Ispravak pisanja 's/sa' i 'k/ka'
-7. Kondicional: mi bi > mi bismo
-8. Klasični tipfeleri
+6. Veliko i malo slovo u nazivima jezika
+7. Ispravak pisanja 's/sa' i 'k/ka'
+8. Kondicional: mi bi > mi bismo
+9. Bezlični glagol 'trebati'
+10. Klasični tipfeleri
+11. Još ponešto da ne nabrajam...
 
 
 ## Za one koji žele znati više
