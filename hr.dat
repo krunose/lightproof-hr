@@ -322,9 +322,6 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 
 
 
-
-
-
 # Ispravak odvojenoga pisanja superlativa (Izbjegavanje lažnih uzbuna)
 # =============================================================================
 
@@ -430,28 +427,6 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 \b([uU]natoč|[uU]sprkos)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- (morph(\2, "a", False) and not morph(\2, "u", False)) or (morph(\2, "e", False) and not morph(\2, "oj", False) and not \2.lower() in ["mehatronika", "točke", "rečenice", "faze"]) -> _ # Prijedlozi 'unatoč' i 'usprkos' u hrvatskome standardnom jeziku zahtijevaju dativ (komu/čemu), a ne genitiv. Umjesto 'unatoč problema/sreće' pravilno je 'unatoč problemima/sreći'.
 
 
-
-
-# Ispravljanje zareza minimalno
-# =============================================================================
-
-## 1. Suprotni veznici u jasnom rečeničnom kontekstu (ali, nego, već)
-
-## Suprotni veznici (Sintaktički neprobojno i razdvojeno pravilo)
-([^,\s.?!:;]+)\s+(ali|nego|već)\b <- (\2 == "ali") or (\2 in ["nego", "već"] and "ne samo" in sentence[:start]) -> \1, \2 # Ispred suprotnog veznika piše se zarez.
-
-([^,\s.?!:;]+)\s+(a)(?!\s+(da|kamoli|ne)\b)\b -> \1, \2 # Ispred suprotnog veznika 'a' dolazi zarez ako odvaja rečenice.
-
-## 2. Isključni i zaključni veznici na granicama tvrdnji (dakle, stoga)
-([^,\s.?!:;]+)\s+(dakle|stoga)\b -> \1, \2 # Ako 'dakle' ili 'stoga' uvode zaključnu rečenicu, odvojite ih zarezom.
-
-# Izolirani zaključni veznik 'zato' (izuzima se složeni veznik 'zato što' i 'zato da')
-
-## Dodana i nepravilna veza 'zato jer' zato što se često griješi pa ne želimo da se aktivira ovo pravilo, nego ono o ispravljanju 'zato jer' > 'zato što'
-([^,\s]+)\s+(zato)(?!\s+(da|što|jer)\b) -> \1, \2 # Ako 'zato' djeluje samostalno kao zaključni veznik, ispred njega ide zarez.
-
-
-
 [char]
 
 
@@ -483,7 +458,4 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 ([\„]\w)(\s+[\„]) -> \1”  # Unijeli ste razmak između riječi i navnodnoga znaka.
 ([\„]\s+)(\w+[\”]) -> „\2   # Unijeli ste razmak između riječi i navodnoga znaka.
 ([\„]\s+)(\w+)(\s+[\„]) -> „\2”    # Unijeli ste razmak između riječi i navodnoga znaka.
-
-
-
 
