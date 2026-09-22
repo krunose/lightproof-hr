@@ -454,6 +454,16 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 (\w+)\s(;)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
 
 
+# Ispravljanje navodnika na razini riječi i na razini rečenice
+
+## Unutar jedne riječi „ riječ „ -> „riječ”
+([\„]\w)(\s+[\„]) -> \1”  # Unijeli ste razmak između riječi i navnodnoga znaka.
+([\„]\s+)(\w+[\”]) -> „\2   # Unijeli ste razmak između riječi i navodnoga znaka.
+([\„]\s+)(\w+)(\s+[\„]) -> „\2”    # Unijeli ste razmak između riječi i navodnoga znaka.
+
+
+
+
 
 
 
