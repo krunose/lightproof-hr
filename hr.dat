@@ -183,11 +183,11 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 
 \bE(nglesk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b <- not s.startswith(("Engleski", "Engleskog", "Engleskoga", "Engleskom", "Engleskomu", "Engleskome", "Engleskim")) -> e\1\2 \3\4 # Sintagma 'engleski valcer' piše se malim slovom.
 
-\bB(ečk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b <- not s.startswith(("Engleski", "Engleskog", "Engleskoga", "Engleskom", "Engleskomu", "Engleskome", "Engleskim")) -> b\1\2 \3\4 # Sintagma 'engleski valcer' piše se malim slovom.
+\bB(ečk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b <- not s.startswith(("Bečki", "Bečkog", "Bečkoga", "Bečkom", "Bečkomu", "Engleskome", "Engleskim")) -> b\1\2 \3\4 # Sintagma 'bečki valcer' piše se malim slovom.
 
-\bF(rancusk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b <- not s.startswith(("Francuska", "Francuske", "Francuskoj", "Francusku", "Francuskom")) -> f\1\2 \3\4 # Sintagma 'francuska salata' piše se malim slovom.
+\bF(rancusk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b <- not s.startswith(("Francuska", "Francuske", "Francuskoj", "Francusku", "Francuskom")) -> f\1\2 \3\4 # Sintagma 'francuska salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
 
-\bG(rčk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b <- not s.startswith(("Francuska", "Francuske", "Francuskoj", "Francusku", "Francuskom")) -> g\1\2 \3\4 # Sintagma 'francuska salata' piše se malim slovom.
+\bG(rčk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b <- not s.startswith(("Grčka", "Grčke", "Grčkoj", "Grčku", "Grčkom")) -> g\1\2 \3\4 # Sintagma 'grčka salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
 
 \bI(starsk)(i|og|oga|om|omu|ome|im)\s(pršu)(t|ta|tu|tom)?\b <- not s.lstrip().startswith(("Istarski", "Istarskog", "Istarskoga", "Istarskom", "Istarskomu", "Istarskome", "Istarskim")) -> i\1\2 \3\4 # Sintagma 'istarski pršut' piše se malim slovom (osim na početku rečenice).
 
@@ -441,6 +441,25 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 \b([uU]natoč|[uU]sprkos)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- (morph(\2, "a", False) and not morph(\2, "u", False)) or (morph(\2, "e", False) and not morph(\2, "oj", False) and not \2.lower() in ["mehatronika", "točke", "rečenice", "faze"]) -> _ # Prijedlozi 'unatoč' i 'usprkos' u hrvatskome standardnom jeziku zahtijevaju dativ (komu/čemu), a ne genitiv. Umjesto 'unatoč problema/sreće' pravilno je 'unatoč problemima/sreći'.
 
 
+[word]
+
+
+
+
+# Provjera nezatvaranja navodnih zankova u rečenici.
+# ===========================================================================
+
+# Provjera nezatvorenih hrvatskih navodnika (podcrtava samo prvu riječ u rečenici)
+(^|(?<=\s))„(\w+)\b <- s.count("„") != s.count("”") -> _ # Provjerite navodnike u rečenici. Čini se da niste zatvorili navodne znakove negdje u odlomku.
+
+(\w+)” <- s.count("”") > s.count("„") -> _ # Provjerite navodnike u rečenici. Čini se da niste otvorili navodnike negdje u odlomku.
+
+„ ([^„”]*?)” -> „\1”        # Unijeli ste razmak između navodnika i riječi na početku navoda.
+„([^„”]*?) ” -> „\1”        # Unijeli ste razmak između navodnika i riječi na kraju navoda.
+„ ([^„”]*?) („|”) -> = "„" + \1.rstrip(" ") + "”"       # Unijeli ste razmak između navodnika na početku i kraju navoda.
+
+
+
 [char]
 
 
@@ -464,13 +483,5 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 (\w+)\s(\!)(?!\s)(\w+) -> = \1 + \2 + " " + \3.capitalize()  # Možda ste željeli napisati:
 (\w+)\s(:)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
 (\w+)\s(;)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
-
-
-# Ispravljanje navodnika na razini riječi i na razini rečenice
-
-## Unutar jedne riječi „ riječ „ -> „riječ”
-([\„]\w)(\s+[\„]) -> \1”  # Unijeli ste razmak između riječi i navnodnoga znaka.
-([\„]\s+)(\w+[\”]) -> „\2   # Unijeli ste razmak između riječi i navodnoga znaka.
-([\„]\s+)(\w+)(\s+[\„]) -> „\2”    # Unijeli ste razmak između riječi i navodnoga znaka.
 
 
