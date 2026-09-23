@@ -6,7 +6,7 @@
 
 ---
 
-LightProof je računalni alat ugrađen u LibreOffice i služi za računalnu provjeru gramatike, pravopisa i stila. Dobra je dopuna Hunspellu jer dok potonji provjerava riječi isključivo u izolaciji, LightProof nudi ograničenu mogućnost provjeravanja okoline i konteksta. Temelji se na pravilnim izrazima (engl. regular expressions) i ne razumije duboku semantičku i gramatičku strukturu rečenice, pa određene pravopisno-gramatičke pa i stilske probleme njime nije jednostavno ili nije uopće mguće riješiti, recimo pisanje zareza u hrvatskome jeziku.
+LightProof je računalni alat ugrađen u LibreOffice i služi za računalnu provjeru gramatike, pravopisa i stila. Dobra je dopuna Hunspellu jer dok potonji provjerava riječi isključivo u izolaciji, LightProof nudi ograničenu mogućnost provjeravanja okoline i konteksta. Temelji se na pravilnim izrazima (engl. regular expressions) i ne razumije duboku semantičku i gramatičku strukturu rečenice, pa određene pravopisno-gramatičke pa i stilske probleme njime nije jednostavno ili nije uopće moguće riješiti, recimo pisanje zareza u hrvatskome jeziku.
 
 Ovaj repozitorij sadrži dodatak (`OXT datoteka`) koji omogućuje brzu i jednostavnu integraciju pravila za provjeru gramatike, pravopisa i stila (`hr.dat`) u LibreOffice Writer.
 
@@ -53,7 +53,7 @@ Trenutačno najnovija inačica dodatka nije u službenom LibreOfficeovu repozito
 
 ### Postupak pripreme i izrada dodatka za LibreOffice
 
-Problem je s alatom iz repozitorija [github.com/karelin/lightproof](https://github.com/karelin/lightproof) to što se dodatak nije mogao napraviti jer je skripta `make.py` izvorno napisana za `Python 2`. Zbog promjena (nekih) parametara u Pythonu 3, skriptu sam uspješno prilagodio i modernizirao pomoću AI-a, koji je ujedno pomogao generirati i `hr.cfg` datoteku. Dakle tko želi raditi pravila i treba ih kompajlirati zbog testa, mora preuzeti `make.py` iz **ovoga repozitorija**, odnosno treba mu `lightproof.zip`. Više o tome u sljedećm dijelu.
+Problem je s alatom iz repozitorija [github.com/karelin/lightproof](https://github.com/karelin/lightproof) to što se dodatak nije mogao napraviti jer je skripta `make.py` izvorno napisana za `Python 2`. Zbog promjena (nekih) parametara u Pythonu 3, skriptu sam uspješno prilagodio i modernizirao pomoću AI-a, koji je ujedno pomogao generirati i `hr.cfg` datoteku. Dakle tko želi raditi pravila i treba ih kompajlirati zbog testa, mora preuzeti `make.py` iz **ovoga repozitorija**, odnosno treba mu `lightproof.zip`. Više o tome u sljedećem dijelu.
 
 ### Kako samostalno kompajlirati dodatak
 1. Klonirajte repozitorij s [karelin/lightproof](https://github.com).
