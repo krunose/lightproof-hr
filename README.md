@@ -2,7 +2,7 @@
 
 > [!WARNING]
 > **OVISNOST O NOVOM RJEČNIKU ZA PROVJERU PRAVOPISA:** 
-> Ovaj dodatak **više ne radi** na principu čistih pravilnih izraza (regexp). Uspjelo se označiti (POS tag) infinitive u Hunspellovu rječniku. Pravila će od **inačice 0.5.5.9** raditi isključivo ako vaš LibreOffice koristi tagiran hrvatski rječnik. **Prije instalacije ovog dodatka**, obavezno izbrišite stari dodatak s rječnikom za provjeru pravopisa i instalirajte [dodatak s tagiranim rječnikom](https://extensions.libreoffice.org/en/extensions/show/99660) ~iz repozitorija [hunspell-hr](https://github.com). Primam pitanja i pružam pomoć na [ask.libreoffice.org croatian](https://ask.libreoffice.org/c/croatian/15)~. Ponovno pokrenite LibreOffice, također i u sistemskoj traci ako je aktivan (Windows).
+> Ovaj dodatak **više ne radi** na principu čistih pravilnih izraza (regexp). Uspjelo se označiti (POS tag) infinitive u Hunspellovu rječniku. Pravila će od **inačice 0.5.5.9** raditi isključivo ako vaš LibreOffice koristi tagiran hrvatski rječnik. **Prije instalacije ovog dodatka**, obavezno izbrišite stari dodatak s rječnikom za provjeru pravopisa i instalirajte [dodatak s tagiranim rječnikom](https://extensions.libreoffice.org/en/extensions/show/99660) ~iz repozitorija [hunspell-hr](https://github.com)~. Primam pitanja i pružam pomoć na [ask.libreoffice.org Hrvatski](https://ask.libreoffice.org/c/croatian/15). Ponovno pokrenite LibreOffice, također i u sistemskoj traci ako je aktivan (Windows).
 
 ---
 
