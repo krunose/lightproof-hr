@@ -6,7 +6,7 @@
 
 # prefiksoidi na koje se poziva u pravilima i provjerava odvojeno pisanje prefiksoida od ostatka riječi: auto mehaničar > automehaničar
 
-popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto", "rokto", "kveko", "fluoro", kripto", "nano", "piko", "femto", "giga", "tera", "peta", "eksa", "vice", "aero", "akro", "alto", "andro", "aritmo", "austro", "avio", "biblio", "bruto", "daktilo", "dija", "ego", "elektro", "epi", "fero", "fono", "galvano", "gono", "helio", "hidro", "hiro", "infra", "izo", "kiber", "kreno", "kripto", "kseno", "latino", "magneto", "megalo", "metro", "mili", "mono", "muzeo", "neo", "nukleo", "osteo", "para", "pireto", "poli", "proto", "roto", "servo", "soc", "steno", "surdo", "tele", "trofo", "vazo", "akva", "alu", "anglo", "arterio", "auto", "balneo", "bio", "centi", "deci", "disko", "egzo", "empirio", "etno", "filo", "foto", "gastro", "grafo", "hemo", "hemato", "homo", "ino", "kabrio", "kilo", "krim", "kromo", "ksero", "leuko", "makro", "melo", "mezo", "mini", "morfo", "nano", "neto", "oligo", "paleo", "pato", "piro", "porno", "pseudo", "repro", "ruso", "sidero", "socio", "stereo", "tahi", "teo", "turbo", "video", "afro", "alergo", "ampelo", "antropo", "astro", "baro", "blasto", "cito", "deka", "domato", "ekstra", "endo", "euro", "fito", "geo", "grando", "hero", "hiper", "indo", "inter", "kardio", "kino", "krimi", "krono", "kvazi", "lito", "maksi", "meta", "midi", "mio", "moto", "narko", "neuro", "ornito", "palin", "pedo", "pluskvam", "profi", "psiho", "retro", "semio", "sinkro", "solo", "supra", "tara", "termo", "ultra", "zoo", "agro", "alo", "anarho", "argiro", "audio", "auzo", "bi", "bronho", "dakno", "demo", "doro", "eko", "entomo", "fizio", "franko", "germano", "hekto", "hetero", "hipo", "info", "italo", "kata", "klepto", "krio", "kozmo", "labio", "logo", "mega", "meteo", "mikro", "mnemo", "multi", "nekro", "nitro", "orto", "pan", "petro", "pneumo", "promo", "radio", "rino", "sero", "ski", "spektro", "super", "tehno", "topo", "uni", "žiro"])
+popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto", "rokto", "kveko", "fluoro", "kripto", "nano", "piko", "femto", "giga", "tera", "peta", "eksa", "vice", "aero", "akro", "alto", "andro", "aritmo", "austro", "avio", "biblio", "bruto", "daktilo", "dija", "ego", "elektro", "epi", "fero", "fono", "galvano", "gono", "helio", "hidro", "hiro", "infra", "izo", "kiber", "kreno", "kripto", "kseno", "latino", "magneto", "megalo", "metro", "mili", "mono", "muzeo", "neo", "nukleo", "osteo", "para", "pireto", "poli", "proto", "roto", "servo", "soc", "steno", "surdo", "tele", "trofo", "vazo", "akva", "alu", "anglo", "arterio", "auto", "balneo", "bio", "centi", "deci", "disko", "egzo", "empirio", "etno", "filo", "foto", "gastro", "grafo", "hemo", "hemato", "homo", "ino", "kabrio", "kilo", "krim", "kromo", "ksero", "leuko", "makro", "melo", "mezo", "mini", "morfo", "nano", "neto", "oligo", "paleo", "pato", "piro", "porno", "pseudo", "repro", "ruso", "sidero", "socio", "stereo", "tahi", "teo", "turbo", "video", "afro", "alergo", "ampelo", "antropo", "astro", "baro", "blasto", "cito", "deka", "domato", "ekstra", "endo", "euro", "fito", "geo", "grando", "hero", "hiper", "indo", "inter", "kardio", "kino", "krimi", "krono", "kvazi", "lito", "maksi", "meta", "midi", "mio", "moto", "narko", "neuro", "ornito", "palin", "pedo", "pluskvam", "profi", "psiho", "retro", "semio", "sinkro", "solo", "supra", "tara", "termo", "ultra", "zoo", "agro", "alo", "anarho", "argiro", "audio", "auzo", "bi", "bronho", "dakno", "demo", "doro", "eko", "entomo", "fizio", "franko", "germano", "hekto", "hetero", "hipo", "info", "italo", "kata", "klepto", "krio", "kozmo", "labio", "logo", "mega", "meteo", "mikro", "mnemo", "multi", "nekro", "nitro", "orto", "pan", "petro", "pneumo", "promo", "radio", "rino", "sero", "ski", "spektro", "super", "tehno", "topo", "uni", "žiro"])
 
 
 
@@ -178,6 +178,20 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 
 (?<![.?!]\s)([A-ZČĆŽŠĐ]\w+(?:ski|ški|čki|a|e|o|g|m|h|im|oj|u|og|oga|om|emu))\s+(jezik|jezika|jeziku|jezikom|jezici|jezika|jezicima|jezike|tečaj|tečaja|tečaju|tečajem|tečajevi|tečajeva|tečajevima|tečajeve|rječnik|rječnika|rječniku|rječnikom|rječnici|rječnika|rječnicima|rječnike|gramatika|gramatike|gramatici|gramatiku|gramatikom|gramatike|gramatika|gramatikama|govor|govora|govoru|govorom|govori|govora|govorima|govore)\b <- word(-1) not in ["", ".", "!", "?", "«", "»", "\"", "“", "("] -> = \1.lower() + " " + \2 # Nazivi jezika malim slovom, osim ako nije riječ o nazivu šk. predmeta ili same knjige/priručnika.
 
+# varijabla 's' sadržava cijelu rečenicu
+\b(Hrvatsk)(i|og|oga|om|omu|ome|im)\s+(Nogometn)(i|og|oga|om|omu|ome|im)\s+(Save)(z|za|zu|zom)\b <- not s.startswith(("Hrvatski", "Hrvatskog", "Hrvatskoga", "Hrvatskom", "Hrvatskome", "Hrvatskomu", "Hrvatskim")) -> = \1 + \2 + " " + \3.lower() + \4 + " " + \5.lower() + \6 # Samo se prva riječ u nazivu 'Hrvatski nogometni savez' piše velikim slovom (osim na početku rečenice).
+
+\bE(nglesk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b <- not s.startswith(("Engleski", "Engleskog", "Engleskoga", "Engleskom", "Engleskomu", "Engleskome", "Engleskim")) -> e\1\2 \3\4 # Sintagma 'engleski valcer' piše se malim slovom.
+
+\bB(ečk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b <- not s.startswith(("Engleski", "Engleskog", "Engleskoga", "Engleskom", "Engleskomu", "Engleskome", "Engleskim")) -> b\1\2 \3\4 # Sintagma 'engleski valcer' piše se malim slovom.
+
+\bF(rancusk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b <- not s.startswith(("Francuska", "Francuske", "Francuskoj", "Francusku", "Francuskom")) -> f\1\2 \3\4 # Sintagma 'francuska salata' piše se malim slovom.
+
+\bG(rčk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b <- not s.startswith(("Francuska", "Francuske", "Francuskoj", "Francusku", "Francuskom")) -> g\1\2 \3\4 # Sintagma 'francuska salata' piše se malim slovom.
+
+\bI(starsk)(i|og|oga|om|omu|ome|im)\s(pršu)(t|ta|tu|tom)?\b <- not s.lstrip().startswith(("Istarski", "Istarskog", "Istarskoga", "Istarskom", "Istarskomu", "Istarskome", "Istarskim")) -> i\1\2 \3\4 # Sintagma 'istarski pršut' piše se malim slovom (osim na početku rečenice).
+
+\bP(ašk)(i|og|oga|om|omu|ome|im)\s(si)(r|ra|ru|rom)?\b <- not s.startswith(("Paški", "Paškog", "Paškoga", "Paškom", "Paškomu", "Paškome", "Paškim")) -> p\1\2 \3\4 # Sintagma 'paški sir' piše se malim slovom (osim na početku rečenice).
 
 
 
@@ -383,7 +397,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # Primjeri: 'za se obući', 'za obući se' -> pretvara se u upozorenje
 \b(za|bez|umjesto|osim)\s+se\s+(\w+[aeiou]ći)\b <- morph(\2, "po:glagol", False) and \2.lower() not in ["pomoći", "noći", "peći", "moći"] -> _ # Izbjegavajte konstrukciju prijedlog + infinitiv. Umjesto 'za se obući' ili 'za obući se' pravilno je reći 'za odijevanje' ili preformulirati rečenicu.
 
-\b(za|bez|umjesto|osim)\s+(\w+[aeiou]ći)\s+se <- morph(\2, "po:glagol", False) and \2.lower() not in ["pomoći", "noći", "peći", "moći"] -> _ # Izbjegavajte konstrukciju prijedlog + infinitiv. Umjesto 'za obući se' pravilno je reći 'za odijevanje' ili preformulirati rečenicu.
+\b(za|bez|umjesto|osim)\s+(\w+[aeiou]ći)\s+se\b <- morph(\2, "po:glagol", False) and \2.lower() not in ["pomoći", "noći", "peći", "moći"] -> _ # Izbjegavajte konstrukciju prijedlog + infinitiv. Umjesto 'za obući se' pravilno je reći 'za odijevanje' ili preformulirati rečenicu.
 
 
 
