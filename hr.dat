@@ -17,11 +17,6 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 # Ispravak krnjega infinitiva
 # ===========================================
 
-# Hvatanje samostalnoga krnjega infinitiva
-#\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1i # Ako je riječ o infinitivu, mora završavati na '-ti' ili '-ći'.
-
-#\b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete"] -> \1  # Iza pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
-
 
 # 1. KORAK: Uklanjanje suvišne zamjenice 'si' (Mora ići na sam vrh!)
 
@@ -34,8 +29,8 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 
 # 2. KORAK: Ispravak krnjega i punog infinitiva (Svi oblici glagola htjeti)
 
-## Krnji infinitiv na -t (Osigurano od svih oblika htjeti i homonima ispit/nacrt)
-\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] and not \1.lower() in ["ispit", "nacrt", "jest", "dobit"] -> \1i # Infinitiv u hrvatskome treba završavati na '-ti' ili '-ći'.
+## Krnji infinitiv na -t (Osigurano od svih oblika htjeti i homonima ispit/nacrt/rast)
+\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] and not \1.lower() in ["ispit", "nacrt", "jest", "dobit", "rast"] -> \1i # Ako je riječ o infinitivu, mora završavati na '-ti' ili '-ći'.
 
 ## Puni infinitiv na -ti ispred svih oblika glagola htjeti
 \b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1 # Iza pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
@@ -176,7 +171,7 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 
 ## Ispravak pisanja imena jezika (malo početno slovo) - Preskače početak rečenice/odlomka
 
-(?<![.?!]\s)([A-ZČĆŽŠĐ]\w+(?:ski|ški|čki|a|e|o|g|m|h|im|oj|u|og|oga|om|emu))\s+(jezik|jezika|jeziku|jezikom|jezici|jezika|jezicima|jezike|tečaj|tečaja|tečaju|tečajem|tečajevi|tečajeva|tečajevima|tečajeve|rječnik|rječnika|rječniku|rječnikom|rječnici|rječnika|rječnicima|rječnike|gramatika|gramatike|gramatici|gramatiku|gramatikom|gramatike|gramatika|gramatikama|govor|govora|govoru|govorom|govori|govora|govorima|govore)\b <- word(-1) not in ["", ".", "!", "?", "«", "»", "\"", "“", "("] -> = \1.lower() + " " + \2 # Nazivi jezika malim slovom, osim ako nije riječ o nazivu šk. predmeta ili same knjige/priručnika.
+(?<![.?!]\s)([A-ZČĆŽŠĐ]\w+(?:ski|ški|čki|a|e|o|g|m|h|im|oj|u|og|oga|om|emu))\s+(jezik|jezika|jeziku|jezikom|jezici|jezika|jezicima|jezike|tečaj|tečaja|tečaju|tečajem|tečajevi|tečajeva|tečajevima|tečajeve|rječnik|rječnika|rječniku|rječnikom|rječnici|rječnika|rječnicima|rječnike|gramatika|gramatike|gramatici|gramatiku|gramatikom|gramatike|gramatika|gramatikama|govor|govora|govoru|govorom|govori|govora|govorima|govore)\b <- word(-1) not in ["", ".", "!", "?", "«", "»", "\"", "“", "("] -> = \1.lower() + " " + \2 # Nazivi jezika pišu se malim slovom, osim ako nije riječ o nazivu šk. predmeta ili same knjige/priručnika.
 
 # varijabla 's' sadržava cijelu rečenicu
 \b(Hrvatsk)(i|og|oga|om|omu|ome|im)\s+(Nogometn)(i|og|oga|om|omu|ome|im)\s+(Save)(z|za|zu|zom)\b <- not s.startswith(("Hrvatski", "Hrvatskog", "Hrvatskoga", "Hrvatskom", "Hrvatskome", "Hrvatskomu", "Hrvatskim")) -> = \1 + \2 + " " + \3.lower() + \4 + " " + \5.lower() + \6 # Samo se prva riječ u nazivu 'Hrvatski nogometni savez' piše velikim slovom (osim na početku rečenice).
@@ -439,10 +434,6 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 ## 2. Slučaj: Samostalna imenica odmah iza prijedloga (Pokriva muški, srednji i ženski rod u genitivu)
 \b([uU]natoč|[uU]sprkos)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- (morph(\2, "a", False) and not morph(\2, "u", False)) or (morph(\2, "e", False) and not morph(\2, "oj", False) and not \2.lower() in ["mehatronika", "točke", "rečenice", "faze"]) -> _ # Prijedlozi 'unatoč' i 'usprkos' u hrvatskome standardnom jeziku zahtijevaju dativ (komu/čemu), a ne genitiv. Umjesto 'unatoč problema/sreće' pravilno je 'unatoč problemima/sreći'.
-
-
-[word]
-
 
 
 
