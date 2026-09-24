@@ -476,6 +476,13 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 \(\w+|\w+\) <- s.count("(") != s.count(")") -> _ # Provjerite zagrade u odlomku. Niste otvorili ili zatvorili sve zagrade.
 
 
+
+# Primjer pravila u kojem se koristi varijabla [sentence]. 'start' označava početak ulovljenoga izrada 'end' označava kraj ulovljenoga izrada. Postoje još i funkcije .startswith() i .endswith() -> treba istražiti u izvornom kodu LightProofa (pomoću AI-a) kako ih koristiti.
+## Suprotni veznici (Sintaktički neprobojno i razdvojeno pravilo)
+#([^,\s.?!:;]+)\s+(ali|nego|već)\b <- (\2 == "ali") or (\2 in ["nego", "već"] and "ne samo" in sentence[:start]) -> \1, \2 # Ispred suprotnog veznika piše se zarez.
+
+
+
 [char]
 
 
