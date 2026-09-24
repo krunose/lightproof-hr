@@ -123,12 +123,9 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 
 
 
-# Unos dvije riječi, točke, upitnika, uskličnika i razmaka...
+# Unos dvije iste riječi jedna za drugom
 #=======================================================================
 
-(\w+)(\.\.)(?!\.) -> \1...|\1.      # Unijeli ste svega dvije točke, treba ili jednu ili tri.
-(\w+)(\?\?)(?!\?) -> \1???|\1?      # Unijeli ste dva upitnika, treba ili jednu ili tri.
-(\w+)(\!\!)(?!\!) -> \1!!!|\1!      # Unijeli ste dva upitnika, treba ili jednu ili tri.
 (\w+)\s+\1 <- \1 != "malo" -> \1    # Unijeli ste dvaput istu riječ.
 
 
@@ -451,9 +448,12 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # ===========================================================================
 
 # Provjera nezatvorenih hrvatskih navodnika (podcrtava samo prvu riječ u rečenici)
-(^|(?<=\s))„(\w+)\b <- s.count("„") != s.count("”") -> _ # Provjerite navodnike u rečenici. Čini se da niste zatvorili navodne znakove negdje u odlomku.
+
+(^|(?<=\s))„(\w+)\b <- s.count("„") != s.count("”") -> _ # Provjerite navodnike u odlomku. Čini se da niste zatvorili navodne znakove negdje u odlomku.
 
 (\w+)” <- s.count("”") > s.count("„") -> _ # Provjerite navodnike u rečenici. Čini se da niste otvorili navodnike negdje u odlomku.
+
+# Razmak između navodnika i riječi u navodu
 
 „ ([^„”]*?)” -> „\1”        # Unijeli ste razmak između navodnika i riječi na početku navoda.
 „([^„”]*?) ” -> „\1”        # Unijeli ste razmak između navodnika i riječi na kraju navoda.
@@ -461,11 +461,33 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 
+# Provjera razmaka između riječi i zagrade i neotvaranje/nezatvaranje zagrade
+# ===========================================================================
+
+## Provjera razmaka između riječi i zagrade.
+
+\(\s+([^\(\)]*?)\b\) -> (\1)    # Imate razmak između otvorene zagrade i prve riječi u zagradama.
+\(\b([^\(\)]*?)\s\) -> (\1)     # Imate razmak između zatvorene zagrade i posljednje riječi u zagrdama.
+\(\s([^\(\)]*?)\s\) -> (\1)     # Imate razmak između zagrade i riječi između zagrada.
+
+
+## Provjera neotvaranja ili nezatvaranja zagrada u odlomku.
+
+\(\w+|\w+\) <- s.count("(") != s.count(")") -> _ # Provjerite zagrade u odlomku. Niste otvorili ili zatvorili sve zagrade.
+
+
 [char]
 
 
-# Ispravljanje dvostrukog ili trostrukog razmaka, spajanje dviju rečenica i slično
+# Ispravljanje dvostrukog ili trostrukog razmaka, dvostruke točke, upitnika, uskličnika, razmak između pravopisnih znakova i kraja rečenice...
 # ============================================================================
+
+
+## Unos dvostruke točke, upitnika i uskličnika
+(\w+)(\.\.)(?!\.) -> \1...|\1.      # Unijeli ste svega dvije točke, treba ili jednu ili tri.
+(\w+)(\?\?)(?!\?) -> \1???|\1?      # Unijeli ste dva upitnika, treba ili jednu ili tri.
+(\w+)(\!\!)(?!\!) -> \1!!!|\1!      # Unijeli ste dva upitnika, treba ili jednu ili tri.
+
 
 ## Dvostruki razmak
 \s{2,3} -> " "                     # Unijeli ste više bjelina, možda ste željeli samo jednu.
