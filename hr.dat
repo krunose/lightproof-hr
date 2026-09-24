@@ -10,7 +10,6 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 
 
 
-
 [word]
 
 
@@ -171,17 +170,22 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 (?<![.?!]\s)([A-ZČĆŽŠĐ]\w+(?:ski|ški|čki|a|e|o|g|m|h|im|oj|u|og|oga|om|emu))\s+(jezik|jezika|jeziku|jezikom|jezici|jezika|jezicima|jezike|tečaj|tečaja|tečaju|tečajem|tečajevi|tečajeva|tečajevima|tečajeve|rječnik|rječnika|rječniku|rječnikom|rječnici|rječnika|rječnicima|rječnike|gramatika|gramatike|gramatici|gramatiku|gramatikom|gramatike|gramatika|gramatikama|govor|govora|govoru|govorom|govori|govora|govorima|govore)\b <- word(-1) not in ["", ".", "!", "?", "«", "»", "\"", "“", "("] -> = \1.lower() + " " + \2 # Nazivi jezika pišu se malim slovom, osim ako nije riječ o nazivu šk. predmeta ili same knjige/priručnika.
 
 # varijabla 's' sadržava cijelu rečenicu
-\b(Hrvatsk)(i|og|oga|om|omu|ome|im)\s+(Nogometn)(i|og|oga|om|omu|ome|im)\s+(Save)(z|za|zu|zom)\b <- not s.startswith(("Hrvatski", "Hrvatskog", "Hrvatskoga", "Hrvatskom", "Hrvatskome", "Hrvatskomu", "Hrvatskim")) -> = \1 + \2 + " " + \3.lower() + \4 + " " + \5.lower() + \6 # Samo se prva riječ u nazivu 'Hrvatski nogometni savez' piše velikim slovom (osim na početku rečenice).
+(?<![.?!,:;]\s)(Hrvatsk)(i|og|oga|om|omu|ome|im)\s+(Nogometn)(i|og|oga|om|omu|ome|im)\s+(Save)(z|za|zu|zom)\b  <- word(-1) != "" -> = \1 + \2 + " " + \3.lower() + \4 + " " + \5.lower() + \6 # Samo se prva riječ u nazivu 'Hrvatski nogometni savez' piše velikim slovom (osim na početku rečenice).
 
-\bE(nglesk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b <- not s.startswith(("Engleski", "Engleskog", "Engleskoga", "Engleskom", "Engleskomu", "Engleskome", "Engleskim")) -> e\1\2 \3\4 # Sintagma 'engleski valcer' piše se malim slovom.
+(?<![.?!,:;]\s)E(nglesk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b  <- word(-1) != "" -> e\1\2 \3\4 # Sintagma 'engleski valcer' piše se malim slovom.
 
-\bB(ečk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b <- not s.startswith(("Bečki", "Bečkog", "Bečkoga", "Bečkom", "Bečkomu", "Engleskome", "Engleskim")) -> b\1\2 \3\4 # Sintagma 'bečki valcer' piše se malim slovom.
+(?<![.?!,:;]\s)B(ečk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b <- word(-1) != "" -> b\1\2 \3\4 # Sintagma 'bečki valcer' piše se malim slovom.
 
-\bF(rancusk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b <- not s.startswith(("Francuska", "Francuske", "Francuskoj", "Francusku", "Francuskom")) -> f\1\2 \3\4 # Sintagma 'francuska salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
+(?<![.?!,:;]\s)F(rancusk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b  <- word(-1) != "" -> f\1\2 \3\4 # Sintagma 'francuska salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
 
-\bG(rčk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b <- not s.startswith(("Grčka", "Grčke", "Grčkoj", "Grčku", "Grčkom")) -> g\1\2 \3\4 # Sintagma 'grčka salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
+(?<![.?!,:;]\s)G(rčk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b <- word(-1) != "" -> g\1\2 \3\4 # Sintagma 'grčka salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
 
-\bI(starsk)(i|og|oga|om|omu|ome|im)\s(pršu)(t|ta|tu|tom)?\b <- not s.lstrip().startswith(("Istarski", "Istarskog", "Istarskoga", "Istarskom", "Istarskomu", "Istarskome", "Istarskim")) -> i\1\2 \3\4 # Sintagma 'istarski pršut' piše se malim slovom (osim na početku rečenice).
+(?<![.?!,:;]\s)I(starsk)(i|og|oga|om|omu|ome|im)\s+(pršu)(t|ta|tu|tom)\b <- word(-1) != "" -> i\1\2 \3\4 # Sintagma 'istarski pršut' piše se malim slovom (osim na početku rečenice).
+
+
+
+
+do_small_caps(moj_uzorak, moja_zamjena, "")
 
 \bP(ašk)(i|og|oga|om|omu|ome|im)\s(si)(r|ra|ru|rom)?\b <- not s.startswith(("Paški", "Paškog", "Paškoga", "Paškom", "Paškomu", "Paškome", "Paškim")) -> p\1\2 \3\4 # Sintagma 'paški sir' piše se malim slovom (osim na početku rečenice).
 
@@ -457,7 +461,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 „ ([^„”]*?)” -> „\1”        # Unijeli ste razmak između navodnika i riječi na početku navoda.
 „([^„”]*?) ” -> „\1”        # Unijeli ste razmak između navodnika i riječi na kraju navoda.
-„ ([^„”]*?) („|”) -> = "„" + \1.rstrip(" ") + "”"       # Unijeli ste razmak između navodnika na početku i kraju navoda.
+„\s([^„”]*?)\s(„|”) -> „\1”       # Unijeli ste razmak između navodnika na početku i kraju navoda.
 
 
 
@@ -477,7 +481,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 
-# Primjer pravila u kojem se koristi varijabla [sentence]. 'start' označava početak ulovljenoga izrada 'end' označava kraj ulovljenoga izrada. Postoje još i funkcije .startswith() i .endswith() -> treba istražiti u izvornom kodu LightProofa (pomoću AI-a) kako ih koristiti.
+# Primjer pravila u kojem se koristi varijabla [sentence]. 'start' označava početak ulovljenoga izrada 'end' označava kraj ulovljenoga izrada. Postoje još i funkcije .startswith("Početak rečenice") i .endswith() -> treba istražiti u izvornom kodu LightProofa (pomoću AI-a) kako ih koristiti.
 ## Suprotni veznici (Sintaktički neprobojno i razdvojeno pravilo)
 #([^,\s.?!:;]+)\s+(ali|nego|već)\b <- (\2 == "ali") or (\2 in ["nego", "već"] and "ne samo" in sentence[:start]) -> \1, \2 # Ispred suprotnog veznika piše se zarez.
 
