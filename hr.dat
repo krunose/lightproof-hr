@@ -182,12 +182,7 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 
 (?<![.?!]\s)I(starsk)(i|og|oga|om|omu|ome|im)\s+(pršu)(t|ta|tu|tom)\b <- word(-1) != "" -> i\1\2 \3\4 # Sintagma 'istarski pršut' piše se malim slovom (osim na početku rečenice).
 
-
-
-
-do_small_caps(moj_uzorak, moja_zamjena, "")
-
-\bP(ašk)(i|og|oga|om|omu|ome|im)\s(si)(r|ra|ru|rom)?\b <- not s.startswith(("Paški", "Paškog", "Paškoga", "Paškom", "Paškomu", "Paškome", "Paškim")) -> p\1\2 \3\4 # Sintagma 'paški sir' piše se malim slovom (osim na početku rečenice).
+(?<![.?!]\s)P(ašk)(i|og|oga|om|omu|ome|im)\s(si)(r|ra|ru|rom)?\b <- word(-1) != "" -> p\1\2 \3\4 # Sintagma 'paški sir' piše se malim slovom (osim na početku rečenice).
 
 
 
