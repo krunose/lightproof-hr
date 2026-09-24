@@ -170,17 +170,17 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 (?<![.?!]\s)([A-ZČĆŽŠĐ]\w+(?:ski|ški|čki|a|e|o|g|m|h|im|oj|u|og|oga|om|emu))\s+(jezik|jezika|jeziku|jezikom|jezici|jezika|jezicima|jezike|tečaj|tečaja|tečaju|tečajem|tečajevi|tečajeva|tečajevima|tečajeve|rječnik|rječnika|rječniku|rječnikom|rječnici|rječnika|rječnicima|rječnike|gramatika|gramatike|gramatici|gramatiku|gramatikom|gramatike|gramatika|gramatikama|govor|govora|govoru|govorom|govori|govora|govorima|govore)\b <- word(-1) not in ["", ".", "!", "?", "«", "»", "\"", "“", "("] -> = \1.lower() + " " + \2 # Nazivi jezika pišu se malim slovom, osim ako nije riječ o nazivu šk. predmeta ili same knjige/priručnika.
 
 # varijabla 's' sadržava cijelu rečenicu
-(?<![.?!,:;]\s)(Hrvatsk)(i|og|oga|om|omu|ome|im)\s+(Nogometn)(i|og|oga|om|omu|ome|im)\s+(Save)(z|za|zu|zom)\b  <- word(-1) != "" -> = \1 + \2 + " " + \3.lower() + \4 + " " + \5.lower() + \6 # Samo se prva riječ u nazivu 'Hrvatski nogometni savez' piše velikim slovom (osim na početku rečenice).
+(?<![.?!]\s)(Hrvatsk)(i|og|oga|om|omu|ome|im)\s+(Nogometn)(i|og|oga|om|omu|ome|im)\s+(Save)(z|za|zu|zom)\b  <- word(-1) != "" -> = \1 + \2 + " " + \3.lower() + \4 + " " + \5.lower() + \6 # Samo se prva riječ u nazivu 'Hrvatski nogometni savez' piše velikim slovom (osim na početku rečenice).
 
-(?<![.?!,:;]\s)E(nglesk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b  <- word(-1) != "" -> e\1\2 \3\4 # Sintagma 'engleski valcer' piše se malim slovom.
+(?<![.?!]\s)E(nglesk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b  <- word(-1) != "" -> e\1\2 \3\4 # Sintagma 'engleski valcer' piše se malim slovom.
 
-(?<![.?!,:;]\s)B(ečk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b <- word(-1) != "" -> b\1\2 \3\4 # Sintagma 'bečki valcer' piše se malim slovom.
+(?<![.?!]\s)B(ečk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b <- word(-1) != "" -> b\1\2 \3\4 # Sintagma 'bečki valcer' piše se malim slovom.
 
-(?<![.?!,:;]\s)F(rancusk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b  <- word(-1) != "" -> f\1\2 \3\4 # Sintagma 'francuska salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
+(?<![.?!]\s)F(rancusk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b  <- word(-1) != "" -> f\1\2 \3\4 # Sintagma 'francuska salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
 
-(?<![.?!,:;]\s)G(rčk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b <- word(-1) != "" -> g\1\2 \3\4 # Sintagma 'grčka salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
+(?<![.?!]\s)G(rčk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b <- word(-1) != "" -> g\1\2 \3\4 # Sintagma 'grčka salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
 
-(?<![.?!,:;]\s)I(starsk)(i|og|oga|om|omu|ome|im)\s+(pršu)(t|ta|tu|tom)\b <- word(-1) != "" -> i\1\2 \3\4 # Sintagma 'istarski pršut' piše se malim slovom (osim na početku rečenice).
+(?<![.?!]\s)I(starsk)(i|og|oga|om|omu|ome|im)\s+(pršu)(t|ta|tu|tom)\b <- word(-1) != "" -> i\1\2 \3\4 # Sintagma 'istarski pršut' piše se malim slovom (osim na početku rečenice).
 
 
 
