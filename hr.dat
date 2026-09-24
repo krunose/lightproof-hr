@@ -129,7 +129,7 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 (\w+)(\.\.)(?!\.) -> \1...|\1.      # Unijeli ste svega dvije točke, treba ili jednu ili tri.
 (\w+)(\?\?)(?!\?) -> \1???|\1?      # Unijeli ste dva upitnika, treba ili jednu ili tri.
 (\w+)(\!\!)(?!\!) -> \1!!!|\1!      # Unijeli ste dva upitnika, treba ili jednu ili tri.
-(\w+)\s+\1 -> \1                    # Unijeli ste dvaput istu riječ.
+(\w+)\s+\1 <- \1 != "malo" -> \1    # Unijeli ste dvaput istu riječ.
 
 
 
@@ -234,20 +234,19 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 ## =============================================================================
 
 ## 1. 'kako i na koji način' / 'na koji način i kako' -> kako
-\b([kK]ako)\si\sna\skoji\snačin\b -> \1                                      # Pleonazam. Dovoljno je reći samo 'kako'.
-\b([nN]a\skoji\snačin)\si\skako\b -> \1                                      # Pleonazam. Dovoljno je reći 'na koji način' ili 'kako'.
+\b([kK]ako)\si\sna\skoji\snačin\b -> = "kako".capitalize() + "|" + "na koji način".capitalize() if \1[0].isupper() else "kako|na koji način" # Pleonazam. Dovoljno je reći samo 'kako'.
+\b(?<![kK]ako\si\s)([nN]a\skoji\snačin)\si\skako\b -> = "kako".capitalize() + "|" + "na koji način".capitalize() if \1[0].isupper() else "kako|na koji način"  # Pleonazam. Dovoljno je reći 'na koji način' ili 'kako'.
 
 ## 2. 'oko cca' / 'cca oko' -> oko / cca (oko i cca znače potpuno istu stvar)
-\b([oO]ko)\s(?:[cC][cC][aA]\.?)\b -> \1                                      # Pleonazam. Izrazi 'oko' i 'cca' imaju isto značenje.
-\b([cC][cC][aA]\.?)\s(oko)\b -> \1                                           # Pleonazam. Izrazi 'cca' i 'oko' imaju isto značenje.
+\b([oO]ko)\s(?:[cC]ca\.?)\b -> = "oko".capitalize() + "|" + "cca.".capitalize() if \1[0].isupper() else "oko|cca." # Pleonazam. Izrazi 'oko' i 'cca.' imaju isto značenje.
+\b([cC]ca\.?)\s(oko)\b -> = "cca.".capitalize() + "|" + "oko".capitalize() if \1[0].isupper() else "oko|cca." # Pleonazam. Izrazi 'cca.' i 'oko' imaju isto značenje.
 
 ## 3. 'čak štoviše' / 'štoviše čak' -> štoviše / čak
-\b([čČ]ak)\sštoviše\b -> \1                                                  # Pleonazam. Izrazi 'čak' i 'štoviše' znače isto, upotrijebite samo jedan.
-\b([šŠ]toviše)\sčak\b -> \1                                                  # Pleonazam. Izrazi 'štoviše' i 'čak' znače isto, upotrijebite samo jedan.
+\b([čČ]ak)\sštoviše\b -> = "štoviše".capitalize() + "|" + "čak".capitalize() if \1[0].isupper() else "štoviše|čak"   # Pleonazam. Izrazi 'čak' i 'štoviše' znače isto, upotrijebite samo jedan.
+\b([šŠ]toviše)\sčak\b -> = "štoviše".capitalize() + "|" + "čak".capitalize() if \1[0].isupper() else "štoviše|čak"   # Pleonazam. Izrazi 'čak' i 'štoviše' znače isto, upotrijebite samo jedan.
 
 ## 4. 'no međutim' / 'međutim no' -> međutim / no
-\b([nN]o)\smeđutim\b -> \1                                                   # Pleonazam. Veznici 'no' i 'međutim' imaju isto suprotno značenje.
-\b([mM]eđutim)\sno\b -> \1                                                   # Pleonazam. Veznici 'međutim' i 'no' imaju isto suprotno značenje.
+\b([nN]o)\smeđutim\b -> = "međutim|no".title() if \1.istitle() else "međutim|no" # Pleonazam. Veznici 'no' i 'međutim' imaju isto suprotno značenje.
 
 ## 5. 'zajedno suodlučivati' / 'zajedno surađivati' / 'zajedno sujelovati' (prefiks su- već označava zajedništvo)
 \b([zZ]ajedno)\s(suodluč\w+|surađ\w+|sujelov\w+|suorganiz\w+|supotpi\w+)\b -> \2 # Pleonazam. Prefiks 'su-' već označava da se radnja radi zajedno.
@@ -265,7 +264,7 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 \b(uđ\w+|uša\w+)\sunutra\b -> \1                                             # Pleonazam. Glagol 'ući' već znači kretanje prema unutra.
 
 ## 8. 'malo pomalo' -> malo-pomalo (pisanje sastavljeno)
-\b([mM]alo)\spomalo\b -> \1pomalo                                            # Izraz 'malo-pomalo' u hrvatskom se jeziku piše sa spojnicom.
+\b([mM]alo)\spo(\s)?malo\b -> \1-pomalo                                            # Izraz 'malo-pomalo' u hrvatskom se jeziku piše sa spojnicom.
 
 ## 9. 'potpuno/u potpunosti uništen/neutraliziran' (ako je nešto uništeno, to je apsolutno)
 \b([uU]\spotpunosti|[pP]otpuno)\s(uništ\w+|neutraliz\w+|likvid\w+|is korijen\w+)\b -> \2 # Stilski pleonazam. Glagoli poput 'uništiti' već sami po sebi znače potpunost.
@@ -316,6 +315,9 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 \b([oO]ba) (dvoje)\b -> = "oboje".title() if \1.istitle() else "oboje"         # Pisati 'oba dvoje' jest pleonazam. Treba pisati:
 \b([oO]ba) (dvije)\b -> = "obje".title() if \1.istitle() else "obje"            # Pisati 'oba dvije' jest pleonazam. Treba pisati:
 \b([oO]ba) (dvojic)(a|e|i|u|om)\b -> = "obojic".title() + \3 if \1.istitle() else "obojic" + \3   # Pisati 'oba \2\3' jest pleonazam. Treba pisati:
+
+## 19 malo malo > malo-malo
+\bmalo\smalo\b -> malo-malo     # Izraz 'malo-malo' u hrvatskom se jeziku piše sa spojnicom.
 
 
 
