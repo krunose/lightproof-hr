@@ -436,10 +436,10 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 
-# Ispravljanje konstrukcije 'sad će ju doći|sad ćeju doći' > sad će doći
+# Ispravljanje konstrukcije 'oni će ju raditi' > oni će raditi.
 # =============================================================================
 
-\b(\w+)\sće(\s)?ju(.*?)(\w+(ti|ći))\b <- morph(\4, "po:glagol", False) -> = \1.lower() + " će" + \3 + \4 if \1.islower() else \1.capitalize()  + " će" + \3 + \4   # Konstrukcija '\1 će ju \4' nije pravilna u standardnom jeziku.
+\b([oO])ni će(\s)?ju (\w+)([^.?!]*?)(\w+(ti|ći))\b <- \3.lower() in ["sad", "sada", "već", "tek", "još", "opet", "ponovo", "ponovno", "brzo", "odmah", "hitno", "danas", "večeras", "sutra", "prekosutra", "ujutro", "popodne", "navečer", "noćas", "uvijek", "često", "rijetko", "stalno", "neprestano", "katkad", "ponekad", "nekad", "nekada", "ikad", "ikada", "nikad", "nikada", "tada", "onda", "uskoro"] and morph(\5, "po:glagol", False) -> \1ni će \3\4\5 # Konstrukcija 'će ju' ne pripada standardnom jeziku.
 
 
 
