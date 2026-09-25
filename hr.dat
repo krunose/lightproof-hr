@@ -321,6 +321,12 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 ## 19 malo malo > malo-malo
 \bmalo\smalo\b -> malo-malo     # Izraz 'malo-malo' u hrvatskom se jeziku piše sa spojnicom.
 
+## 20. provjera 'ukoliko' 'utoliko'.
+([uU])koliko(?!.[^.!?]*?(utoliko)) -> = "Ako" if \1.istitle() else "ako" # U hrvatskom standardnom jeziku 'ukoliko' uvijek dolazi u paru s 'utoliko'.
+
+## U vezi toga > u vezi s tim
+([uU]) vezi toga -> = "U vezi s tim" if \1.istitle() else "u vezi s tim"   # Pravilno konstrukcija 'u vezi' traži instrumental:
+
 
 
 
@@ -370,7 +376,7 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 # Ispravak odvojenoga pisanja polusloženica
 # ==============================================================================
 
-\b(\w+)\s([a-zA-ZčćžšđŠĐŽĆČ]+)\b <- spell(\1 + "-" + \2) -> \1-\2                   # Riječ je o polusloženici, treba pisati sa spojnicom.
+\b([a-zA-ZčćžšđŠĐŽĆČ])\s([a-zA-ZčćžšđŠĐŽĆČ]+)\b <- spell(\1 + "-" + \2) -> \1-\2                   # Riječ je o polusloženici, treba pisati sa spojnicom.
 
 
 
@@ -534,6 +540,16 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 (\w+)\s(;)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
 
 
+# Razmak (NBSP) između broja i mjernih jedinica / postotaka
+
+## 1. Znak za postotak (npr. 50% -> 50% uz NBSP)
+(\d+)% -> \1 % # Između broja i znaka postotka (%) piše se neprekidajući razmak.
+
+## 2. Osnovne mjerne jedinice za težinu, duljinu i volumen (npr. 5kg -> 5 kg uz NBSP)
+(\d+)(g|kg|t|mm|cm|dm|m|km|l|dl|ml)\b -> \1 \2 # Između broja i mjerne jedinice piše se neprekidajući razmak.
+
+## 3. Kratice za valute iza broja (npr. 100eur -> 100 EUR uz NBSP)
+(\d+)(eur|EUR|usd|USD)\b -> = \1 + " " + \2.upper() if \2.lower() in ["eur", "usd", "hrk"] else \1 + " " + \2 # Između broja i oznake valute piše se neprekidajući razmak.
 
 
 
