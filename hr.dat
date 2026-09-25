@@ -9,6 +9,10 @@
 popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto", "rokto", "kveko", "fluoro", "kripto", "nano", "piko", "femto", "giga", "tera", "peta", "eksa", "vice", "aero", "akro", "alto", "andro", "aritmo", "austro", "avio", "biblio", "bruto", "daktilo", "dija", "ego", "elektro", "epi", "fero", "fono", "galvano", "gono", "helio", "hidro", "hiro", "infra", "izo", "kiber", "kreno", "kripto", "kseno", "latino", "magneto", "megalo", "metro", "mili", "mono", "muzeo", "neo", "nukleo", "osteo", "para", "pireto", "poli", "proto", "roto", "servo", "soc", "steno", "surdo", "tele", "trofo", "vazo", "akva", "alu", "anglo", "arterio", "auto", "balneo", "bio", "centi", "deci", "disko", "egzo", "empirio", "etno", "filo", "foto", "gastro", "grafo", "hemo", "hemato", "homo", "ino", "kabrio", "kilo", "krim", "kromo", "ksero", "leuko", "makro", "melo", "mezo", "mini", "morfo", "nano", "neto", "oligo", "paleo", "pato", "piro", "porno", "pseudo", "repro", "ruso", "sidero", "socio", "stereo", "tahi", "teo", "turbo", "video", "afro", "alergo", "ampelo", "antropo", "astro", "baro", "blasto", "cito", "deka", "domato", "ekstra", "endo", "euro", "fito", "geo", "grando", "hero", "hiper", "indo", "inter", "kardio", "kino", "krimi", "krono", "kvazi", "lito", "maksi", "meta", "midi", "mio", "moto", "narko", "neuro", "ornito", "palin", "pedo", "pluskvam", "profi", "psiho", "retro", "semio", "sinkro", "solo", "supra", "tara", "termo", "ultra", "zoo", "agro", "alo", "anarho", "argiro", "audio", "auzo", "bi", "bronho", "dakno", "demo", "doro", "eko", "entomo", "fizio", "franko", "germano", "hekto", "hetero", "hipo", "info", "italo", "kata", "klepto", "krio", "kozmo", "labio", "logo", "mega", "meteo", "mikro", "mnemo", "multi", "nekro", "nitro", "orto", "pan", "petro", "pneumo", "promo", "radio", "rino", "sero", "ski", "spektro", "super", "tehno", "topo", "uni", "žiro"])
 
 
+#
+fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr", "pdf", "docx", "txt", "xlsx", "pptx", "jpg", "jpeg", "png", "gif", "mp3", "wav", "mp4", "mkv", "zip", "rar", "exe", "apk", "oxt", "odt", "ods", "odp", "odg"])
+
+
 
 [word]
 
@@ -475,10 +479,14 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 \(\w+|\w+\) <- s.count("(") != s.count(")") -> _ # Provjerite zagrade u odlomku. Niste otvorili ili zatvorili sve zagrade.
 
 
+## Ispravljanje nepravilno započete rečenice
 
-# Primjer pravila u kojem se koristi varijabla [sentence]. 'start' označava početak ulovljenoga izrada 'end' označava kraj ulovljenoga izrada. Postoje još i funkcije .startswith("Početak rečenice") i .endswith() -> treba istražiti u izvornom kodu LightProofa (pomoću AI-a) kako ih koristiti.
-## Suprotni veznici (Sintaktički neprobojno i razdvojeno pravilo)
-#([^,\s.?!:;]+)\s+(ali|nego|već)\b <- (\2 == "ali") or (\2 in ["nego", "već"] and "ne samo" in sentence[:start]) -> \1, \2 # Ispred suprotnog veznika piše se zarez.
+## Razmak između dvije riječi povezane interpunkcijskim znakom: Prva rečenica.druga rečenica.
+(\w+)([.?!])(\w+) <- \3.lower() not in fileExtensions -> = \1 + \2 + " " + \3.capitalize()  # Jeste li htjeli započeti novu rečenicu?
+\b(?<=^)([a-zčćžšđ]+)\b -> = \1.capitalize()  # Jeste li započeli odlomak malim slovom?
+\b(?<=[.?!]\s)([a-zčćžšđ]+)\b -> = \1.capitalize() # Jeste li započeli rečenicu malim slovom?
+
+(\w+)([,„”;\(\)])(\w+) -> \1\2 \3   # Niste unijeli razmak ispred pravopisnoga znaka.
 
 
 
@@ -498,6 +506,8 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 ## Dvostruki razmak
 \s{2,3} -> " "                     # Unijeli ste više bjelina, možda ste željeli samo jednu.
 
+
+# Razmak između riječi i pravopisnoga znaka
 (\w+)\s(\.)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
 (\w+)\s(,)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
 (\w+)\s(\?)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
@@ -505,12 +515,17 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 (\w+)\s(:)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
 (\w+)\s(;)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
 
-(\w+)\s(\.)(?!\s)(\w+) <- \3.lower() in ["com", "hr", "org", "net", "edu", "gov", "info", "com.hr", "pdf", "docx", "txt", "xlsx", "pptx", "jpg", "jpeg", "png", "gif", "mp3", "wav", "mp4", "mkv", "zip", "rar", "exe", "apk", "oxt", "odt", "ods", "odp", "odg"] -> \1\2\3 # Možda ste željeli napisati:
-(\w+)\s(\.)(?!\s)(\w+) <- \3.lower() not in ["com", "hr", "org", "net", "edu", "gov", "info", "com.hr", "pdf", "docx", "txt", "xlsx", "pptx", "jpg", "jpeg", "png", "gif", "mp3", "wav", "mp4", "mkv", "zip", "rar", "exe", "apk", "oxt", "odt", "ods", "odp", "odg"] -> = \1 + \2 + " " + \3.capitalize()  # Možda ste željeli napisati:
+(\w+)\s(\.)(?!\s)(\w+) <- \3.lower() in fileExtensions -> \1\2\3 # Možda ste željeli napisati:
+(\w+)\s(\.)(?!\s)(\w+) <- \3.lower() not in fileExtensions -> = \1 + \2 + " " + \3.capitalize()  # Možda ste željeli napisati:
 (\w+)\s(,)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
 (\w+)\s(\?)(?!\s)(\w+) -> = \1 + \2 + " " + \3.capitalize()  # Možda ste željeli napisati:
 (\w+)\s(\!)(?!\s)(\w+) -> = \1 + \2 + " " + \3.capitalize()  # Možda ste željeli napisati:
 (\w+)\s(:)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
 (\w+)\s(;)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
+
+
+
+
+
 
 
