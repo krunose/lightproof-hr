@@ -281,7 +281,9 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 \b([gG]lavni)\sprotagonist\w*\b -> protagonist                               # Pleonazam. Protagonist je po definiciji glavni lik.
 
 ## 13. 's obzirom da'
-\b([sS]) obzirom da\b -> \1 obzirom na to da                                 # Konstrukcija zahtijeva prijedlog 'na' pa treba biti:
+\b([sS]) obzirom da\b -> \1 obzirom na to da                                 # Konstrukcija traži još 'na to' pa treba glasiti:
+\b([oO])bzirom\sda\b -> = "s".lower() + " obzirom na to da" if \1.islower() else "s".upper() + " obzirom na to da" # Konstrukcija 'obzirom da' nije u duhu hrvatskoga standardnoga jezika.
+
 
 ## 14. 'oko par dana'
 \boko par dana\b -> nekoliko dana|dva dana|par dana                          # Pleonazam. Riječ 'oko' i 'par' u ovom kontekstu znače isto.
