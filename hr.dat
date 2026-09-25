@@ -436,6 +436,14 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 
+# Ispravljanje konstrukcije 'sad će ju doći|sad ćeju doći' > sad će doći
+# =============================================================================
+
+\b(\w+)\sće(\s)?ju(.*?)(\w+(ti|ći))\b <- morph(\4, "po:glagol", False) -> = \1.lower() + " će" + \3 + \4 if \1.islower() else \1.capitalize()  + " će" + \3 + \4   # Konstrukcija '\1 će ju \4' nije pravilna u standardnom jeziku.
+
+
+
+
 # Ispravljanje pogrešne padežne veze uz prijedloge 'unatoč' i 'usprkos' (zahtijevaju dativ)
 # =============================================================================
 
