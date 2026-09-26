@@ -497,11 +497,20 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 ## Ispravljanje nepravilno započete rečenice
 
-## Razmak između dvije riječi povezane interpunkcijskim znakom: Prva rečenica.druga rečenica.
-(\w+)([.?!])(\w+) <- \3.lower() not in fileExtensions -> = \1 + \2 + " " + \3.capitalize()  # Jeste li htjeli započeti novu rečenicu?
-\b(?<=^)([a-zčćžšđ]+)\b -> = \1.capitalize()  # Jeste li započeli odlomak malim slovom?
-\b(?<=[.?!]\s)([a-zčćžšđ]+)\b -> = \1.capitalize() # Jeste li započeli rečenicu malim slovom?
+## Razmak ako rečenice nisu odvojene, a prva završava datumom: ... 2026.g.nisam... > 2026. g. Nisam
+#(?:\d{1,2}\.\d{1,2}\.)(\d{4})(\.)?\s*(g\.|god\.|godine\.)?(\w+) -> = \1\2 \3 \4.capitalize()    # Možda se nakon datuma željeli započeti novu rečenicu? // ovaj regexp radi u regex101 stranici, ali ne u LibreOfficeu...
 
+
+## Razmak između dvije riječi povezane interpunkcijskim znakom: Prva rečenica.druga rečenica.
+(\w+)([.?!])(?!g\.|god\.|godine)([a-zA-ZčćžšđČĆŽŠĐ]\w*) <- \3.lower() not in fileExtensions -> = \1 + \2 + " " + \3.capitalize()  # Jeste li htjeli započeti novu rečenicu?
+
+## Započet odlomak malim slovom
+\b(?<=^)([a-zčćžšđ]+)\b -> = \1.capitalize()  # Jeste li započeli odlomak malim slovom?
+
+## Provjera je li rečenica koja nije na početku odlomka započeta malim slovom: 'Rečenica. ovo je nova.' > 'Rečenica. Ovo je nova'
+\b(?<=[.?!]\s)(?!g\.|god\.|godine.)([a-zčćžšđ]+)\b -> = \1.capitalize() # Jeste li započeli rečenicu malim slovom?
+
+## Unos razmaka između riječi i pravopisnoga znaka
 (\w+)([,„”;\(\)])(\w+) -> \1\2 \3   # Niste unijeli razmak ispred pravopisnoga znaka.
 
 
