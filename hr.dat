@@ -74,15 +74,15 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 # Ispravak pogrešne promjene glagola 'trebati' kroz lica ispred infinitiva (bezlični trebati)
 # =============================================================================
 
-\b(ja|ti|on|ona|ono|mi|vi|oni|one)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> treba \3     # Glagol trebati ispred infinitiva je bezličan.
+\b(ja|ti|on|ona|ono|mi|vi|oni|one)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> treba \3     # Glagol trebati ispred infinitiva je u strogom standardu bezličan.
 
-\b(Ja|Ti|On|Ona|Ono|Mi|Vi|Oni|One)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> Treba \3     # Glagol trebati ispred infinitiva je bezličan.
+\b(Ja|Ti|On|Ona|Ono|Mi|Vi|Oni|One)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> Treba \3     # Glagol trebati ispred infinitiva je u strogom standardu bezličan.
 
-\b(trebam|trebaš|trebamo|trebate|trebaju)\s+(\w+)\b <- morph(\2, "po:glagol", False) -> = "treba " + \2 # Kada glagol 'trebati' dolazi ispred infinitiva, mora biti bezličan (uvijek glasi 'treba'). Primjer: umjesto 'trebamo raditi' pravilno je 'treba raditi'.
+\b(trebam|trebaš|trebamo|trebate|trebaju)\s+(\w+)\b <- morph(\2, "po:glagol", False) -> = "treba " + \2 # Kada glagol 'trebati' dolazi ispred infinitiva, u strogom standardu je bezličan. Primjer: umjesto 'trebamo raditi' pravilno je 'treba raditi'.
 
-\b(sam|si|je|smo|ste|su)\s+(trebao|trebala|trebalo|trebali|trebale)\s+(\w+)\b <- morph(\3, "po:glagol", False) -> _ # Kada glagol 'trebati' dolazi ispred infinitiva u prošlom vremenu, mora biti bezličan (uvijek glasi 'trebalo je'). Preformulirajte rečenicu.
+\b(sam|si|je|smo|ste|su)\s+(trebao|trebala|trebalo|trebali|trebale)\s+(\w+)\b <- morph(\3, "po:glagol", False) -> _ # Kada glagol 'trebati' dolazi ispred infinitiva u prošlom vremenu, u strogom standardu je bezličan (glasi 'trebalo je'). Preformulirajte rečenicu.
 
-\b(trebao|trebala|trebalo|trebali|trebale)\s+(sam|si|je|smo|ste|su)\s+(\w+)\b <- morph(\3, "po:glagol", False) -> _ # Kada glagol 'trebati' dolazi ispred infinitiva u prošlom vremenu, mora biti bezličan (uvijek glasi 'trebalo je'). Preformulirajte rečenicu.
+\b(trebao|trebala|trebalo|trebali|trebale)\s+(sam|si|je|smo|ste|su)\s+(\w+)\b <- morph(\3, "po:glagol", False) -> _ # Kada glagol 'trebati' dolazi ispred infinitiva u prošlom vremenu, u strogom standardu je bezličan (glasi 'trebalo je'). Preformulirajte rečenicu.
 
 
 # Ispravljanje konstrukcije prijedlog 'kroz' + riječ koja označava vrijeme
@@ -159,7 +159,7 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 
 ## Ispravak pisanja imena jezika (malo početno slovo) - Preskače početak rečenice/odlomka
 
-(?<![.?!]\s)([A-ZČĆŽŠĐ]\w+(?:ski|ški|čki|a|e|o|g|m|h|im|oj|u|og|oga|om|emu))\s+(jezik|jezika|jeziku|jezikom|jezici|jezika|jezicima|jezike|tečaj|tečaja|tečaju|tečajem|tečajevi|tečajeva|tečajevima|tečajeve|rječnik|rječnika|rječniku|rječnikom|rječnici|rječnika|rječnicima|rječnike|gramatika|gramatike|gramatici|gramatiku|gramatikom|gramatike|gramatika|gramatikama|govor|govora|govoru|govorom|govori|govora|govorima|govore)\b <- word(-1) not in ["", ".", "!", "?", "«", "»", "\"", "“", "("] -> = \1.lower() + " " + \2 # Nazivi jezika pišu se malim slovom, osim ako nije riječ o nazivu šk. predmeta ili same knjige/priručnika.
+(?<![.?!]\s)([A-ZČĆŽŠĐ]\w+(?:ski|ški|čki|a|e|o|g|m|h|im|oj|u|og|oga|om|emu))\s+(jezik|jezika|jeziku|jezikom|jezici|jezika|jezicima|jezike|tečaj|tečaja|tečaju|tečajem|tečajevi|tečajeva|tečajevima|tečajeve|rječnik|rječnika|rječniku|rječnikom|rječnici|rječnika|rječnicima|rječnike|gramatika|gramatike|gramatici|gramatiku|gramatikom|gramatike|gramatika|gramatikama|govor|govora|govoru|govorom|govori|govora|govorima|govore)\b -> = \1.lower() + " " + \2 # Nazivi jezika pišu se malim slovom, osim ako nije riječ o nazivu šk. predmeta ili same knjige/priručnika.
 
 # varijabla 's' sadržava cijelu rečenicu
 (?<![.?!]\s)(Hrvatsk)(i|og|oga|om|omu|ome|im)\s+(Nogometn)(i|og|oga|om|omu|ome|im)\s+(Save)(z|za|zu|zom)\b  <- word(-1) != "" -> = \1 + \2 + " " + \3.lower() + \4 + " " + \5.lower() + \6 # Samo se prva riječ u nazivu 'Hrvatski nogometni savez' piše velikim slovom (osim na početku rečenice).
@@ -479,7 +479,6 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 ## Unos razmaka između riječi i pravopisnoga znaka
 (\w+)([,„”;\(\)])(\w+) -> \1\2 \3   # Niste unijeli razmak ispred pravopisnoga znaka.
-
 
 
 [char]
