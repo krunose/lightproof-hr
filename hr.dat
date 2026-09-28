@@ -297,19 +297,29 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 
 
 ## 18. s nikim > ni s kim
-\bs nikim\b -> ni s kim                 # Pravilno je pisati:
+\b([sS]) nikim\b -> = "ni".lower() + "s kim" if \1.islower() else "Ni s kim" # Pravilno je pisati:
 
-# 19. oba dvoje > oboje | oba dvije > obje | oba dvojica > dvojica
+## 19. iz ničega > ni iz čega
+\b([iI]z) ničega\b -> = "ni iz čega" if \1.islower() else "Ni iz čega" # Pravilno je pisati:
+
+## 20. za nikoga > ni za koga
+\b([zZ]a) nikoga\b -> = "ni za koga" if \1.islower() else "Ni za koga" # Pravilno je pisati:
+
+## 21.
+\b([sS]) ničim\b -> = "ni s čim" if \1.islower() else "Ni sa čim" # Pravilno je pisati:
+
+# 22. oba dvoje > oboje | oba dvije > obje | oba dvojica > dvojica
 \b([oO]ba) (dvoje)\b -> = "oboje".title() if \1.istitle() else "oboje"         # Pisati 'oba dvoje' jest pleonazam. Treba pisati:
 \b([oO]ba) (dvije)\b -> = "obje".title() if \1.istitle() else "obje"            # Pisati 'oba dvije' jest pleonazam. Treba pisati:
 \b([oO]ba) (dvojic)(a|e|i|u|om)\b -> = "obojic".title() + \3 if \1.istitle() else "obojic" + \3   # Pisati 'oba \2\3' jest pleonazam. Treba pisati:
 
-## 19 malo malo > malo-malo
+## 23 malo malo > malo-malo
 \bmalo\smalo\b -> malo-malo     # Izraz 'malo-malo' u hrvatskom se jeziku piše sa spojnicom.
 
-## 20. provjera 'ukoliko' 'utoliko'.
+## 24. provjera 'ukoliko' 'utoliko'.
 ([uU])koliko(?!.[^.!?]*?(utoliko)) -> = "Ako" if \1.istitle() else "ako" # U hrvatskom standardnom jeziku 'ukoliko' uvijek dolazi u paru s 'utoliko'.
 
+## 25.
 ## U vezi toga > u vezi s tim
 ([uU]) vezi toga -> = "U vezi s tim" if \1.istitle() else "u vezi s tim"   # Pravilno konstrukcija 'u vezi' traži instrumental:
 
