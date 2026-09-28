@@ -318,14 +318,21 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 # =============================================================================
 
 ## 1. Konstrukcija "Zato jer..." / "Zato što..." na početku rečenice -> Mijenja se u 'Budući da' ili 'Kako'
-\b([zZ]ato)\b <- word(1).lower() in ["jer", "što"] -> Budući da|Kako # Na početku samostalne rečenice umjesto 'Zato jer/što' pravilno je upotrijebiti 'Budući da' ili 'Kako'.
+(?<=[.!?]\s)(Zato)\b <- word(1).lower() in ["jer", "što"] -> Budući da|Kako # Na početku samostalne rečenice umjesto 'Zato jer/što' pravilno je upotrijebiti 'Budući da' ili 'Kako'.
+\b(Zato)\b <- word(-1) == "" and word(1).lower() in ["jer", "što"] -> Budući da|Kako # Na početku samostalne rečenice umjesto 'Zato jer/što' pravilno je upotrijebiti 'Budući da' ili 'Kako'.
 
 ## 2. Izraz "Slijedom toga..." / "Slijedom navedenog..." -> Mijenja se u standardne uzročne i zaključne oblike
-\b([sS]lijedom)\b <- word(1).lower() == "toga" -> Tragom toga|Zbog toga|Stoga # Izraz 'slijedom toga' na početku rečenice nije u duhu hrvatskoga standardnog jezika.
-\b([sS]lijedom)\b <- word(1).lower() == "navedenog" -> Tragom navedenog|Zbog navedenog # Izraz 'slijedom navedenog' na početku rečenice nije u duhu hrvatskoga standardnog jezika.
+(?<=[.?!]\s)(Slijedom)\b <- word(1).lower() == "toga" -> Tragom toga|Zbog toga|Stoga # Izraz 'slijedom toga' na početku rečenice nije u duhu hrvatskoga standardnog jezika.
+\b(Slijedom)\b <- word(-1) == "" and word(1).lower() == "toga" -> Tragom toga|Zbog toga|Stoga # Izraz 'slijedom toga' na početku rečenice nije u duhu hrvatskoga standardnog jezika.
+
+(?<=[.!?]\s)(Slijedom)\b <- word(1).lower() == "navedenog" -> Tragom navedenog|Zbog navedenog # Izraz 'slijedom navedenog' na početku rečenice nije u duhu hrvatskoga standardnog jezika.
+\b(Slijedom)\b <- word(-1) == "" and word(1).lower() == "navedenog" -> Tragom navedenog|Zbog navedenog # Izraz 'slijedom navedenog' na početku rečenice nije u duhu hrvatskoga standardnog jezika.
 
 ## 3. Izraz "S obzirom da..." na početku rečenice -> Zahtijeva potpunu konstrukciju 'S obzirom na to da'
-\b([sS])\b <- word(1).lower() == "obzirom" and word(2).lower() == "da" -> \1 obzirom na to da|Budući da # Na početku rečenice konstrukcija zahtijeva prijedlog 'na' (S obzirom na to da) ili se mijenja veznikom 'Budući da'.
+(?<=[.!?]\s)(S)\b <- word(1).lower() == "obzirom" and word(2).lower() == "da" -> \1 obzirom na to da|Budući da # Na početku rečenice konstrukcija zahtijeva prijedlog 'na' (S obzirom na to da) ili se mijenja veznikom 'Budući da'.
+\b(S)\b <- word(-1) == "" and word(1).lower() == "obzirom" and word(2).lower() == "da" -> \1 obzirom na to da|Budući da # Na početku rečenice konstrukcija zahtijeva prijedlog 'na' (S obzirom na to da) ili se mijenja veznikom 'Budući da'.
+
+
 
 
 # Ispravak odvojenoga pisanja superlativa (Izbjegavanje lažnih uzbuna)
