@@ -162,19 +162,19 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 (?<![.?!]\s)([A-ZČĆŽŠĐ]\w+(?:ski|ški|čki|a|e|o|g|m|h|im|oj|u|og|oga|om|emu))\s+(jezik|jezika|jeziku|jezikom|jezici|jezika|jezicima|jezike|tečaj|tečaja|tečaju|tečajem|tečajevi|tečajeva|tečajevima|tečajeve|rječnik|rječnika|rječniku|rječnikom|rječnici|rječnika|rječnicima|rječnike|gramatika|gramatike|gramatici|gramatiku|gramatikom|gramatike|gramatika|gramatikama|govor|govora|govoru|govorom|govori|govora|govorima|govore)\b -> = \1.lower() + " " + \2 # Nazivi jezika pišu se malim slovom, osim ako nije riječ o nazivu šk. predmeta ili same knjige/priručnika.
 
 # varijabla 's' sadržava cijelu rečenicu
-(?<![.?!]\s)(Hrvatsk)(i|og|oga|om|omu|ome|im)\s+(Nogometn)(i|og|oga|om|omu|ome|im)\s+(Save)(z|za|zu|zom)\b  <- word(-1) != "" -> = \1 + \2 + " " + \3.lower() + \4 + " " + \5.lower() + \6 # Samo se prva riječ u nazivu 'Hrvatski nogometni savez' piše velikim slovom (osim na početku rečenice).
+(?<![.?!]\s)(Hrvatsk)(i|og|oga|om|omu|ome|im)\s+(Nogometn)(i|og|oga|om|omu|ome|im)\s+(Save)(z|za|zu|zom)\b  -> = \1 + \2 + " " + \3.lower() + \4 + " " + \5.lower() + \6 # Samo se prva riječ u nazivu 'Hrvatski nogometni savez' piše velikim slovom (osim na početku rečenice).
 
-(?<![.?!]\s)E(nglesk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b  <- word(-1) != "" -> e\1\2 \3\4 # Sintagma 'engleski valcer' piše se malim slovom.
+(?<![.?!]\s)E(nglesk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b -> e\1\2 \3\4 # Sintagma 'engleski valcer' piše se malim slovom.
 
-(?<![.?!]\s)B(ečk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b <- word(-1) != "" -> b\1\2 \3\4 # Sintagma 'bečki valcer' piše se malim slovom.
+(?<![.?!]\s)B(ečk)(i|og|oga|om|omu|ome|im)\s(valce)(r|ra|ru|rom)\b -> b\1\2 \3\4 # Sintagma 'bečki valcer' piše se malim slovom.
 
-(?<![.?!]\s)F(rancusk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b  <- word(-1) != "" -> f\1\2 \3\4 # Sintagma 'francuska salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
+(?<![.?!]\s)F(rancusk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b -> f\1\2 \3\4 # Sintagma 'francuska salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
 
-(?<![.?!]\s)G(rčk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b <- word(-1) != "" -> g\1\2 \3\4 # Sintagma 'grčka salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
+(?<![.?!]\s)G(rčk)(a|e|oj|u|om)\s(salat)(a|e|i|u|om)\b -> g\1\2 \3\4 # Sintagma 'grčka salata' piše se malim slovom, osim na početku rečenice ili kakvu naslovu.
 
-(?<![.?!]\s)I(starsk)(i|og|oga|om|omu|ome|im)\s+(pršu)(t|ta|tu|tom)\b <- word(-1) != "" -> i\1\2 \3\4 # Sintagma 'istarski pršut' piše se malim slovom (osim na početku rečenice).
+(?<![.?!]\s)I(starsk)(i|og|oga|om|omu|ome|im)\s+(pršu)(t|ta|tu|tom)\b -> i\1\2 \3\4 # Sintagma 'istarski pršut' piše se malim slovom (osim na početku rečenice).
 
-(?<![.?!]\s)P(ašk)(i|og|oga|om|omu|ome|im)\s(si)(r|ra|ru|rom)?\b <- word(-1) != "" -> p\1\2 \3\4 # Sintagma 'paški sir' piše se malim slovom (osim na početku rečenice).
+(?<![.?!]\s)P(ašk)(i|og|oga|om|omu|ome|im)\s(si)(r|ra|ru|rom)?\b -> p\1\2 \3\4 # Sintagma 'paški sir' piše se malim slovom (osim na početku rečenice).
 
 
 # Ispravljanje 'č' i 'ć'
@@ -318,14 +318,14 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 # =============================================================================
 
 ## 1. Konstrukcija "Zato jer..." / "Zato što..." na početku rečenice -> Mijenja se u 'Budući da' ili 'Kako'
-\b([zZ]ato)\b <- word(-1) == "" and word(1).lower() in ["jer", "što"] -> Budući da|Kako # Na početku samostalne rečenice umjesto 'Zato jer/što' pravilno je upotrijebiti 'Budući da' ili 'Kako'.
+\b([zZ]ato)\b <- word(1).lower() in ["jer", "što"] -> Budući da|Kako # Na početku samostalne rečenice umjesto 'Zato jer/što' pravilno je upotrijebiti 'Budući da' ili 'Kako'.
 
 ## 2. Izraz "Slijedom toga..." / "Slijedom navedenog..." -> Mijenja se u standardne uzročne i zaključne oblike
-\b([sS]lijedom)\b <- word(-1) == "" and word(1).lower() == "toga" -> Tragom toga|Zbog toga|Stoga # Izraz 'slijedom toga' na početku rečenice nije u duhu hrvatskoga standardnog jezika.
-\b([sS]lijedom)\b <- word(-1) == "" and word(1).lower() == "navedenog" -> Tragom navedenog|Zbog navedenog # Izraz 'slijedom navedenog' na početku rečenice nije u duhu hrvatskoga standardnog jezika.
+\b([sS]lijedom)\b <- word(1).lower() == "toga" -> Tragom toga|Zbog toga|Stoga # Izraz 'slijedom toga' na početku rečenice nije u duhu hrvatskoga standardnog jezika.
+\b([sS]lijedom)\b <- word(1).lower() == "navedenog" -> Tragom navedenog|Zbog navedenog # Izraz 'slijedom navedenog' na početku rečenice nije u duhu hrvatskoga standardnog jezika.
 
 ## 3. Izraz "S obzirom da..." na početku rečenice -> Zahtijeva potpunu konstrukciju 'S obzirom na to da'
-\b([sS])\b <- word(-1) == "" and word(1).lower() == "obzirom" and word(2).lower() == "da" -> \1 obzirom na to da|Budući da # Na početku rečenice konstrukcija zahtijeva prijedlog 'na' (S obzirom na to da) ili se mijenja veznikom 'Budući da'.
+\b([sS])\b <- word(1).lower() == "obzirom" and word(2).lower() == "da" -> \1 obzirom na to da|Budući da # Na početku rečenice konstrukcija zahtijeva prijedlog 'na' (S obzirom na to da) ili se mijenja veznikom 'Budući da'.
 
 
 # Ispravak odvojenoga pisanja superlativa (Izbjegavanje lažnih uzbuna)
