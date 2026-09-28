@@ -9,7 +9,7 @@
 popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto", "rokto", "kveko", "fluoro", "kripto", "nano", "piko", "femto", "giga", "tera", "peta", "eksa", "vice", "aero", "akro", "alto", "andro", "aritmo", "austro", "avio", "biblio", "bruto", "daktilo", "dija", "ego", "elektro", "epi", "fero", "fono", "galvano", "gono", "helio", "hidro", "hiro", "infra", "izo", "kiber", "kreno", "kripto", "kseno", "latino", "magneto", "megalo", "metro", "mili", "mono", "muzeo", "neo", "nukleo", "osteo", "para", "pireto", "poli", "proto", "roto", "servo", "soc", "steno", "surdo", "tele", "trofo", "vazo", "akva", "alu", "anglo", "arterio", "auto", "balneo", "bio", "centi", "deci", "disko", "egzo", "empirio", "etno", "filo", "foto", "gastro", "grafo", "hemo", "hemato", "homo", "ino", "kabrio", "kilo", "krim", "kromo", "ksero", "leuko", "makro", "melo", "mezo", "mini", "morfo", "nano", "neto", "oligo", "paleo", "pato", "piro", "porno", "pseudo", "repro", "ruso", "sidero", "socio", "stereo", "tahi", "teo", "turbo", "video", "afro", "alergo", "ampelo", "antropo", "astro", "baro", "blasto", "cito", "deka", "domato", "ekstra", "endo", "euro", "fito", "geo", "grando", "hero", "hiper", "indo", "inter", "kardio", "kino", "krimi", "krono", "kvazi", "lito", "maksi", "meta", "midi", "mio", "moto", "narko", "neuro", "ornito", "palin", "pedo", "pluskvam", "profi", "psiho", "retro", "semio", "sinkro", "solo", "supra", "tara", "termo", "ultra", "zoo", "agro", "alo", "anarho", "argiro", "audio", "auzo", "bi", "bronho", "dakno", "demo", "doro", "eko", "entomo", "fizio", "franko", "germano", "hekto", "hetero", "hipo", "info", "italo", "kata", "klepto", "krio", "kozmo", "labio", "logo", "mega", "meteo", "mikro", "mnemo", "multi", "nekro", "nitro", "orto", "pan", "petro", "pneumo", "promo", "radio", "rino", "sero", "ski", "spektro", "super", "tehno", "topo", "uni", "žiro"])
 
 
-#
+# datotečni nastavci za provjeravanje je li riječ o kraju rečenice u slučajevima: 'datoteka .odt'
 fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr", "pdf", "docx", "txt", "xlsx", "pptx", "jpg", "jpeg", "png", "gif", "mp3", "wav", "mp4", "mkv", "zip", "rar", "exe", "apk", "oxt", "odt", "ods", "odp", "odg"])
 
 
@@ -19,7 +19,6 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 
 # Ispravak krnjega infinitiva
 # ===========================================
-
 
 # 1. KORAK: Uklanjanje suvišne zamjenice 'si' (Mora ići na sam vrh!)
 
@@ -45,12 +44,10 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 \b(neću|nećeš|neće|nećemo|nećete)\s+(se|si)\s+(\w+t)\b <- morph(\3, "po:glagol", False) -> \1 \2 \3i # U niječnom futuru s povratnom zamjenicom infinitiv mora biti puni (-ti).
 
 
-
 # Upozorenje na konstrukciju 'da li'
 #===========================================
 
 \b[dD]a li\b -> _ # U hrvatskom treba izbjegavati ovu konstrukciju, preformulirajte rečenicu.
-
 
 
 # Ispravljanje konstrukcija prijedlog + infinitiv
@@ -74,8 +71,6 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 \b(za|bez|umjesto|osim)\s+(\w+ći)\s+se\b <- morph(\2, "po:glagol", False) and word(-1).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri"] -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
 
 
-
-
 # Ispravak pogrešne promjene glagola 'trebati' kroz lica ispred infinitiva (bezlični trebati)
 # =============================================================================
 
@@ -90,13 +85,11 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 \b(trebao|trebala|trebalo|trebali|trebale)\s+(sam|si|je|smo|ste|su)\s+(\w+)\b <- morph(\3, "po:glagol", False) -> _ # Kada glagol 'trebati' dolazi ispred infinitiva u prošlom vremenu, mora biti bezličan (uvijek glasi 'trebalo je'). Preformulirajte rečenicu.
 
 
-
 # Ispravljanje konstrukcije prijedlog 'kroz' + riječ koja označava vrijeme
 # =============================================================================
 
 # !!! Ovo pravilo treba razraditi na (barem) dva dijela: prvi dio: kroz godinu|kroz ožujak... a durgi dio: kroz cijelu godinu|kroz iduće ljeto
 \b(kroz)(?=\s+(cijele|cijelu|cijelog|čitavu|čitav|čitavog|iduća|sljedeća|protekla|prošla|naredna|zadnja|zadnjih|proteklih|dva|tri|četiri|pet|\d+)?\s*(godinu|godine|godina|mjesec|mjeseca|mjeseci|tjedan|tjedna|tjedana|dan|dana|sat|sata|sati|minutu|minuta|sekundu|sekundi|stoljeće|stoljeća|period|razdoblje|povijest|život|vrijeme|ljeto|zimu|proljeće|jesen|siječanj|veljaču|ožujak|travanj|svibanj|lipanj|srpanj|kolovoz|rujan|listopad|studeni|prosinac)\b) -> _ # Prijedlog 'kroz' ima primarno prostorno značenje (npr. „proći kroz vrata”). U vremenskom kontekstu trebate preformulirati izraz. Primjer: umjesto „kroz cijelu godinu” pravilno je pisati „tijekom cijele godine” ili „u cijeloj godini”.
-
 
 
 # Ispravak ije i je
@@ -125,13 +118,10 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 \b([zZ]a)\s+([sS])lijedeć(i|eg|ega|em|im|ih|a|e|u)\b -> \1 \2ljedeć\3   # U ovom slučaju je riječ o pridjevu (idući), piše se s 'je'.
 
 
-
 # Unos dvije iste riječi jedna za drugom
 #=======================================================================
 
 (\w+)\s+\1 <- \1 != "malo" -> \1    # Unijeli ste dvaput istu riječ.
-
-
 
 
 #  zamjena 's' i 'sa'
@@ -157,13 +147,11 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 ([sS]) mnom -> \1a mnom     # Ispravno je pisati:
 
 
-
 # Zamjena 'k' i 'ka'
 #===========================================
 \bk\s([kghKGH]\w+)\b -> ka \1                   # Ako iza 'k' slijedi riječ koja počinje s 'k, g, h', treba pisati 'ka'.
 #\bka\s([^kghKGH]\w+)\b -> k \1                 # Ako iza 'ka' slijedi riječ koja ne počinje s 'k, g, h', treba pisati 'k'.
 \bka\s+((?![kghKGH])[a-zžšđčćA-ZŽŠĐČĆ]+)\b -> k \1  # Ako iza 'ka' ne slijedi riječ na 'k, g ili h', piše se 'k'.
-
 
 
 # Veliko i malo slovo
@@ -189,13 +177,11 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 (?<![.?!]\s)P(ašk)(i|og|oga|om|omu|ome|im)\s(si)(r|ra|ru|rom)?\b <- word(-1) != "" -> p\1\2 \3\4 # Sintagma 'paški sir' piše se malim slovom (osim na početku rečenice).
 
 
-
 # Ispravljanje 'č' i 'ć'
 #===========================================
 
 \bču\b -> ću|ču                             # Vjerojatno treba pisati pom. gl. htjeti: 'ću'. Riječ 'ču' je aorist od 'čuti'.
 \bčete\b -> ćete|čete                       # Vjerojatno treba pisati pom. gl. htjeti: 'ćete'. Riječ 'čete' je od im. 'četa'.
-
 
 
 # Ispravljanje pogrešne uporabe 'bi' u kondicionalu (bismo/biste)
@@ -328,8 +314,6 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 ([uU]) vezi toga -> = "U vezi s tim" if \1.istitle() else "u vezi s tim"   # Pravilno konstrukcija 'u vezi' traži instrumental:
 
 
-
-
 # Kontrola nepravilnih stilskih konstrukcija na samom početku rečenice
 # =============================================================================
 
@@ -342,11 +326,6 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 
 ## 3. Izraz "S obzirom da..." na početku rečenice -> Zahtijeva potpunu konstrukciju 'S obzirom na to da'
 \b([sS])\b <- word(-1) == "" and word(1).lower() == "obzirom" and word(2).lower() == "da" -> \1 obzirom na to da|Budući da # Na početku rečenice konstrukcija zahtijeva prijedlog 'na' (S obzirom na to da) ili se mijenja veznikom 'Budući da'.
-
-## 4. Izbjegavanje suvišnih razgovornih veznika ("Pa...", "Te...") na samom otvaranju tvrdnje
-\b([pP]a)\b <- word(-1) == "" and morph(word(1), "po:glagol", False) -> _ # Izbjegavajte započinjati administrativne i poslovne rečenice razgovornim veznikom 'Pa'.
-\b([tT]e)\b <- word(-1) == "" and morph(word(1), "po:glagol", False) -> _ # Veznik 'Te' služi za povezivanje unutar rečenice. Izbjegavajte njime započinjati novu rečenicu.
-
 
 
 # Ispravak odvojenoga pisanja superlativa (Izbjegavanje lažnih uzbuna)
@@ -365,7 +344,6 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 \b([nN]aj)\s(\w+ž(i|eg|ega|em|emu|im|ih|ima|a|e|oj|u))\b -> \1\2                           # Superlativ se piše sastavljeno.
 
 
-
 # Ispravak odvojenoga pisanja prefiksoida
 # ============================================================================
 
@@ -379,12 +357,10 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 \b([a-zA-ZčćžšđŠĐŽĆČ])\s([a-zA-ZčćžšđŠĐŽĆČ]+)\b <- spell(\1 + "-" + \2) -> \1-\2                   # Riječ je o polusloženici, treba pisati sa spojnicom.
 
 
-
 # Razmak između kratica
 # =============================================================================
 
 n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
-
 
 
 # Ispravljanje konstrukcija prijedlog + infinitiv
@@ -411,7 +387,6 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 \b(za|bez|umjesto|osim)\s+se\s+(\w+[aeiou]ći)\b <- morph(\2, "po:glagol", False) and \2.lower() not in ["pomoći", "noći", "peći", "moći"] -> _ # Izbjegavajte konstrukciju prijedlog + infinitiv. Umjesto 'za se obući' ili 'za obući se' pravilno je reći 'za odijevanje' ili preformulirati rečenicu.
 
 \b(za|bez|umjesto|osim)\s+(\w+[aeiou]ći)\s+se\b <- morph(\2, "po:glagol", False) and \2.lower() not in ["pomoći", "noći", "peći", "moći"] -> _ # Izbjegavajte konstrukciju prijedlog + infinitiv. Umjesto 'za obući se' pravilno je reći 'za odijevanje' ili preformulirati rečenicu.
-
 
 
 # Ispravljanje konstrukcije prijedlog kroz + riječ koja označava vrijeme
@@ -443,13 +418,10 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 \bse\s+je\s+(\w+vši|\w+avši)\b -> se \1                                    # Izbacivanje suvišnog pomoćnog glagola 'je' ispred glagolskog priloga prošlog.
 
 
-
 # Ispravljanje konstrukcije 'oni će ju raditi' > oni će raditi.
 # =============================================================================
 # ne možemo ispravljati jer 'ju' može biti i točno i višak ovisno o kontekstu, a kontekst ne možemo provjeravati
 #\b([oO])ni će(\s)?ju (\w+)([^.?!]*?)(\w+(ti|ći))\b <- \3.lower() in ["sad", "sada", "već", "tek", "još", "opet", "ponovo", "ponovno", "brzo", "odmah", "hitno", "danas", "večeras", "sutra", "prekosutra", "ujutro", "popodne", "navečer", "noćas", "uvijek", "često", "rijetko", "stalno", "neprestano", "katkad", "ponekad", "nekad", "nekada", "ikad", "ikada", "nikad", "nikada", "tada", "onda", "uskoro"] and morph(\5, "po:glagol", False) -> \1ni će \3\4\5 # Konstrukcija 'će ju' ne pripada standardnom jeziku.
-
-
 
 
 # Ispravljanje pogrešne padežne veze uz prijedloge 'unatoč' i 'usprkos' (zahtijevaju dativ)
@@ -460,7 +432,6 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 ## 2. Slučaj: Samostalna imenica odmah iza prijedloga (Pokriva muški, srednji i ženski rod u genitivu)
 \b([uU]natoč|[uU]sprkos)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- (morph(\2, "a", False) and not morph(\2, "u", False)) or (morph(\2, "e", False) and not morph(\2, "oj", False) and not \2.lower() in ["mehatronika", "točke", "rečenice", "faze"]) -> _ # Prijedlozi 'unatoč' i 'usprkos' u hrvatskome standardnom jeziku zahtijevaju dativ (komu/čemu), a ne genitiv. Umjesto 'unatoč problema/sreće' pravilno je 'unatoč problemima/sreći'.
-
 
 
 # Provjera nezatvaranja navodnih zankova u rečenici.
@@ -527,7 +498,6 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 ## Dvostruki razmak
 \s{2,3} -> " "                     # Unijeli ste više bjelina, možda ste željeli samo jednu.
 
-
 # Razmak između riječi i pravopisnoga znaka
 (\w+)\s(\.)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
 (\w+)\s(,)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
@@ -544,7 +514,12 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 (\w+)\s(:)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
 (\w+)\s(;)(?!\s)(\w+) -> \1\2 \3  # Možda ste željeli napisati:
 
-(\d+\.)\s*(?!g\.|god\.|godine\.)([a-zA-ZčćžšđČĆŽŠĐ]\w*) -> = \1 + " " + \2  + "|" + \1 + " " + \2.capitalize()  # Možda ste htjeli započeti rečenicu ili jednostavno niste unijeli razmak?
+# Ne započinji novu rečenicu ako iz točke i razmaka ide datotečni nastavak
+(?<=\.)\s(\w+) <- \1.lower() in fileExtensions -> = \1.lower()    # Možda niste željeli započeti novu rečenicu, nego napisati naziv kakve datoteke?
+
+
+# Započinjanje rečnica ili razmak između broja i sljedeće riječi.
+(\d+\.)(?!g\.|god\.|godine\.)([a-zA-ZčćžšđČĆŽŠĐ]\w*) -> = \1 + " " + \2  + "|" + \1 + " " + \2.capitalize()  # Možda ste htjeli započeti rečenicu ili jednostavno niste unijeli razmak?
 
 
 # Razmak (NBSP) između broja i mjernih jedinica / postotaka
