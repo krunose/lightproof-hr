@@ -10,7 +10,7 @@ LightProof je računalni alat ugrađen u LibreOffice i služi za računalnu prov
 
 Ovaj repozitorij sadrži dodatak (`OXT datoteka`) koji omogućuje brzu i jednostavnu integraciju pravila za provjeru gramatike, pravopisa i stila (`hr.dat`) u LibreOffice Writer.
 
-Ambicija ovoga projekta nije napraviti sveobuhvatnu provjeru pravopisa i gramatike jer to s obzirom na vrijeme, ljudstvo, ovaj alat, ali i druge alate koji su nam na raspolaganju (rječnik nije označen) jednostavno nije moguće. Ovo je samo mala (pri)pomoć svakome tko je želi. Nešto čemu ne treba bezrezervno vjerovati, ali će (možda) ipak nekome biti od koristi; dakle samo pripomoć rječniku za provjeru pravopisa. Pitanja, komentare i prijedloge možete ostaviti na [ask.libreoffice.org](https://ask.libreoffice.org/t/provjera-gramatike-tipografije-i-stila-lightproofom-za-hrvatski-jezik/137656).
+Ambicija ovoga projekta nije napraviti sveobuhvatnu provjeru pravopisa i gramatike jer to s obzirom na vrijeme, ljudstvo, ovaj alat, ali i na ostalo što nam je na raspolaganju (rječnik nije označen) jednostavno nije moguće. Ovo je samo mala (pri)pomoć svakome tko je želi. Nešto čemu ne treba bezrezervno vjerovati, ali će (možda) ipak biti od koristi (hrvatski bolje nema); dakle samo pripomoć rječniku za provjeru pravopisa. Pitanja, komentare i prijedloge možete ostaviti na [ask.libreoffice.org](https://ask.libreoffice.org/t/provjera-gramatike-tipografije-i-stila-lightproofom-za-hrvatski-jezik/137656).
 
 ## Instalacija i pokretanje
 
