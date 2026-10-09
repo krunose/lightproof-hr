@@ -1,4 +1,4 @@
-# Jednostavna računalna provjera gramatike, pravopisa, gramatike i stila za hrvatski jezik LightProofom
+# Jednostavna računalna provjera gramatike, pravopisa, tipografije i stila za hrvatski jezik LightProofom
 
 > [!WARNING]
 > **OVISNOST O NOVOM RJEČNIKU ZA PROVJERU PRAVOPISA:** 
