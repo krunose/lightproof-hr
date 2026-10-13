@@ -35,7 +35,7 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 \b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] and not \1.lower() in ["ispit", "nacrt", "jest", "dobit", "rast"] -> \1i # Ako je riječ o infinitivu, mora završavati na '-ti' ili '-ći'.
 
 ## Puni infinitiv na -ti ispred svih oblika glagola htjeti
-\b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1 # Iza pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
+\b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1 # Ispred pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
 
 
 # 3. KORAK: Niječni i povratni futur (Kontekstualna pravila)
