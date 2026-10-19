@@ -321,7 +321,7 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 
 ## 25.
 ## U vezi toga > u vezi s tim
-([uU]) vezi toga -> = "U vezi s tim" if \1.istitle() else "u vezi s tim"   # Pravilno konstrukcija 'u vezi' traži instrumental:
+([uU]) vezi toga -> = "U vezi s tim" if \1.istitle() else "u vezi s tim"   # Konstrukcija 'u vezi' traži instrumental:
 
 
 # Kontrola nepravilnih stilskih konstrukcija na samom početku rečenice
