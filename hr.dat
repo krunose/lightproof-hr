@@ -23,7 +23,7 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 # 1. KORAK: Uklanjanje suvišne zamjenice 'si' (Mora ići na sam vrh!)
 
 ## glagol na -t + ću/ćeš/će + si (npr. kupit ću si -> kupit ću)
-\b(\w+t)\s+(ću|ćeš|će|ćemo|ćete)\s+si\b <- morph(\1, "po:glagol", False) -> \1 \2 # Zamjenica 'si' je uz ovaj glagol u standardnom jeziku suvišna.
+\b(\w+t)\s+(ću|ćeš|će|ćemo|ćete)\s+si\b <- morph(\1, "po:glagol)", False) -> \1 \2 # Zamjenica 'si' je uz ovaj glagol u standardnom jeziku suvišna.
 
 ## ću/ćeš/će + si + infinitiv (npr. ću si kupiti -> ću kupiti)
 \b(ću|ćeš|će|ćemo|ćete)\s+si\s+(\w+ti)\b <- morph(\2, "po:glagol", False) -> \1 \2 # Zamjenica 'si' je uz ovaj glagol u standardnom jeziku suvišna.
@@ -32,7 +32,7 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 # 2. KORAK: Ispravak krnjega i punog infinitiva (Svi oblici glagola htjeti)
 
 ## Krnji infinitiv na -t (Osigurano od svih oblika htjeti i homonima ispit/nacrt/rast)
-\b(\w+t)\b <- morph(\1, "po:glagol", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] and not \1.lower() in ["ispit", "nacrt", "jest", "dobit", "rast"] -> \1i # Ako je riječ o infinitivu, mora završavati na '-ti' ili '-ći'.
+\b(\w+t)\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] and not \1.lower() in ["ispit", "nacrt", "jest", "dobit", "rast"] -> \1i # Ako je riječ o infinitivu, mora završavati na '-ti' ili '-ći'.
 
 ## Puni infinitiv na -ti ispred svih oblika glagola htjeti
 \b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1 # Ispred pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
