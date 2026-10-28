@@ -36,17 +36,23 @@ Trenutačno najnovija inačica dodatka nije u službenom LibreOfficeovu repozito
 
 ## Kako ova pravila pokušavaju pomoći
 
-1. Ispraviti probleme u pisanju infinitiva u futuru I.
-2. Sastavljeno i nesastavljeno pisanje
-3. Upozoriti na konstrukciju 'da li'
-4. Donekle razlikovati 'slijedeći' i 'sljedeći'
-5. Pomoći oko pleonazama
-6. Veliko i malo slovo u nazivima jezika
-7. Ispravak pisanja 's/sa' i 'k/ka'
-8. Kondicional: mi bi > mi bismo
-9. Bezlični glagol 'trebati'
-10. Klasični tipfeleri
-11. Još ponešto da ne nabrajam...
+* **Ispravak krnjega infinitiva u futuru I. i konstrukcijama s modalnim glagolima:** Sustav automatski dodaje krajnje *-i* u infinitivima koji ne dolaze ispred oblika glagola *htjeti* (npr. *moram radit* → *moram raditi*), dok ispred pomoćnoga glagola *htjeti* reže puni infinitiv u krnji oblik (npr. *kupiti ću* → *kupit ću*).
+* **Uklanjanje suvišne zamjenice "si" u futuru:** Prepoznaje i briše pleonastičnu zamjenicu *si* unutar futur konstrukcija (npr. *kupit ću si* → *kupit ću*, *ću si kupiti* → *ću kupiti*).
+* **Kontrola infinitiva u niječnom povratnom futuru:** Osigurava da se u nijeku povratnih glagola upotrebljava puni infinitiv na *-ti* (npr. *neću se vratit* → *neću se vratiti*).
+* **Upozorenje na konstrukciju "da li":** Prepoznaje nepreporučenu upitnu česticu *da li* i predlaže preoblikovanje rečenice u duhu hrvatskoga jezika (npr. *da li znaš* → *znaš li*).
+* **Uklanjanje konstrukcije prijedlog + infinitiv (na -ti i -ći):** Pronalazi i označava pogrešnu uporabu prijedloga *za, bez, umjesto, osim* ispred glagola te sugerira zamjenu glagolskom imenicom ili preformulaciju (npr. *za učiti* → *za učenje*, *za obući se* → *za odijevanje*).
+* **Bezlični oblik glagola "trebati" ispred infinitiva:** Ispravlja pogrešno sklanjanje glagola *trebati* po licima kada se nalazi u funkciji modalnoga glagola ispred drugog infinitiva, u sadašnjosti i prošlosti (npr. *mi trebamo raditi* → *treba raditi*, *trebali smo raditi* → *trebalo je raditi*).
+* **Zabrana vremenskoga značenja prijedloga "kroz":** Upozorava na pogrešnu vremensku upotrebu prijedloga *kroz* uz imenice koje označavaju vrijeme i predlaže zamjenu prijedlogom *tijekom* ili padežnim oblicima (npr. *kroz cijelu godinu* → *tijekom cijele godine*).
+* **Razlikovanje pridjeva "sljedeći" i priloga "slijedeći":** Ispravlja pogrešno pisanje *slijedeći* (s dugim *ije*) u *sljedeći* kada se odnosi na iduće ili naredne vremenske i prostorne pojmove te unutar prijedložnih izraza (npr. *slijedeći mjesec* → *sljedeći mjesec*, *u slijedećem koraku* → *u sljedećem koraku*).
+* **Detekcija dvostruko upisanih istih riječi:** Pronalazi i uklanja pogreške u tipkanju kada se ista riječ ponovi dvaput zaredom (npr. *u u školu* → *u školu*), uz dopuštenu iznimku za izraz *malo*.
+* **Pravilna zamjena i naveza prijedloga "s/sa" i "k/ka":** Ispravlja fiksne konstrukcije poput *s menom* u *sa mnom*, dodaje navezno *a* ispred suglasnika s, z, š, ž i teških skupina, uklanja suvišno *a* ispred ostalih glasova te dodaje *a* prijedlogu *k* ispred glasova k, g, h (npr. *sa ocem* → *s ocem*, *k kući* → *ka kući*).
+* **Ispravak velikoga početnog slova u malom unutar rečenice:** Prepoznaje i ispravlja nazive jezika, tečajeve, rječnike, gramatike te ustaljene opće sintagme koje su pogrešno napisane velikim slovom (npr. *Hrvatski jezik* → *hrvatski jezik*, *Paški sir* → *paški sir*, *Francuska salata* → *francuska salata*).
+* **Spajanje rastavljenih oblika kondicionala (bismo/biste):** Prepoznaje pogrešno razdvojeno pisanje aorista glagola *biti* sa zamjenicama u potvrdnim i niječnim rečenicama te ih spaja u jednu riječ (npr. *bi smo* → *bismo*, *bi ste* → *biste*).
+* **Uklanjanje pleonazama, stilskih viškova i pogrešnih parova veznika:** Čisti tekst od niza ustaljenih pleonastičnih izraza i gomilanja istoznačnica poput *čak štoviše*, *no međutim*, *oko cca*, *vratiti natrag*, *sići dolje*, *zato jer*, *oba dvoje*, *ukoliko* (bez *utoliko*) i slično.
+* **Uklanjanje suvišnoga "je" uz povratnu zamjenicu "se":** Automatizirano izbacuje suvišan pomoćni glagol *je* u perfektu, pasivu i uz glagolske priloge kada se u rečenici već nalazi povratna zamjenica *se* (npr. *vratio se je* → *vratio se*, *se je smijući* → *se smijući*).
+* **Sintaksička kontrola navodnika, zagrada, interpunkcije i neprekidajućih razmaka (NBSP):** Upozorava na nezatvorene navodnike i zagrade, uklanja suvišne bjelina unutar njih, ispravlja dvostruke točke i razmake te automatski umeće neprekidajući razmak (NBSP) između brojeva i mjernih jedinica, oznaka valuta ili postotaka (npr. *50%* → *50 %*, *100eur* → *100 EUR*).
+* I još ponešto, da se ne nabraja...
+
 
 
 ## Za one koji žele znati više
