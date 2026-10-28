@@ -69,7 +69,7 @@ Problem je s alatom iz repozitorija [github.com/karelin/lightproof](https://gith
 
 ---
 
-Složena pravila pisana su uz pomoć umjetne inteligencije kako bu se uštedjelo vrijeme pri ispravljanju grešaka u samome kodu.
+Složena pravila pisana su uz pomoć umjetne inteligencije kako bi se uštedjelo vrijeme pri ispravljanju grešaka u samome kodu.
 
 ---
 **Autor:** Krunoslav Šebetić (2026.)
