@@ -11,6 +11,9 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 # datotečni nastavci za provjeravanje je li riječ o kraju rečenice u slučajevima: 'datoteka .odt'
 fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr", "pdf", "docx", "txt", "xlsx", "pptx", "jpg", "jpeg", "png", "gif", "mp3", "wav", "mp4", "mkv", "zip", "rar", "exe", "apk", "oxt", "odt", "ods", "odp", "odg"])
 
+# Popis stvarnih glagolskih pridjeva trpnih koji završavaju strogo na suglasnik -t
+popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet", "obuzet", "otpočet", "proždrijet", "nadut", "skinut", "nategnut", "maknut", "dignut", "puknut", "gurnut", "rignut", "krenut", "priznat", "poznat", "doznat", "istaknut", "taknut", "unijet", "iznijet", "odnijet", "uzet", "sažet", "prožvakat", "prostrt", "propst", "prosut"])
+
 [word]
 
 
@@ -28,8 +31,13 @@ fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr",
 
 # 2. KORAK: Ispravak krnjega i punog infinitiva (Svi oblici glagola htjeti)
 
-## Krnji infinitiv na -t (Elastični lokalni filtar - provjera 3 riječi lijevo i desno). Glagolski pridjev trpni ponaša se kao pridjev pa ako je ispred njega pomoćni glagol, onda je riječ o pridjevu i tada pravilo isključujemo
-\b(\w+t)\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and not word(-1).lower() in ["sam", "si", "je", "smo", "ste", "su", "bude", "budu", "biva", "bismo", "biste", "bi", "bih", "biti", "bio", "bila", "bilo", "bili", "bile"] and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1i # Ako je riječ o infinitivu, mora završavati na '-ti' ili '-ći'.
+## 1. PRAVILO: Krnji infinitiv za općenite glagole (npr. napravit, radit, pjevat, ponašat, mislit, pokušat)
+# Ovi glagoli nemaju pridjev na -t i za njih je provjera 100% sigurna u svim kontekstima
+\b(\w+t)\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and not \1.lower() in popis_trpnih_t and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1i # Ako je riječ o infinitivu, mora završavati na '-ti' ili '-ći'.
+
+## 2. PRAVILO: Kontekstualna provjera isključivo za problematične homonime s popisa (prosut, uzet, donijet...)
+# Za njih uvodimo strogi filtar od jedne riječi lijevo i desno kako bismo propustili pasiv i inverzije
+\b(\w+t)\b <- \1.lower() in popis_trpnih_t and not word(-1).lower() in ["sam", "si", "je", "smo", "ste", "su", "bude", "budu", "biva", "bismo", "biste", "bi", "bih", "biti", "bio", "bila", "bilo", "bili", "bile", "nisam", "nisi", "nije", "nismo", "niste", "nisu"] and not word(1).lower() in ["sam", "si", "je", "smo", "ste", "su", "bude", "budu", "biva", "bismo", "biste", "bi", "bih", "bio", "bila", "bilo", "bili", "bile", "nisam", "nisi", "nije", "nismo", "niste", "nisu", "ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1i # Glagolski pridjev trpni upotrijebljen je pogrešno kao krnji infinitiv.
 
 ## Puni infinitiv na -ti ispred svih oblika glagola htjeti
 \b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1 # Ispred pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
