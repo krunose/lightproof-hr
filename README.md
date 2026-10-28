@@ -63,7 +63,7 @@ Problem je s alatom iz repozitorija [github.com/karelin/lightproof](https://gith
 
 ### Kako samostalno kompajlirati dodatak
 1. Klonirajte repozitorij s [karelin/lightproof](https://github.com).
-2. Zamijenite skriptu `make.py` onom koja se nalazi u [mojem repozitoriju](https://github.com/krunose/lightproof-hr).
+2. Zamijenite skriptu `make.py` onom koja se nalazi u [ovom repozitoriju](https://github.com/krunose/lightproof-hr).
 3. Dodajte mapu `lightproof/src/hr/`.
 4. U nju smjestite vlastite datoteke `hr.dat` i `hr.cfg`.
 5. Iz korijenske mape `lightproof` pokrenite skriptu naredbom:
