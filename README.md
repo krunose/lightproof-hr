@@ -68,6 +68,10 @@ Problem je s alatom iz repozitorija [github.com/karelin/lightproof](https://gith
 6. Spreman dodatak u `.oxt` datotečnom formatu bit će generiran unutar mape `~/lightproof/`.
 
 ---
+
+Složena pravila pisana su uz pomoć umjetne inteligencije kako bu se uštedjelo vrijeme pri ispravljanju grešaka u samome kodu.
+
+---
 **Autor:** Krunoslav Šebetić (2026.)
 
 **Licenca:** MPL 2.0 / LGPLv3 (Otvoreni kod kompatibilan s LibreOffice ekosustavom)
