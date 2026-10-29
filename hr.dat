@@ -496,8 +496,10 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 ## Započet odlomak malim slovom
 \b(?<=^)([a-zčćžšđ]+)\b -> = \1.capitalize()  # Jeste li započeli odlomak malim slovom?
 
-## Provjera je li rečenica koja nije na početku odlomka započeta malim slovom: 'Rečenica. ovo je nova.' > 'Rečenica. Ovo je nova'
-\b(?<=[.?!]\s)(?!g\.|god\.|[1-9]{1,2}\.)([a-zčćžšđ]+)\b -> = \1.capitalize() # Jeste li započeli rečenicu malim slovom?
+## Provjera je li rečenica koja nije na početku odlomka započeta malim slovom: 'Rečenica. ovo je nova.' > 'Rečenica. Ovo je nova'.
+#\b(?<!\d)(?<=[.?!]\s)(?!g\.|god\.|st\.)([a-zčćžšđ]+)\b -> = \1.capitalize() # Jeste li započeli rečenicu malim slovom?
+\b(?<=[.?!]\s)([a-zčćžšđ]+)\b <- word(-1).lower() not in ["g.", "god.", "st.", "tzv.", "prof.", "dr."] and not re.match(r"^\d+\.$", word(-1)) -> = \1.capitalize() # Jeste li započeli rečenicu malim slovom?
+
 
 ## Unos razmaka između riječi i pravopisnoga znaka
 (\w+)([.,„;\(])(\w+) -> \1 \2\3   # Niste unijeli razmak ispred pravopisnoga znaka.
