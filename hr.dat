@@ -23,7 +23,7 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 # 1. KORAK: Uklanjanje suvišne zamjenice 'si' (Mora ići na sam vrh!)
 
 ## glagol na -t + ću/ćeš/će + si (npr. kupit ću si -> kupit ću)
-\b(\w+t)\s+(ću|ćeš|će|ćemo|ćete)\s+si\b <- morph(\1, "po:glagol)", False) -> \1 \2 # Zamjenica 'si' je uz ovaj glagol u standardnom jeziku suvišna.
+\b(\w+t)\s+(ću|ćeš|će|ćemo|ćete)\s+si\b <- morph(\1, "po:glagol", False) -> \1 \2 # Zamjenica 'si' je uz ovaj glagol u standardnom jeziku suvišna.
 
 ## ću/ćeš/će + si + infinitiv (npr. ću si kupiti -> ću kupiti)
 \b(ću|ćeš|će|ćemo|ćete)\s+si\s+(\w+ti)\b <- morph(\2, "po:glagol", False) -> \1 \2 # Zamjenica 'si' je uz ovaj glagol u standardnom jeziku suvišna.
