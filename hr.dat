@@ -17,6 +17,7 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 [word]
 
 
+
 # Ispravak krnjega infinitiva
 # ===========================================
 
@@ -490,6 +491,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 \b(?<=[.?!]\s)([a-zčćžšđ]+)\b <- word(-1).lower() not in ["g.", "god.", "st.", "tzv.", "prof.", "dr."] and not re.match(r"^\d+\.$", word(-1)) -> = \1.capitalize() # Jeste li započeli rečenicu malim slovom?
 
 
+# /*** ovo nije dobro **/
 ## Unos razmaka između riječi i pravopisnoga znaka
 (\w+)([.,„;\(])(\w+) -> \1 \2\3   # Niste unijeli razmak ispred pravopisnoga znaka.
 
