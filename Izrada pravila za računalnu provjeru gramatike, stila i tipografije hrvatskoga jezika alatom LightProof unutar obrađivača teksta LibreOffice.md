@@ -163,7 +163,7 @@ Trenutačno u rječnik nije pripremljen za korištenje ove funkcije, a onda ju n
 > Sama funkcija ima dva oblika s obzirom na broj argumenata i način rada:
 
 > * `affix(word, regex_pattern)` – Radi u zadanom (engl. <i>default</i>) načinu rada `all`. Zahtijeva da svi morfološki oblici riječi (ako ih rječnik nudi više) obvezno zadovoljavaju zadani regularni izraz kako bi funkcija vratila `True`.
-* `affix(word, regex_pattern, False)` – Dodavanjem parametra `False` aktivira se mod `if exists`. U ovom je načinu rada dovoljno da barem jedno morfološko tumačenje riječi sadrži traženi afiks da bi funkcija vratila `True`, što je ključno za jezike s bogatom morfologijom i čestim homonimima.
+> * `affix(word, regex_pattern, False)` – Dodavanjem parametra `False` aktivira se mod `if exists`. U ovom je načinu rada dovoljno da barem jedno morfološko tumačenje riječi sadrži traženi afiks da bi funkcija vratila `True`, što je ključno za jezike s bogatom morfologijom i čestim homonimima.
 
 ```
 # Tražimo bilo koju riječ (\1) iza koje slijedi riječ "koji" (\2)
@@ -225,7 +225,7 @@ U sekcijama treba spomenuti još `[Word]` (veliko `W`) koja operira (tokenizira)
 
 # Funkcija prima riječ i provjerava počinje li na tvrdo slovo 'č'
 def pocinje_na_c(tekst):
-return tekst.startswith("č") or tekst.startswith("Č")
+	return tekst.startswith("č") or tekst.startswith("Č")
 
 
 [word]
