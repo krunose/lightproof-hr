@@ -41,15 +41,20 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 
 ## 2. PRAVILO: Kontekstualna provjera isključivo za problematične homonime s popisa (prosut, uzet, donijet...)
 # Za njih uvodimo strogi filtar od jedne riječi lijevo i desno kako bismo propustili pasiv i inverzije
-\b(\w+t)\b <- \1.lower() in popis_trpnih_t and not word(-1).lower() in ["sam", "si", "je", "smo", "ste", "su", "bude", "budu", "biva", "bismo", "biste", "bi", "bih", "biti", "bio", "bila", "bilo", "bili", "bile", "nisam", "nisi", "nije", "nismo", "niste", "nisu"] and not word(1).lower() in ["sam", "si", "je", "smo", "ste", "su", "bude", "budu", "biva", "bismo", "biste", "bi", "bih", "bio", "bila", "bilo", "bili", "bile", "nisam", "nisi", "nije", "nismo", "niste", "nisu", "ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1i # Ako je riječ o infinitivu, on mora završavati na '-ti' ili '-ći'.
+\b(\w+t)\b <- word(-2) not in ["sam", "si", "je", "smo", "ste", "su"] and \1.lower() in popis_trpnih_t and not word(-1).lower() in ["sam", "si", "je", "smo", "ste", "su", "bude", "budu", "biva", "bismo", "biste", "bi", "bih", "biti", "bio", "bila", "bilo", "bili", "bile", "nisam", "nisi", "nije", "nismo", "niste", "nisu"] and not word(1).lower() in ["sam", "si", "je", "smo", "ste", "su", "bude", "budu", "biva", "bismo", "biste", "bi", "bih", "bio", "bila", "bilo", "bili", "bile", "nisam", "nisi", "nije", "nismo", "niste", "nisu", "ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1i # Ako je riječ o infinitivu, on mora završavati na '-ti' ili '-ći'.
 
 ## Puni infinitiv na -ti ispred svih oblika glagola htjeti
 \b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1 # Ispred pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
+
+\b(\w+t)\b <- morph(word(-2), "po:glagol", False) and re.match(r"(.*)(o|la|lo|li|le)", word(-2)) and word(-1).lower() in ["sam", "si", "je", "smo", "ste", "su"] and morph(\1, "po:glagol", False) -> \1i # U ovim slučajevima ne treba pisati krnji infiniti:
 
 # 3. KORAK: Niječni i povratni futur (Kontekstualna pravila)
 
 ## Puni infinitiv u niječnom povratnom futuru (npr. neću se vratit -> neću se vratiti)
 \b(neću|nećeš|neće|nećemo|nećete)\s+(se|si)\s+(\w+t)\b <- morph(\3, "po:glagol", False) -> \1 \2 \3i # U niječnom futuru s povratnom zamjenicom infinitiv mora biti puni (-ti).
+
+## Hvatamo sve ono što bi mogao biti krnji infinitiv, a nije obuhvaćeno prethodnim pravilima.
+\b(\w+t)\b <- word(-2).lower() not in ["sam", "si", "je", "smo", "ste", "su"] and morph(\1, "po:glagol", False) and word(1).lower() not in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "neće"] and word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su", "nisam", "nisi", "nije", "nismo", "niste", "nisu"] and \1.lower() not in popis_trpnih_t -> \1i # Vjerojatno se radi o krnjem infinitivu, treba pisati:
 
 
 # Upozorenje na konstrukciju 'da li'
