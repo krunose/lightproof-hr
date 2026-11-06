@@ -284,6 +284,8 @@ Budući da je krnji infinitiv kada stoji samostalno pogreška (kada nije dio fut
 \b(\w+t)\b <- word(-1) not in ["sam", "si", "je"] -> \1i # Ako je riječ o infinitivu, ne o glag. prid. trpnom na -t, treba pisati '\1i'.
 ```
 
+Međutim nije moguće pisati `morph(word(0), "po:glagol", False)`, nego `word(0)` treba zamijeniti s `\1`: `morph(\1, "po:glagol", False)`.
+
 ## LightProof je ipak rudimentaran alat
 
 Iako ima pokoji trik u rukavu, LightProof je vrlo rudimentaran alat. Čak ako bi se pretvarali da imamo označen rječnik (a nemamo), nevolja je u tome što te oznake ne bismo mogli iskoristiti u LightProofu za generiranje prijedloga ispravaka korisniku. Koliko smo se mi uspjeli upoznati s ovim alatom, ne postoji mogućnost da se LightProofu zada da uzme riječ pogođenu pravilnim izrazom te da mu se zadaju morfološke oznake i da prema njima generira novu riječ. Recimo, želimo rečenicu `Gledam automobil kojega vozi.` ispraviti u `Gledam automobil koji vozi.`, ali u LightProofu ne postoji način da iskoristimo oznake pa da sustav sam generira `koji` iz `kojega`. Evo što bismo htjeli imati:
