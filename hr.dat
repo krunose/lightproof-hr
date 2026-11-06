@@ -33,7 +33,7 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 # 2. KORAK: Ispravak krnjega i punog infinitiva (Svi oblici glagola htjeti)
 
 ## 0. PRAVILO: Hvatamo konstrukcije s modalnim glagolima jer oni traže dopunu u infinitivu (punom)
-\b(\w+t)\b <- morph(word(-2), "st:moći|st:morati|st:smjeti|st:trebati|st:htjeti|st:željeti", True) and word(-1) in ["sam", "si", "je", "smo", "ste", "su"] -> \1i # U konstrukciji s modalnim glagolom, infinitiv ne smije biti krnj.
+\b(\w+t)\b <- (morph(word(-2), "st:moći|st:morati|st:smjeti|st:trebati|st:htjeti|st:željeti", True) and word(-1) in ["sam", "si", "je", "smo", "ste", "su"]) -> \1i # U konstrukciji s modalnim glagolom, infinitiv ne smije biti krnj.
 
 ## 1. PRAVILO: Krnji infinitiv za općenite glagole (npr. napravit, radit, pjevat, ponašat, mislit, pokušat)
 # Ovi glagoli nemaju pridjev na -t i za njih je provjera 100% sigurna u svim kontekstima, ali zaobilazimo konstrukcije u kojima imenica na -t dolazi u akuzativu
@@ -45,7 +45,6 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 
 ## Puni infinitiv na -ti ispred svih oblika glagola htjeti
 \b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1 # Ispred pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
-
 
 # 3. KORAK: Niječni i povratni futur (Kontekstualna pravila)
 
