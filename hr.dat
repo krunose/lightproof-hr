@@ -36,8 +36,8 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 \b(\w+t)\b <- morph(word(-2), "st:moći|st:morati|st:smjeti|st:trebati|st:htjeti|st:željeti", True) and word(-1) in ["sam", "si", "je", "smo", "ste", "su"] -> \1i # U konstrukciji s modalnim glagolom, infinitiv ne smije biti krnj.
 
 ## 1. PRAVILO: Krnji infinitiv za općenite glagole (npr. napravit, radit, pjevat, ponašat, mislit, pokušat)
-# Ovi glagoli nemaju pridjev na -t i za njih je provjera 100% sigurna u svim kontekstima
-\b(\w+t)\b <- not morph(word(-2), "po:glagol", False) and word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su"] and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and not \1.lower() in popis_trpnih_t and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1i # Ako je riječ o infinitivu, mora završavati na '-ti' ili '-ći'.
+# Ovi glagoli nemaju pridjev na -t i za njih je provjera 100% sigurna u svim kontekstima, ali zaobilazimo konstrukcije u kojima imenica na -t dolazi u akuzativu
+\b(\w+t)\b <- not morph(word(-2), "po:glagol", False) and word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su"] and not morph(word(-1), "st:.*ti", True) and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and not \1.lower() in popis_trpnih_t and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1i # Ako je riječ o infinitivu, mora završavati na '-ti' ili '-ći'.
 
 ## 2. PRAVILO: Kontekstualna provjera isključivo za problematične homonime s popisa (prosut, uzet, donijet...)
 # Za njih uvodimo strogi filtar od jedne riječi lijevo i desno kako bismo propustili pasiv i inverzije
