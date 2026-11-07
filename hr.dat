@@ -11,50 +11,53 @@ popis_prefiksoida = set(["jota", "rona", "kveka", "zeta", "zepto", "ato", "jokto
 # datotečni nastavci za provjeravanje je li riječ o kraju rečenice u slučajevima: 'datoteka .odt'
 fileExtensions = set(["com", "hr", "org", "net", "edu", "gov", "info", "com.hr", "pdf", "docx", "txt", "xlsx", "pptx", "jpg", "jpeg", "png", "gif", "mp3", "wav", "mp4", "mkv", "zip", "rar", "exe", "apk", "oxt", "odt", "ods", "odp", "odg"])
 
+# nenaglašeni oblik pomoćnoga glagola htjeti
+pomocni_nenaglaseni_htjeti = set(["ću", "ćeš", "će", "ćemo", "ćete"])
+
+# niječni oblik pomoćnoga glagola htjeti
+nijecni_pomocni_htjeti = set(["neću", "nećeš", "neće", "nećemo", "nećete"])
+
+# nenaglašeni oblik svršenoga prezenta pomoćnoga glagola biti
+pomocni_nenaglaseni_biti = set(["sam", "si", "je", "smo", "ste", "su"])
+
+# glagolski pridjev radni pomoćnoga glagola biti
+glagolski_pridjev_radni_biti = set(["bio", "bila", "bilo", "bili", "bile"])
+
 # Popis stvarnih glagolskih pridjeva trpnih koji završavaju strogo na suglasnik -t
-popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet", "obuzet", "otpočet", "proždrijet", "nadut", "skinut", "nategnut", "maknut", "dignut", "puknut", "gurnut", "rinut", "krenut", "priznat", "poznat", "doznat", "istaknut", "taknut", "unijet", "iznijet", "odnijet", "uzet", "sažet", "prostrt", "prosut"])
+popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet", "obuzet", "otpočet", "proždrijet", "nadut", "skinut", "nategnut", "maknut", "dignut", "puknut", "gurnut", "rinut", "krenut", "priznat", "poznat", "doznat", "istaknut", "taknut", "unijet", "iznijet", "odnijet", "uzet", "sažet", "prostrt", "prosut", "ispit"])
+
 
 [word]
 
 
 
-# Ispravak krnjega infinitiva
-# ===========================================
-
-# 1. KORAK: Uklanjanje suvišne zamjenice 'si' (Mora ići na sam vrh!)
-
-## glagol na -t + ću/ćeš/će + si (npr. kupit ću si -> kupit ću)
-\b(\w+t)\s+(ću|ćeš|će|ćemo|ćete)\s+si\b <- morph(\1, "po:glagol", False) -> \1 \2 # Zamjenica 'si' je uz ovaj glagol u standardnom jeziku suvišna.
-
-## ću/ćeš/će + si + infinitiv (npr. ću si kupiti -> ću kupiti)
-\b(ću|ćeš|će|ćemo|ćete)\s+si\s+(\w+ti)\b <- morph(\2, "po:glagol", False) -> \1 \2 # Zamjenica 'si' je uz ovaj glagol u standardnom jeziku suvišna.
+## Ispravak infinitiva
+## ================================
 
 
-# 2. KORAK: Ispravak krnjega i punog infinitiva (Svi oblici glagola htjeti)
+## Futur I: Pisati ću. > Pisat ću.
+\b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1) in pomocni_nenaglaseni_htjeti -> \1 # Infinitiv u futuru dolazi u krnjem obliku ako iza njega slijedi nenagl. jesni oblik pom. gl. htjeti.
 
-## 0. PRAVILO: Hvatamo konstrukcije s modalnim glagolima jer oni traže dopunu u infinitivu (punom)
-\b(\w+t)\b <- (morph(word(-2), "st:moći|st:morati|st:smjeti|st:trebati|st:htjeti|st:željeti", True) and word(-1) in ["sam", "si", "je", "smo", "ste", "su"]) -> \1i # U konstrukciji s modalnim glagolom, infinitiv ne smije biti krnj.
+## Negacija Futur I:
+\b(\w+t)\b <- morph(\1, "po:glagol", False) and word(1) in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # U negaciji futura I infinitiv nije krnj.
 
-## 1. PRAVILO: Krnji infinitiv za općenite glagole (npr. napravit, radit, pjevat, ponašat, mislit, pokušat)
-# Ovi glagoli nemaju pridjev na -t i za njih je provjera 100% sigurna u svim kontekstima, ali zaobilazimo konstrukcije u kojima imenica na -t dolazi u akuzativu
-\b(\w+t)\b <- not morph(word(-2), "po:glagol", False) and word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su"] and not morph(word(-1), "st:.*ti", True) and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and not \1.lower() in popis_trpnih_t and not word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1i # Ako je riječ o infinitivu, mora završavati na '-ti' ili '-ći'.
+## Futur I: Željet ću pisat > Željet ću pisati.
+\b(\w+t)\b <- morph(\1, "po:glagol", False) and word(-1) in pomocni_nenaglaseni_htjeti -> \1i # Kada je nenaglašeni pomoćni glagol htjeti ispred infinitiva, on ne smije biti krnj.
 
-## 2. PRAVILO: Kontekstualna provjera isključivo za problematične homonime s popisa (prosut, uzet, donijet...)
-# Za njih uvodimo strogi filtar od jedne riječi lijevo i desno kako bismo propustili pasiv i inverzije
-\b(\w+t)\b <- word(-2) not in ["sam", "si", "je", "smo", "ste", "su"] and \1.lower() in popis_trpnih_t and not word(-1).lower() in ["sam", "si", "je", "smo", "ste", "su", "bude", "budu", "biva", "bismo", "biste", "bi", "bih", "biti", "bio", "bila", "bilo", "bili", "bile", "nisam", "nisi", "nije", "nismo", "niste", "nisu"] and not word(1).lower() in ["sam", "si", "je", "smo", "ste", "su", "bude", "budu", "biva", "bismo", "biste", "bi", "bih", "bio", "bila", "bilo", "bili", "bile", "nisam", "nisi", "nije", "nismo", "niste", "nisu", "ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1i # Ako je riječ o infinitivu, on mora završavati na '-ti' ili '-ći'.
+## krnji infinitivi izvan futura: Samostalni krnji infinitiv ako ispred ili iza stoji glagol koji nije glagolski pridjev radni biti ili nenaglašeni pomoćni glagol htjeti: On je mogao radit. > On je mogao raditi; On je radit mogao. > On je raditi mogao.; Ne smijem radit to što hoću. > Ne smijem raditi to što hoću.
+\b(\w+t)\b <- morph(\1, "po:glagol", False) and morph(word(-1), "po:glagol", False) and word(-1) not in glagolski_pridjev_radni_biti and word(-1) != "" and (word(-1) not in pomocni_nenaglaseni_htjeti and word(1) not in pomocni_nenaglaseni_htjeti) -> \1i # U ovoj konstrukciji infinitiv ne smije biti krnj.
 
-## Puni infinitiv na -ti ispred svih oblika glagola htjeti
-\b(\w+t)i\b <- morph(\1, "po:glagol", False) and word(1).lower() in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "hoću", "hoćeš", "hoće", "hoćemo", "hoćete"] -> \1 # Ispred pomoćnoga glagola 'htjeti' infinitiv mora biti u krnjem obliku.
+## On želi moći učit > On želi moći učiti; ali ne hvatamo Bio je izričit.| On je bio izričit. jer su to glagolski pridjevi trpni
+\b(\w+t)\b <- morph(\1, "po:glagol", False) and (morph(word(-2), "po:glagol", False) and word(-2).lower() not in glagolski_pridjev_radni_biti) and word(-1) in pomocni_nenaglaseni_biti -> \1i # U ovom se slučaju vjerojatno radi o infinitivu, ne smije biti u krnjem obliku.
 
-\b(\w+t)\b <- morph(word(-2), "po:glagol", False) and re.match(r"(.*)(o|la|lo|li|le)", word(-2)) and word(-1).lower() in ["sam", "si", "je", "smo", "ste", "su"] and morph(\1, "po:glagol", False) -> \1i # U ovim slučajevima ne treba pisati krnji infiniti:
+## Razdvojeno pomoćni glagol biti, infinitiv i modalni ili kakav drugi glagol
+\b(\w+t)\b <- word(-1) in pomocni_nenaglaseni_biti and morph(\1, "po:glagol", False) and morph(word(1), "po:glagol") -> \1i # Izgleda kao infinitiv u rečenici sa stilski obilježenim redom riječi:
 
-# 3. KORAK: Niječni i povratni futur (Kontekstualna pravila)
+## infinitivi izvan futura na daljinu (bilo bi lakše da je rječnik označen, ovako ne mogu provjeravati jesu li u pitanju zamjenice ili prilozi već moram pogađati broj riječi
+\b(\w+t)\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and ((morph(word(-3), "po:glagol", False) or morph(word(-2), "po:glagol", False)) or (morph(word(3), "po:glagol", False) or morph(word(2), "po:glagol", False))) and word(1) not in pomocni_nenaglaseni_htjeti and word(1) not in pomocni_nenaglaseni_biti and word(-2).lower() not in pomocni_nenaglaseni_biti -> \1i # Najvjerojatnije je riječ o infinitivu, ne smije biti u krnjem obliku.
 
-## Puni infinitiv u niječnom povratnom futuru (npr. neću se vratit -> neću se vratiti)
-\b(neću|nećeš|neće|nećemo|nećete)\s+(se|si)\s+(\w+t)\b <- morph(\3, "po:glagol", False) -> \1 \2 \3i # U niječnom futuru s povratnom zamjenicom infinitiv mora biti puni (-ti).
-
-## Hvatamo sve ono što bi mogao biti krnji infinitiv, a nije obuhvaćeno prethodnim pravilima.
-\b(\w+t)\b <- word(-2).lower() not in ["sam", "si", "je", "smo", "ste", "su"] and morph(\1, "po:glagol", False) and word(1).lower() not in ["ću", "ćeš", "će", "ćemo", "ćete", "neću", "nećeš", "neće", "nećemo", "nećete", "neće"] and word(-1).lower() not in ["sam", "si", "je", "smo", "ste", "su", "nisam", "nisi", "nije", "nismo", "niste", "nisu"] and \1.lower() not in popis_trpnih_t -> \1i # Vjerojatno se radi o krnjem infinitivu, treba pisati:
+## infinitiv u Futuru I na daljinu
+#\b(\w+t)i\b <- morph(\1, "po:glagol", False) and (( word(-2) in pomocni_nenaglašeni_htjeti or word(-3) in pomocni_nenaglaseni_htjeti ) or ( word(3) in pomocni_nenaglaseni_htjeti or word(2) in pomocni_nenaglaseni_htjeti ) and (morph(word(-2), "po:glagol", False) and word(-3).lower() == "da") ) -> \1|\1i # Najvjerojatnije se radi o glagolskom pridjevu trpnome.
 
 
 # Upozorenje na konstrukciju 'da li'
