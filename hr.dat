@@ -27,14 +27,15 @@ glagolski_pridjev_radni_biti = set(["bio", "bila", "bilo", "bili", "bile"])
 popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet", "obuzet", "otpočet", "proždrijet", "nadut", "skinut", "nategnut", "maknut", "dignut", "puknut", "gurnut", "rinut", "krenut", "priznat", "poznat", "doznat", "istaknut", "taknut", "unijet", "iznijet", "odnijet", "uzet", "sažet", "prostrt", "prosut", "ispit"])
 
 
+
 [word]
 
 
 
 ## Ispravak infinitiva
-## ================================
+## =============================================================================
 
-# U većini pravila za infinitiv bilo je potrebno dodati `and not morph(\1, "po:imenica", False) zato što Hunspellov rječnik istovremeno radi i fleksiju i derivacju pa povlači oznake `po:glagol` na imenice na `-ost`.
+# U većini pravila za infinitiv bilo je potrebno dodati `and not morph(\1, "po:imenica", False) zato što Hunspellov rječnik istovremeno radi i fleksiju i derivacju pa povlači oznake `po:glagol` na imenice na `-ost`. Jednom kada se rječnik (ručno) očisti od derivacije, taj se dio koda može sigurno izvaditi. Do tada štiti da LightProof imenice na `-ost` ne propoznaje kao glagole (infinitive).
 
 ## Futur I: Pisati ću. > Pisat ću.
 \b(\w+t)i\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and word(1) in pomocni_nenaglaseni_htjeti -> \1 # Infinitiv u futuru dolazi u krnjem obliku ako iza njega slijedi nenagl. jesni oblik pom. gl. htjeti.
@@ -54,17 +55,12 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 ## Razdvojeno pomoćni glagol biti, infinitiv i modalni ili kakav drugi glagol
 \b(\w+t)\b <- word(-1) in pomocni_nenaglaseni_biti and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and morph(word(1), "po:glagol") -> \1i # Izgleda kao infinitiv u rečenici sa stilski obilježenim redom riječi:
 
-## infinitivi izvan futura na daljinu (bilo bi lakše da je rječnik označen, ovako ne mogu provjeravati jesu li u pitanju zamjenice ili prilozi već moram pogađati broj riječi
+## infinitivi izvan futura na daljinu (bilo bi lakše da je rječnik označen, ovako moram pogađati je li nešto glagol na udaljenosti do tri riječi
 \b(\w+t)\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and ((morph(word(-3), "po:glagol", False) or morph(word(-2), "po:glagol", False)) or (morph(word(3), "po:glagol", False) or morph(word(2), "po:glagol", False))) and word(1) not in pomocni_nenaglaseni_htjeti and word(1) not in pomocni_nenaglaseni_biti and word(-2).lower() not in pomocni_nenaglaseni_biti -> \1i # Najvjerojatnije je riječ o infinitivu, ne smije biti u krnjem obliku.
 
 ## infinitiv u Futuru I na daljinu
 #\b(\w+t)i\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and (( word(-2) in pomocni_nenaglašeni_htjeti or word(-3) in pomocni_nenaglaseni_htjeti ) or ( word(3) in pomocni_nenaglaseni_htjeti or word(2) in pomocni_nenaglaseni_htjeti ) and (morph(word(-2), "po:glagol", False) and word(-3).lower() == "da") ) -> \1|\1i # Najvjerojatnije se radi o glagolskom pridjevu trpnome.
 
-
-# Upozorenje na konstrukciju 'da li'
-#===========================================
-
-\b[dD]a li\b -> _ # U hrvatskom treba izbjegavati ovu konstrukciju, preformulirajte rečenicu.
 
 
 # Ispravljanje konstrukcija prijedlog + infinitiv
@@ -88,7 +84,8 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 \b(za|bez|umjesto|osim)\s+(\w+ći)\s+se\b <- morph(\2, "po:glagol", False) and word(-1).lower() not in ["pomoći", "noći", "peći", "stvari", "kćeri"] -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
 
 
-# Ispravak pogrešne promjene glagola 'trebati' kroz lica ispred infinitiva (bezlični trebati)
+
+# Ispravak promjene glagola 'trebati' kroz lica ispred infinitiva (bezlični trebati)
 # =============================================================================
 
 \b(ja|ti|on|ona|ono|mi|vi|oni|one)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> treba \3     # Glagol trebati ispred infinitiva je u strogom standardu bezličan.
@@ -102,6 +99,14 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 \b(trebao|trebala|trebalo|trebali|trebale)\s+(sam|si|je|smo|ste|su)\s+(\w+)\b <- morph(\3, "po:glagol", False) -> _ # Kada glagol 'trebati' dolazi ispred infinitiva u prošlom vremenu, u strogom standardu je bezličan (glasi 'trebalo je'). Preformulirajte rečenicu.
 
 
+
+# Upozorenje na konstrukciju 'da li'
+# =============================================================================
+
+\b[dD]a li\b -> _ # U hrvatskom treba izbjegavati ovu konstrukciju, preformulirajte rečenicu.
+
+
+
 # Ispravljanje konstrukcije prijedlog 'kroz' + riječ koja označava vrijeme
 # =============================================================================
 
@@ -109,8 +114,9 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 \b(kroz)(?=\s+(cijele|cijelu|cijelog|čitavu|čitav|čitavog|iduća|sljedeća|protekla|prošla|naredna|zadnja|zadnjih|proteklih|dva|tri|četiri|pet|\d+)?\s*(godinu|godine|godina|mjesec|mjeseca|mjeseci|tjedan|tjedna|tjedana|dan|dana|sat|sata|sati|minutu|minuta|sekundu|sekundi|stoljeće|stoljeća|period|razdoblje|povijest|život|vrijeme|ljeto|zimu|proljeće|jesen|siječanj|veljaču|ožujak|travanj|svibanj|lipanj|srpanj|kolovoz|rujan|listopad|studeni|prosinac)\b) -> _ # Prijedlog 'kroz' ima primarno prostorno značenje (npr. „proći kroz vrata”). U vremenskom kontekstu trebate preformulirati izraz. Primjer: umjesto „kroz cijelu godinu” pravilno je pisati „tijekom cijele godine” ili „u cijeloj godini”.
 
 
+
 # Ispravak ije i je
-#===========================================
+# =============================================================================
 
 ## Slijedeći i sljedeći (generirano pomoću AI-a jer odviše komplicirano za držati u glavi)
 
@@ -136,13 +142,13 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 
 
 # Unos dvije iste riječi jedna za drugom
-#=======================================================================
+# =======================================================================
 
 (\w+)\s+\1 <- \1 != "malo" -> \1    # Unijeli ste dvaput istu riječ.
 
 
 #  zamjena 's' i 'sa'
-#===========================================
+# =======================================================================
 
 # 1. Posebna i trenutna ispravka za čestu pogrešku 's menom' -> sa mnom
 \b[sS]\smenom\b -> sa mnom                          # Piše se 'sa mnom'.
@@ -164,15 +170,17 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 ([sS]) mnom -> \1a mnom     # Ispravno je pisati:
 
 
+
 # Zamjena 'k' i 'ka'
-#===========================================
+# =======================================================================
 \bk\s([kghKGH]\w+)\b -> ka \1                   # Ako iza 'k' slijedi riječ koja počinje s 'k, g, h', treba pisati 'ka'.
 #\bka\s([^kghKGH]\w+)\b -> k \1                 # Ako iza 'ka' slijedi riječ koja ne počinje s 'k, g, h', treba pisati 'k'.
 \bka\s+((?![kghKGH])[a-zžšđčćA-ZŽŠĐČĆ]+)\b -> k \1  # Ako iza 'ka' ne slijedi riječ na 'k, g ili h', piše se 'k'.
 
 
+
 # Veliko i malo slovo
-#===========================================
+# =======================================================================
 
 ## Ispravak pisanja imena jezika (malo početno slovo) - Preskače početak rečenice/odlomka
 
@@ -194,18 +202,17 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 (?<![.?!]\s)P(ašk)(i|og|oga|om|omu|ome|im)\s(si)(r|ra|ru|rom)?\b  <- word(-1) != ""  -> p\1\2 \3\4 # Sintagma 'paški sir' piše se malim slovom (osim na početku rečenice).
 
 
+
 # Ispravljanje 'č' i 'ć'
-#===========================================
+# =======================================================================
 
 \bču\b -> ću|ču                             # Vjerojatno treba pisati pom. gl. htjeti: 'ću'. Riječ 'ču' je aorist od 'čuti'.
 \bčete\b -> ćete|čete                       # Vjerojatno treba pisati pom. gl. htjeti: 'ćete'. Riječ 'čete' je od im. 'četa'.
 
 
-# Ispravljanje pogrešne uporabe 'bi' u kondicionalu (bismo/biste)
-#===========================================
 
-# rastavljanje bismo i biste na bi smo i bi ste.
-\b([bB]i)\s(smo|ste)\b -> \1\2   # Pogrešno je rastavljati aorist gl. 'biti', piše se sastavljeno.
+# Ispravljanje pogrešne uporabe 'bi' u kondicionalu (bismo/biste)
+# =======================================================================
 
 # zamjenica ispred pom. gl. biti
 \b(?<=[mM]i\s)(bi)\b(?!\s+(?:smo|ste)\b) -> bismo # Uz zamjenicu 'mi' aorist gl. 'biti' glasi 'bismo'.
@@ -219,6 +226,8 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 \b(bi)(?=(\smi\s))(?!\s(smo|ste))\b -> bismo      # Uz zamjenicu 'mi' u aoristu gl. 'biti' uvijek ide 'bismo'.
 \b(bi)(?=(\svi\s))(?!\s(smo|ste))\b -> biste      # Uz zamjenicu 'vi' u aoristu gl. 'biti' uvijek ide 'biste'.
 
+# rastavljeno 'bi smo' i 'bi ste' u 'bismo' i 'biste'.
+\b([bB]i)\s(smo|ste)\b -> \1\2   # Pogrešno je rastavljati aorist gl. 'biti', piše se sastavljeno.
 
 ## 1. lice množine (mi) -> mora biti 'bismo'
 #\bbi\s+(smo)\b -> bi\1 # Pogrešan rastavljeni oblik 'bi smo', piše se zajedno 'bismo'.
@@ -234,7 +243,7 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 
 
 # Uklanjanje pleonazama i ispravljanje jezičnih konstrukcija (Pisanje u duhu hrvatskoga jezika)
-## =============================================================================
+## =======================================================================
 
 ## 1. 'kako i na koji način' / 'na koji način i kako' -> kako
 \b([kK]ako)\si\sna\skoji\snačin\b -> = "kako".capitalize() + "|" + "na koji način".capitalize() if \1[0].isupper() else "kako|na koji način" # Pleonazam. Dovoljno je reći samo 'kako'.
@@ -312,7 +321,6 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 \bzato jer\b -> zato što|budući da|jer            # Gomilanje istoznačnih veznika, zamijenite:
 \bZato jer\b -> Zato što|Budući da      # Gomilanje istoznačnih veznika, zamijenite: 
 
-
 ## 18. s nikim > ni s kim
 \b([sS]) nikim\b -> = "ni".lower() + "s kim" if \1.islower() else "Ni s kim" # Pravilno je pisati:
 
@@ -342,7 +350,7 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 
 
 # Kontrola nepravilnih stilskih konstrukcija na samom početku rečenice
-# =============================================================================
+# =======================================================================
 
 ## 1. Konstrukcija "Zato jer..." / "Zato što..." na početku rečenice -> Mijenja se u 'Budući da' ili 'Kako'
 (?<=[.!?]\s)(Zato)\b <- word(1).lower() in ["jer", "što"] -> Budući da|Kako # Na početku samostalne rečenice umjesto 'Zato jer/što' pravilno je upotrijebiti 'Budući da' ili 'Kako'.
@@ -361,9 +369,8 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 
 
 
-
 # Ispravak odvojenoga pisanja superlativa (Izbjegavanje lažnih uzbuna)
-# =============================================================================
+# =======================================================================
 
 ## 1. Pridjevi na -ji, -ja, -je, -ji (npr. naj bolji, naj lošiji, naj noviji, naj manji, naj gori)
 \b([nN]aj)\s(\w+(ij|j)(i|eg|ega|em|emu|im|ih|ima|a|e|oj|u))\b -> \1\2                      # Superlativ se piše sastavljeno.
@@ -379,25 +386,25 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 
 
 # Ispravak odvojenoga pisanja prefiksoida
-# ============================================================================
+# =======================================================================
 
 \b([a-zA-ZčČćĆžŽšŠđĐ]+)\s+([a-zA-ZčČćĆžŽšŠđĐ]+)\b <- \1.lower() in popis_prefiksoida and \2.lower() not in ["li"] and spell(\1 + \2) -> \1\2   # Prefiksoid '\1' i riječ  '\2' pišu se sastavljeno.
 
 
 # Ispravak odvojenoga pisanja polusloženica
-# ==============================================================================
+# =======================================================================
 
 \b([a-zA-ZčćžšđŠĐŽĆČ]+)\s([a-zA-ZčćžšđŠĐŽĆČ]+)\b <- \1.lower() not in popis_prefiksoida and spell(\1 + "-" + \2) -> \1-\2           # Riječ je o polusloženici, treba pisati sa spojnicom.
 
 
 # Razmak između kratica
-# =============================================================================
+# =======================================================================
 
 n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 # Ispravljanje konstrukcija prijedlog + infinitiv
-# =============================================================================
+# =======================================================================
 
 ## 1. Slučaj: prijedlog + infinitiv na -ti (strogo definirani glagolski morfemi i sufiksi)
 \b(za|bez|umjesto|osim)\s+(\w+ti)\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskoga standardnog jezika. Umjesto 'za učiti' ili 'za raditi' pravilno je upotrijebiti glagolsku imenicu: 'za učenje', 'za rad' ili preformulirati rečenicu.
@@ -423,17 +430,17 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 # Ispravljanje konstrukcije prijedlog kroz + riječ koja označava vrijeme
-# =============================================================================
+# =======================================================================
 
 \b(kroz)(?=\s+(cijele|cijelu|cijelog|čitavu|čitav|čitavog|iduća|sljedeća|protekla|prošla|naredna|zadnja|zadnjih|proteklih|dva|tri|četiri|pet|\d+)?\s*(godinu|godine|godina|mjesec|mjeseca|mjeseci|tjedan|tjedna|tjedana|dan|dana|sat|sata|sati|minutu|minuta|sekundu|sekundi|stoljeće|stoljeća|period|razdoblje|povijest|život|vrijeme|ljeto|zimu|proljeće|jesen|siječanj|veljaču|ožujak|travanj|svibanj|lipanj|srpanj|kolovoz|rujan|listopad|studeni|prosinac)\b) -> _ # Prijedlog 'kroz' ima prostorno značenje (npr. „proći kroz vrata”). Preformulirate. Primjer: umjesto „kroz cijelu godinu” treba pisati „tijekom cijele godine” ili „u cijeloj godini”.
 
 
 
 # Ispravljanje pogrešne uporabe pomoćnoga glagola 'je' uz povratnu zamjenicu 'se'
-# =============================================================================
+# =======================================================================
 
 ## 1. Slučaj: glagolski pridjev radni + se je (npr. 'vratio se je', 'gradila se je' -> 'vratio se', 'gradila se')
-\b(\w+o|\w+ao|\w+la|\w+lo|\w+li|\w+le)\s+se\s+je\b -> \1 se                     # Pomoćni glagol 'je' se izostavlja uz povratnu zamjenicu 'se' i glagolski pridjev radni.
+\b(\w+o|\w+ao|\w+la|\w+lo|\w+li|\w+le)\s+se\s+je\b -> \1 se                     # Pomoćni glagol 'je' izostavlja se uz povratnu zamjenicu 'se' i glagolski pridjev radni.
 
 ## 2. Slučaj: se je + glagolski pridjev radni (npr. 'on se je vratio', 'kuća se je gradila')
 \bse\s+je\s+(\w+o|\w+ao|\w+la|\w+lo|\w+li|\w+le)\b -> se \1               # Izbacivanje suvišnog 'je' ispred glagolskog pridjeva radnog (perfekt/pasiv).
@@ -452,13 +459,13 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 # Ispravljanje konstrukcije 'oni će ju raditi' > oni će raditi.
-# =============================================================================
+# =======================================================================
 # ne možemo ispravljati jer 'ju' može biti i točno i višak ovisno o kontekstu, a kontekst ne možemo provjeravati
 #\b([oO])ni će(\s)?ju (\w+)([^.?!]*?)(\w+(ti|ći))\b <- \3.lower() in ["sad", "sada", "već", "tek", "još", "opet", "ponovo", "ponovno", "brzo", "odmah", "hitno", "danas", "večeras", "sutra", "prekosutra", "ujutro", "popodne", "navečer", "noćas", "uvijek", "često", "rijetko", "stalno", "neprestano", "katkad", "ponekad", "nekad", "nekada", "ikad", "ikada", "nikad", "nikada", "tada", "onda", "uskoro"] and morph(\5, "po:glagol", False) -> \1ni će \3\4\5 # Konstrukcija 'će ju' ne pripada standardnom jeziku.
 
 
 # Provjera nezatvaranja navodnih zankova u rečenici.
-# ===========================================================================
+# =======================================================================
 
 # Provjera nezatvorenih hrvatskih navodnika (podcrtava samo prvu riječ u rečenici)
 
@@ -475,7 +482,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 # Provjera razmaka između riječi i zagrade i neotvaranje/nezatvaranje zagrade
-# ===========================================================================
+# =======================================================================
 
 ## Provjera razmaka između riječi i zagrade.
 
@@ -501,13 +508,14 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 #\b(?<!\d)(?<=[.?!]\s)(?!g\.|god\.|st\.)([a-zčćžšđ]+)\b -> = \1.capitalize() # Jeste li započeli rečenicu malim slovom?
 \b(?<=[.?!]\s)([a-zčćžšđ]+)\b <- word(-1).lower() not in ["g.", "god.", "st.", "tzv.", "prof.", "dr."] and not re.match(r"\d+\.", word(-1)) -> = \1.capitalize() # Jeste li započeli rečenicu malim slovom?
 
-
 # Umetanje razmaka između riječi i pravopisnoga znaka
-(\w+)([,„\(])(\w+) -> \1 \2\3 # Niste unijeli razmak između riječi i pravopisnoga znaka iza nje.
-(\w+)([,”;\)])(\w+) -> \1\2 \3 # Niste unijeli razmak između riječi i pravnopisnoga znaka ispred nje.
+\b(\w+)([,;\)”])(\w+)\b -> \1\2 \3 # Niste unijeli razmak između riječi i pravopisnoga znaka.
+\b(\w+)([„\(])(\w+)\b -> \1 \2\3 # Niste unijeli razmak između riječi i pravopisanoga znaka.
+
 
 
 [char]
+
 
 
 # Ispravljanje dvostrukog ili trostrukog razmaka, dvostruke točke, upitnika, uskličnika, razmak između pravopisnih znakova i kraja rečenice...
@@ -550,14 +558,14 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # Razmak (NBSP) između broja i mjernih jedinica / postotaka
 # ================================================================
 
-## 1. Znak za postotak (npr. 50% -> 50% uz NBSP)
+## 1. Znak za postotak (npr. 50% -> 50 % uz NBSP)
 (\d+)% -> \1 % # Između broja i znaka postotka (%) piše se neprekidajući razmak.
 
 ## 2. Osnovne mjerne jedinice za težinu, duljinu i volumen (npr. 5kg -> 5 kg uz NBSP)
 (\d+)(g|kg|t|mm|cm|dm|m|km|l|dl|ml)\b -> \1 \2 # Između broja i mjerne jedinice piše se neprekidajući razmak.
 
 ## 3. Kratice za valute iza broja (npr. 100eur -> 100 EUR uz NBSP)
-(\d+)(eur|EUR|usd|USD)\b -> = \1 + " " + \2.upper() if \2.lower() in ["eur", "usd", "hrk"] else \1 + " " + \2 # Između broja i oznake valute piše se neprekidajući razmak.
+(\d+)(eur|EUR|usd|USD)\b -> = \1 + " " + \2.upper() if \2.lower() in ["eur", "usd"] else \1 + " " + \2 # Između broja i oznake valute piše se neprekidajući razmak.
 
 
 
