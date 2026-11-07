@@ -34,6 +34,7 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 ## Ispravak infinitiva
 ## ================================
 
+# U većini pravila za infinitiv bilo je potrebno dodati `and not morph(\1, "po:imenica", False) zato što Hunspellov rječnik istovremeno radi i fleksiju i derivacju pa povlači oznake `po:glagol` na imenice na `-ost`.
 
 ## Futur I: Pisati ću. > Pisat ću.
 \b(\w+t)i\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and word(1) in pomocni_nenaglaseni_htjeti -> \1 # Infinitiv u futuru dolazi u krnjem obliku ako iza njega slijedi nenagl. jesni oblik pom. gl. htjeti.
