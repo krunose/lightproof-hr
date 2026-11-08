@@ -20,6 +20,8 @@ nijecni_pomocni_htjeti = set(["neću", "nećeš", "neće", "nećemo", "nećete"]
 # nenaglašeni oblik svršenoga prezenta pomoćnoga glagola biti
 pomocni_nenaglaseni_biti = set(["sam", "si", "je", "smo", "ste", "su"])
 
+pomocni_naglaseni_biti = set(["jesam", "jesi", "jest", "jesmo", "jeste", "jesu"])
+
 # glagolski pridjev radni pomoćnoga glagola biti
 glagolski_pridjev_radni_biti = set(["bio", "bila", "bilo", "bili", "bile"])
 
@@ -35,13 +37,22 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 ## Ispravak infinitiva
 ## =============================================================================
 
+## Krnji infinitiv na početku odlomka kada je zapravo subjekt: Učit je važno. > Učiti je važno.
+\b([A-ZČĆŽŠĐ]\w+t)\b <- morph(\1, "po:glagol", False) and word(-1) == "" and ( ( morph(word(1), "po:glagol", False) or word(1).lower() in pomocni_nenaglaseni_biti or word(1).lower() in pomocni_naglaseni_biti ) or ( morph(word(2), "po:glagol", False) or word(2).lower() in pomocni_nenaglaseni_biti or word(2).lower() in pomocni_naglaseni_biti ) or ( morph(word(3), "po:glagol", False) or word(3).lower() in pomocni_nenaglaseni_biti or word(3).lower() in pomocni_naglaseni_biti ) ) -> \1i # Ako je infinitiv na početku odlomka u službi subjekta, ne smije biti krnj:
+
+## Krnji infinitiv na početku rečenice unutar odlomka kada je zapravo subjekt: Učit je važno. > Učiti je važno.
+\b(?<=[.?!]\s)([A-ZČĆŽŠĐ]\w+t)\b <- morph(\1, "po:glagol", False) and ( ( morph(word(1), "po:glagol", False) or word(1).lower() in pomocni_nenaglaseni_biti or word(1).lower() in pomocni_naglaseni_biti ) or ( morph(word(2), "po:glagol", False) or word(2).lower() in pomocni_nenaglaseni_biti or word(2).lower() in pomocni_naglaseni_biti ) or ( morph(word(3), "po:glagol", False) or word(3).lower() in pomocni_nenaglaseni_biti or word(3).lower() in pomocni_naglaseni_biti ) ) -> \1i # Ako je infinitiv na početku rečenice u službi subjekta, ne smije biti krnj:
+
+## Krnji infinitiv u službi predikata u stilski obilježenom redu riječi: Najbolje je učit sam. > Najbolje je učiti sam.
+\b(\w+t)\b <- morph(\1, "po:glagol", False) and ( ( morph(word(-1), "po:glagol", False) or word(-1).lower() in pomocni_nenaglaseni_biti or word(-1).lower() in pomocni_naglaseni_biti ) or ( morph(word(-2), "po:glagol", False) or word(-2).lower() in pomocni_nenaglaseni_biti or word(-2).lower() in pomocni_naglaseni_biti ) or ( morph(word(-3), "po:glagol", False) or word(-3).lower() in pomocni_nenaglaseni_biti or word(-3).lower() in pomocni_naglaseni_biti ) ) -> \1i # Ako je infinitiv u stilski obilježenom redu riječi u službi subjekta, treba pisati:
+
 # U većini pravila za infinitiv bilo je potrebno dodati `and not morph(\1, "po:imenica", False) zato što Hunspellov rječnik istovremeno radi i fleksiju i derivacju pa povlači oznake `po:glagol` na imenice na `-ost`. Jednom kada se rječnik (ručno) očisti od derivacije, taj se dio koda može sigurno izvaditi. Do tada štiti da LightProof imenice na `-ost` ne propoznaje kao glagole (infinitive).
 
 ## Hvatanje uzastopnih krnjih infinitiva
 \b(\w+t)\s(\w+t)\b <- morph(\1, "po:glagol", False) and morph(\2, "po:glagol", False) and not morph(\1, "po:imenica", False) and not morph(\2, "po:imenica", False) and \1.lower() not in popis_trpnih_t and \2.lower() not in popis_trpnih_t -> \1i \2i # Napisali ste nekoliko krnjih infinitiva uzastopce, treba biti:
 
 ## Futur I: Pisati ću. > Pisat ću.
-\b(\w+t)i\b <- and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and word(1) in pomocni_nenaglaseni_htjeti -> \1 # Infinitiv u futuru dolazi u krnjem obliku ako iza njega slijedi nenagl. jesni oblik pom. gl. htjeti.
+\b(\w+t)i\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and word(1) in pomocni_nenaglaseni_htjeti -> \1 # Infinitiv u futuru dolazi u krnjem obliku ako iza njega slijedi nenagl. jesni oblik pom. gl. htjeti.
 
 ## Negacija Futur I:
 \b(\w+t)\b <- \1.lower() not in popis_trpnih_t and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and word(1) in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # U negaciji futura I infinitiv nije krnj.
@@ -66,7 +77,6 @@ popis_trpnih_t = set(["donijet", "otet", "proklet", "zauzet", "prožet", "začet
 
 ## Pridjevi trpni na -t koji su zapravo krnji infinitivi (pogreške) ako ispred stoji negacija, a iza njega nema glagola
 \b(\w+t)\b <- \1.lower() in popis_trpnih_t and (word(-1) in pomocni_nenaglaseni_htjeti or word(-1) in nijecni_pomocni_htjeti) and not morph(word(1), "po:glagol", False) -> \1i # Čini se da je riječ o infinitivu, treba biti:
-
 
 
 
