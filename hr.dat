@@ -303,7 +303,7 @@ imenice_na_t_iste_kao_krnji_infinitiv = set(["bit", "brat", "dobit", "ispit", "k
 \b([mM]alo)\spo(\s)?malo\b -> \1-pomalo                                            # Izraz 'malo-pomalo' u hrvatskom se jeziku piše sa spojnicom.
 
 ## 9. 'potpuno/u potpunosti uništen/neutraliziran' (ako je nešto uništeno, to je apsolutno)
-\b([uU]\spotpunosti|[pP]otpuno)\s(uništ\w+|neutraliz\w+|likvid\w+|is korijen\w+)\b -> \2 # Stilski pleonazam. Glagoli poput 'uništiti' već sami po sebi znače potpunost.
+\b([uU]\spotpunosti|[pP]otpuno)\s(uništ\w+|neutraliz\w+|likvid\w+|iskorijen\w+)\b -> \2 # Stilski pleonazam. Glagoli poput 'uništiti' već sami po sebi znače potpunost.
 
 ## 10. 'vremensko razdoblje' / 'vremenski period' -> razdoblje / period
 \b([vV]remensk\w*)\s(razdoblj\w*|period\w*)\b -> \2                          # Pleonazam. Razdoblje i period sami po sebi označavaju vrijeme.
