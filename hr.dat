@@ -106,7 +106,7 @@ imenice_na_c_iste_kao_infinitiv_na_c = set(["ispomoći", "moći", "peći", "pomo
 \b(za|bez|umjesto|osim)\s+(\w+ći)\b <- morph(\2, "po:glagol", False) and \2.lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Konstrukcija prijedlog + infinitiv na -ći nije u duhu hrvatskoga standardnog jezika. Preformulirajte rečenicu ili upotrijebite glagolsku imenicu.
 
 ## 5. Slučaj: prijedlog + povratni oblici s infinitivom na -ći
-\b(za|bez|umjesto|osim)\s+se\s+(\w+ći)\b <- morph(\2, "po:glagol", False) and word(0).lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
+\b(za|bez|umjesto|osim)\s+se\s+(\w+ći)\b <- morph(\2, "po:glagol", False) and \2.lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
 
 \b(za|bez|umjesto|osim)\s+(\w+ći)\s+se\b <- morph(\2, "po:glagol", False) and word(-1).lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
 
@@ -428,32 +428,6 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 # =======================================================================
 
 n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
-
-
-# Ispravljanje konstrukcija prijedlog + infinitiv
-# =======================================================================
-
-## 1. Slučaj: prijedlog + infinitiv na -ti (strogo definirani glagolski morfemi i sufiksi)
-\b(za|bez|umjesto|osim)\s+(\w+ti)\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskoga standardnog jezika. Umjesto 'za učiti' ili 'za raditi' pravilno je upotrijebiti glagolsku imenicu: 'za učenje', 'za rad' ili preformulirati rečenicu.
-
-## 2. Slučaj: prijedlog + povratna zamjenica "se" + infinitiv na -ti
-# Primjer: 'za se pripremiti' umjesto 'za pripremu'
-\b(za|bez|umjesto|osim)\s+se\s+(\w+ti)\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za se pripremiti' pravilno je koristiti glagolsku imenicu: 'za pripremu' ili preformulirati rečenicu.
-
-## 3. Slučaj: prijedlog + infinitiv na -ti + povratna zamjenica "se"
-# Primjer: 'za pripremiti se' umjesto 'za pripremu'
-\b(za|bez|umjesto|osim)\s+(\w+ti)\s+se\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za pripremiti se' pravilno je koristiti glagolsku imenicu: 'za pripremu' ili preformulirati rečenicu.
-
-# ima imenica koje završavaju na -ći pa LightProof ne zna je li riječ o glagolu ili imenici ('pomoći' - 'pomognem'... naspram 'pomoć' - 'pomoću'), to će davati lažne uzbune
-## 4. Slučaj: prijedlog + infinitiv na -ći (s eliminacijom lažnih uzbuna na imenice)
-# Obvezni samoglasnik ispred -ći (-ući, -eći, -ići, -aći) uz izuzimanje čestih imenica u lokativu/genitivu
-\b(za|bez|umjesto|osim)\s+(\w+[aeiou]ći)\b <- morph(\2, "po:glagol", False) and \2.lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskog jezika. Pravilno je upotrijebiti glagolsku imenicu ili preformulirati rečenicu.
-
-## 5. Slučaj: prijedlog + povratni oblici s infinitivom na -ći
-# Primjeri: 'za se obući', 'za obući se' -> pretvara se u upozorenje
-\b(za|bez|umjesto|osim)\s+se\s+(\w+[aeiou]ći)\b <- morph(\2, "po:glagol", False) and \2.lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Izbjegavajte konstrukciju prijedlog + infinitiv. Umjesto 'za se obući' ili 'za obući se' pravilno je reći 'za odijevanje' ili preformulirati rečenicu.
-
-\b(za|bez|umjesto|osim)\s+(\w+[aeiou]ći)\s+se\b <- morph(\2, "po:glagol", False) and \2.lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Izbjegavajte konstrukciju prijedlog + infinitiv. Umjesto 'za obući se' pravilno je reći 'za odijevanje' ili preformulirati rečenicu.
 
 
 # Ispravljanje konstrukcije prijedlog kroz + riječ koja označava vrijeme
