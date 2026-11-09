@@ -33,7 +33,7 @@ imenice_na_t_iste_kao_krnji_infinitiv = set(["bit", "brat", "dobit", "ispit", "k
 
 
 # popis imenica na -ć koje dodavanjem -i izgledaju kao infinitiv na -ći
-imenice_na_c_iste_kao_infinitiv_na_c = set(["ispomoći", "moći", "peći", "pomoći", "pripomoći"])
+imenice_na_c_iste_kao_infinitiv_na_c = set(["ispomoći", "moći", "peći", "pomoći", "pripomoći", "noći"])
 
 
 [word]
