@@ -41,7 +41,7 @@ imenice_na_t_iste_kao_krnji_infinitiv = set(["bit", "brat", "dobit", "ispit", "k
 ## =============================================================================
 
 ## Krnji infinitiv na početku odlomka kada je zapravo subjekt: Učit je važno. > Učiti je važno.
-\b([A-ZČĆŽŠĐ]\w+t)\b <- morph(\1, "po:glagol", False) and word(-1) == "" and word(1).lower() not in pomocni_nenaglaseni_htjeti and \1.lower() not in popis_trpnih_t and ( ( morph(word(1), "po:glagol", False) or word(1).lower() in pomocni_nenaglaseni_biti or word(1).lower() in pomocni_naglaseni_biti ) or ( morph(word(2), "po:glagol", False) or word(2).lower() in pomocni_nenaglaseni_biti or word(2).lower() in pomocni_naglaseni_biti ) or ( morph(word(3), "po:glagol", False) or word(3).lower() in pomocni_nenaglaseni_biti or word(3).lower() in pomocni_naglaseni_biti ) ) -> \1i # Ako je infinitiv na početku odlomka u službi subjekta, ne smije biti krnj:
+\b([A-ZČĆŽŠĐ]\w+t)\b <- morph(\1, "po:glagol", False) and word(-1) == "" and word(1).lower() not in pomocni_nenaglaseni_htjeti and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and ( ( morph(word(1), "po:glagol", False) or word(1).lower() in pomocni_nenaglaseni_biti or word(1).lower() in pomocni_naglaseni_biti ) or ( morph(word(2), "po:glagol", False) or word(2).lower() in pomocni_nenaglaseni_biti or word(2).lower() in pomocni_naglaseni_biti ) or ( morph(word(3), "po:glagol", False) or word(3).lower() in pomocni_nenaglaseni_biti or word(3).lower() in pomocni_naglaseni_biti ) ) -> \1i # Ako je infinitiv na početku odlomka u službi subjekta, ne smije biti krnj:
 
 ## Krnji infinitiv na početku rečenice unutar odlomka kada je zapravo subjekt: Učit je važno. > Učiti je važno.
 \b(?<=[.?!]\s)([A-ZČĆŽŠĐ]\w+t)\b <- morph(\1, "po:glagol", False) and ( ( morph(word(1), "po:glagol", False) or word(1).lower() in pomocni_nenaglaseni_biti or word(1).lower() in pomocni_naglaseni_biti ) or ( morph(word(2), "po:glagol", False) or word(2).lower() in pomocni_nenaglaseni_biti or word(2).lower() in pomocni_naglaseni_biti ) or ( morph(word(3), "po:glagol", False) or word(3).lower() in pomocni_nenaglaseni_biti or word(3).lower() in pomocni_naglaseni_biti ) ) -> \1i # Ako je infinitiv na početku rečenice u službi subjekta, ne smije biti krnj:
@@ -60,7 +60,7 @@ imenice_na_t_iste_kao_krnji_infinitiv = set(["bit", "brat", "dobit", "ispit", "k
 \b(\w+t)i\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and word(1) in pomocni_nenaglaseni_htjeti -> \1 # Infinitiv u futuru dolazi u krnjem obliku ako iza njega slijedi nenagl. jesni oblik pom. gl. htjeti.
 
 ## Negacija Futur I:
-\b(\w+t)\b <- \1.lower() not in popis_trpnih_t and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and word(1) in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # U negaciji futura I infinitiv nije krnj.
+\b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and word(1) in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # U negaciji futura I infinitiv nije krnj.
 
 ## Futur I: Željet ću pisat > Željet ću pisati.
 \b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and morph(\1, "po:glagol", False) and word(-1) in pomocni_nenaglaseni_htjeti -> \1i # Kada je nenaglašeni pomoćni glagol htjeti ispred infinitiva, on ne smije biti krnj.
