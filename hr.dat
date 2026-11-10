@@ -252,8 +252,8 @@ imenice_na_c_iste_kao_infinitiv_na_c = set(["ispomoći", "moći", "peći", "pomo
 \b(?<=[mM]i\sne\s)(bi)\b(?!\s+(?:smo|ste)\b) -> bismo # Uz zamjenicu 'mi' aorist gl. 'biti' glasi 'bismo'.
 \b(?<=[vV]i\sne\s)(bi)\b(?!\s+(?:smo|ste)\b) -> biste # Uz zamjenicu 'vi' aorist gl. 'biti' glasi 'biste'.
 
-# zamjenica iza pom. gl. biti
-\b(bi)(?=(\smi\s))(?!\s(smo|ste))\b -> bismo      # Uz zamjenicu 'mi' u aoristu gl. 'biti' uvijek ide 'bismo'.
+# zamjenica iza pom. gl. biti, ali ne u konstrukcijama 'Da li bi mi pomogao to napraviti.' jer onda ne ispravljamo u 'bismo'.
+\b(?<![dD]a li)\s(bi)(?=(\smi\s))(?!\s(smo|ste))\b -> bismo      # Uz zamjenicu 'mi' u aoristu gl. 'biti' uvijek ide 'bismo'.
 \b(bi)(?=(\svi\s))(?!\s(smo|ste))\b -> biste      # Uz zamjenicu 'vi' u aoristu gl. 'biti' uvijek ide 'biste'.
 
 # rastavljeno 'bi smo' i 'bi ste' u 'bismo' i 'biste'.
