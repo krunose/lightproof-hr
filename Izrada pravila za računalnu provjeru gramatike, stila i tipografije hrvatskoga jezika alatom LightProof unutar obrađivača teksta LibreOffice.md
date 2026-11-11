@@ -148,9 +148,11 @@ Trenutačno to ne čini razliku jer rječnik nije označen, ali ako bi bio ozna�
 
 Istina jest da LightProof nije moćan kao LanguageTool, ali kada bismo imali označen rječnik, značajke koje ovaj provjernik gramatike posjeduje bile bi i više nego dovoljne da se provjera gramatike za hrvatski jezik postavi na zdrave noge. Ključ napretka nije u samom alatu koliko u činjenici da trebamo označiti Hunspellov rječnik.
 
-#### Funkcija stem()
+Ako se unutar funkcije `morph()` želi pozvati na prvu grupu pogotka pravilnoga izraza, sintaksa je ovakva:
 
-Funkcija `stem()` prepoznaje osnovni, kanonski oblik riječi bez obzira na to u kojem je obliku riječ napisana na lijevoj strani izraza. Naravno, o ovome možemo pisati samo teorijski jer nemamo upisane kanonske oblike riječi (stemove) u rječnik uz troslovnu oznaku `st:`. Ovaj dio teksta treba proširiti kada se u rječnik uvedu ove oznake.
+`\b(\w+t)\b <- morph(\1, "st:" + \1 + "i", True) -> \1i`
+
+To će provjeriti je li `stem`, odnosno završava li lema (osnovni oblik) na `-ti`.
 
 #### Funkcija affix()
 
