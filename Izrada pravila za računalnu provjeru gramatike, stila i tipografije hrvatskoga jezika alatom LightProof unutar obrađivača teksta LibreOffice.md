@@ -138,15 +138,23 @@ Međutim navedeno nije dovoljno jer ne završavaju samo glagoli (infinitivi) na 
 
 #### Funkcija morph()
 
-Za relativnu robusnost ovoga pravila zaslužna je funkcija `morph()` koja prima tri argumenta: prvi je, u konkretnom primjeru, prva grupa unutar zagrada (`\1`), drugi je oznaka (engl. <i>part-of-speech tag</i>), a treći može imati vrijednost `True` ili `False`. U našem primjeru funkcija `morph()` provjerava samo postoji li u rječniku za koju riječ oznaka `po:glagol`, i zato je treći argument `False`. Međutim, ako je on `True`, onda je moguće drugi argument pisati kao pravilni izraz.
+Za relativnu robusnost ovoga pravila zaslužna je funkcija `morph()` koja prima tri argumenta: prvi je, u konkretnom primjeru, prva grupa unutar zagrada (`\1`), drugi je oznaka (engl. <i>part-of-speech tag</i>), a treći može imati vrijednost `True` ili `False`.
 
-Trenutačno to ne čini razliku jer rječnik nije označen, ali ako bi bio označen `MulText-East` oznakama (`v6`), one bi se mogle pretraživati pomoću pravilnih izraza: funkcija `morph(\1, "N...an", True)` provjerila bi znači li imenica (`N`) u grupi `\1` nešto neživo (`n`) u akuzativu (`a`). Tri točke označavaju pravilni izraz koji preskače `tip`, `rod` i `broj`. Ta se informacija može koristiti za ispravak `automobil kojega vozim` u `automobil koji vozim`:
+Hunspell za neke riječi može vratiti više oznaka, recimo riječ `moći` može biti glagol (infinitiv od `moći`), ali može biti i imenica (Gjd od `moć`). Budući da provjernik riječi, ali i provjernik gramatike ne mogu znati na što se od toga misli, vraća za `moć` i `po:glagol` i `po:imenica` (kada rječnik bude označen). U tom kontekstu argument `False` znači zapravo `all` odnosno djeluje kao operator `OR` i vraća pogodak ako u oznakama postoji ili `po:glagol` ili `po:imenica`. Međutim ako bi treći argument bio `True`, onda funkcija traži da sve oznake `po:` budu zadovoljene; djeluje kao operator `AND`, odnosno vrati će `false` ako za konkretnu riječ stoji i `po:glagol` i `po:imenica`.
+
+Najsigurnije je pisati `False` ili treći argument u potpunosti izostaviti. Evo primjer:
 
 ```
-(\w+)\skojeg(a)? <- morph(\1, "N...an", True) -> \1 koji
+\b(\w+t)\b <- morph(\1, r"st:\w+(ti|ći)", True) -> \1i
 ```
 
-Istina jest da LightProof nije moćan kao LanguageTool, ali kada bismo imali označen rječnik, značajke koje ovaj provjernik gramatike posjeduje bile bi i više nego dovoljne da se provjera gramatike za hrvatski jezik postavi na zdrave noge. Ključ napretka nije u samom alatu koliko u činjenici da trebamo označiti Hunspellov rječnik.
+Funkcija će raditi ako provjeravana riječ ima samo jednu oznaku i to tako što pravilni izraz provjerava završava li oznaka riječ unutar oznake `st:` na `ti` ili `ći`. Ovaj primjer neće raditi u riječi `moći` jer Hunspell vraća `po:glagol` i `po:imenica`, odnosno `st:moći`, ali i `st:moć` pa je provjeru bolje napisati ovako:
+
+```
+\b(\w+t)\b <- morph(\1, r"st:\w+(ti|ći)", False) -> \1i
+```
+
+Istina jest da LightProof nije moćan kao LanguageTool, ali kada bismo imali označen rječnik, značajke koje ovaj provjernik gramatike posjeduje bile bi i više nego dovoljne da se provjera gramatike za hrvatski jezik postavi na zdrave noge. Ključ napretka nije u samom alatu koliko u označavanju rječnika.
 
 Ako se unutar funkcije `morph()` želi pozvati na prvu grupu pogotka pravilnoga izraza, sintaksa je ovakva:
 
