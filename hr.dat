@@ -70,7 +70,7 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 
 ## Ispravak pogrešnih trpnih -t
 ## 0. Prvo rješavamo pogrešne/zastarjele glagolske pridjeve trpne na -t u pasivnim konstrukcijama (svi rodovi i brojevi)
-## Primjeri: prozor je razbit -> razbijen, čaša je razbita -> razbijena, prijedlozi su podnijeti -> podneseni
+## Primjeri: prozor je razbit -> razbijen, prijedlozi su podnijeti -> podneseni
 \b([a-zA-ZčČćĆžŽšŠđĐ]+t[aoie]?)\b <- \1.lower() in pogresni_trpni_t_u_n and ((word(-1).lower() in pomocni_nenaglaseni_biti or word(-1).lower() in pomocni_naglaseni_biti or word(-1).lower() in glagolski_pridjev_radni_biti) or (word(-2).lower() in pomocni_nenaglaseni_htjeti and word(-1).lower() in ["biti"])) -> = ispravi_trpni_t(\1) # U standardnom hrvatskom jeziku glagolski pridjev trpni ovog glagola tvori se nastavkom -n:
 
 # Ispravak uz imperativ nemoj, nemojmo i nemojte
@@ -162,7 +162,59 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 # Upozorenje na konstrukciju 'da li'
 # =============================================================================
 
-\b[dD]a li\b -> _ # U hrvatskom treba izbjegavati ovu konstrukciju, preformulirajte rečenicu.
+# Ispravak konstrukcije 'da li se (je) htjela|htio...
+([Dd]a) li se (?:je\s)?(htio|htjela|htjelo|htjeli|htjele) <- morph(\2, "po:glagol", False) -> = "je".capitalize() + " li se " + \2 if \1[0].isupper() else "je li se " + \2 # Vjerojatno biste htjeli preoblikovati konstrukciju 'da li se (je) \2':
+
+# Ispravak konstrukcije 'Da li se (je)' + glagolski pridjev radni
+([Dd]a) li se (?:je\s)?(\w+(li|le|la|lo|o)) <- morph(\2, "po:glagol", False) and morph(\2, r"st:(\w+(ti|ći))", False) -> = "je".capitalize() + " li se " + \2 if \1[0].isupper() else "je li se " + \2 # Konstrukciju 'da li se (je) \2' treba preoblikovati u:
+
+# Ispravak konstrukcije 'Da li se' + prezent
+([Dd]a) li se (\w+(m|š|a|amo|te|ju|i|e|u)) <- morph(\2, "po:glagol", False) and morph(\2, r"st:(\w+(ti|ći))", False) and \2.lower() not in glagolski_pridjev_radni_biti -> = \2.capitalize() + " li se" if \1[0].isupper() else \2 + " li se" # Konstrukciju 'da li se \2' treba preoblikovati u:
+
+# Ispravak konstrukcije 'Da li se' + mogu|možeš|može|možemo|možete
+([Dd]a) li se (mogu|možeš|može|možemo|možete) <- morph(\2, "po:glagol", False) -> = \2.capitalize() + " li se" if \1[0].isupper() else \2 + " li se" # Bilo bi bolje konstrukciju 'da li se \2' preoblikovati u:
+
+# Konstrukcija 'Da li se' hoću|hoćeš| ... neću|nećeš...
+([Dd]a) li se (hoću|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete) <- morph(\2, "po:glagol", False) -> = \2.capitalize() + " li se" if \1[0].isupper() else \2 + " li se" # Bilo bi bolje konstrukciju 'da li se \2' preoblikovati u:
+
+### Hvatanje konstrukcije 'Da li je vidiš' da ne bi ispalo 'Je li vidiš' kada treba 'Vidiš li je'
+([Dd]a) li je (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\2, "po:glagol", False) and morph(\2, r"st:(\w+(ti|ći))", False) and \2.lower() not in glagolski_pridjev_radni_biti -> = \2.capitalize() + " li je" if \1[0].isupper() else \2 + " li je" # Konstrukciju '\1 li je \2' treba preoblikovati na sljedeći način:
+
+# Hvatanje konstrukcije 'Da li ne znam' da bi ispalo 'Ne znam li'
+([Dd]a) li (ne) (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\3, "po:glagol", False) and morph(\3, r"st:(\w+(ti|ći))", False) -> = \2.capitalize() + " " + \3 + " li" if \1[0].isupper() else \2 + " " + \3 + " li" # Konstrukciju '\1 li ne \2' treba preoblikovati:
+
+# Hvatanje konstrukcije 'Da li ne mogu' da bi ispalo 'Ne mogu li'
+([Dd]a) li (ne) (mogu|možeš|može|možemo|možete) -> = \2.capitalize() + " " + \3 + " li" if \1[0].isupper() else \3 + " " + \2 + " li" # Konstrukcija 'Da li \2' treba glasiti:
+
+# Hvatanje konstrukcije 'Da li mogu' jer 'mogu' nije pokriveno prezentom običnih glagola jer ima drugačiji prezent
+([Dd]a) li (mogu|možeš|može|možemo|možete) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukcija 'Da li \2' treba glasiti:
+
+# Hvatanje konstrukcije 'da li' + izravno prezent: 'Da li vidiš' (bez zamjenice)
+([Dd]a) li (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\2, "po:glagol", False) and morph(\2, r"st:(\w+(ti|ći))", False) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li je \2' treba preoblikovati na sljedeći način:
+
+# Konstrukcija 'da li' + aorist pom. gl. biti
+([Dd]a) li (bih|bi|bismo|biste) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li \2' treba preoblikovati tako da aorist dođe na prvo mjesto:
+
+# Prezent pomoćnog glagola biti u negaciji: nisam, nisi, nije, nismo, niste, nisu
+([Dd]a) li (nisam|nisi|nije|nismo|niste|nisu) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li \2' treba preoblikovati na sljedeći način:
+
+# Hvatanje konstrukcije 'da li' + nenaglašeni prezent pomoćnog glagola biti (bez 3. l. 'je' jer se može podudarati sa zamjenicom 'je' (ona)
+([Dd]a) li (sam|si|smo|ste|su) -> = "je".capitalize() + \2 + " li" if \1[0].isupper() else "je" + \2 + " li" # Ako iza konstrukcije 'da li' slijedi nenagl. prez. pom. glagola biti, treba pisati:
+
+### Hvatanje konstrukcije 'da li' + nenaglašeni prezent pomoćnog glagola biti 'je'
+\b([Dd]a) li je\b <- word(1) in ["bio", "bila", "bilo", "bili", "bile", "bila"] -> = "je".capitalize() + " li" if \1[0].isupper() else "je li" # Ako iza konstrukcije 'da li' slijedi nenagl. prez. pom. glag. biti u 3. l. jd, treba pisati:
+
+# Hvatanje konstrukcije 'da li' + nenaglašeni prezent pomoćnog glagola htjeti
+([Dd])a li (ću|ćeš|će|ćemo|ćete) -> = "Ho" + \2 + " li" if \1[0].isupper() else "ho" + \2 + " li" # Konstrukcija '\1 li' uz nenagl. prez. pom. gl. 'htjeti' glasi:
+
+# Hvatanje konstrukcije 'da li' + naglađeni prezent pomoćnog glagola htjeti
+([Dd]a) li (hoću|hoćeš|hoće|hoćemo|hoćete) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li \2' treba preoblikovati tako da naglašeni prezent 'hoću' dođe na početak:
+
+# Hvatanje konstrukcije 'da li' + niječni prezent pomoćnog glagola htjeti
+([Dd]a) li (neću|nećeš|neće|nećemo|nećete) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li \2' treba preoblikovati tako da niječni prezent gl. 'htjeti' dođe na početak:
+
+# Najopćenitije koje hvata sve ako je predaleko glagol ili slično
+[Dd]a li -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika. Preoblikujte rečenicu.
 
 
 
@@ -284,6 +336,11 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 # zamjenica iza pom. gl. biti, ali ne u konstrukcijama 'Da li bi mi pomogao to napraviti.' jer onda ne ispravljamo u 'bismo'.
 \b(?<![dD]a li)\s(bi)(?=(\smi\s))(?!\s(smo|ste))\b -> bismo      # Uz zamjenicu 'mi' u aoristu gl. 'biti' uvijek ide 'bismo'.
 \b(bi)(?=(\svi\s))(?!\s(smo|ste))\b -> biste      # Uz zamjenicu 'vi' u aoristu gl. 'biti' uvijek ide 'biste'.
+
+# Zamjena u konstrukcijama 'Bi li se mogao (ja|mi|vi)' + infinitiv
+(Bi) <- word(1) == "li" and word(2) == "se" and re.match(r"(\w+(la|le|li|lo|o))", word(3)) and word(4) == "ja" and morph(word(5), "po:glagol", False) and morph(word(5), "st:(\w+(ti|ći))", False) -> Bih # Uz zamjenicu 'ja' aorist glagola 'biti' glasi:
+(Bi) <- word(1) == "li" and word(2) == "se" and re.match(r"(\w+(la|le|li|lo|o))", word(3)) and word(4) == "mi" and morph(word(5), "po:glagol", False) and morph(word(5), "st:(\w+(ti|ći))", False) -> Bismo # Uz zamjenicu 'mi' aorist glagola 'biti' glasi:
+(Bi) <- word(1) == "li" and word(2) == "se" and re.match(r"(\w+(la|le|li|lo|o))", word(3)) and word(4) == "vi" and morph(word(5), "po:glagol", False) and morph(word(5), "st:(\w+(ti|ći))", False) -> Biste # Uz zamjenicu 'vi' aorist glagola 'biti' glasi:
 
 # rastavljeno 'bi smo' i 'bi ste' u 'bismo' i 'biste'.
 \b([bB]i)\s(smo|ste)\b -> \1\2   # Pogrešno je rastavljati aorist gl. 'biti', piše se sastavljeno.
