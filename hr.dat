@@ -107,7 +107,7 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 \b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and (morph(word(-2), "po:glagol", False) and word(-2).lower() not in glagolski_pridjev_radni_biti) and word(-1) in pomocni_nenaglaseni_biti -> \1i # U ovom se slučaju vjerojatno radi o infinitivu, ne smije biti u krnjem obliku.
 
 ## Razdvojeno pomoćni glagol biti, infinitiv i modalni ili kakav drugi glagol
-\b(\w+t)\b <- morph(\1, "st:" + \1 + "i", True) and \1.lower() not in popis_trpnih_t and word(-1) in pomocni_nenaglaseni_biti and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and morph(word(1), "po:glagol") -> \1i # Izgleda kao infinitiv u rečenici sa stilski obilježenim redom riječi:
+\b(\w+t)\b <- morph(\1, "st:" + \1 + "i", True) and \1.lower() not in popis_trpnih_t and word(-1) in pomocni_nenaglaseni_biti and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and morph(word(1), "po:glagol", False) -> \1i # Izgleda kao infinitiv u rečenici sa stilski obilježenim redom riječi:
 
 ## infinitivi izvan futura na daljinu (bilo bi lakše da je rječnik označen, ovako moram pogađati je li nešto glagol na udaljenosti do tri riječi
 \b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and \1.lower() not in ["jest"] and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and ((morph(word(-3), "po:glagol", False) or morph(word(-2), "po:glagol", False)) or (morph(word(3), "po:glagol", False) or morph(word(2), "po:glagol", False))) and word(1) not in pomocni_nenaglaseni_htjeti and word(1) not in pomocni_nenaglaseni_biti and word(-2).lower() not in pomocni_nenaglaseni_biti -> \1i # Najvjerojatnije je riječ o infinitivu, ne smije biti u krnjem obliku.
@@ -140,7 +140,7 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 ## 5. Slučaj: prijedlog + povratni oblici s infinitivom na -ći
 \b(za|bez|umjesto|osim)\s+se\s+(\w+ći)\b <- morph(\2, "po:glagol", False) and \2.lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
 
-\b(za|bez|umjesto|osim)\s+(\w+ći)\s+se\b <- morph(\2, "po:glagol", False) and word(-1).lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
+\b(za|bez|umjesto|osim)\s+(\w+ći)\s+se\b <- morph(\2, "po:glagol", False) and \2.lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
 
 
 
@@ -162,6 +162,9 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 # Upozorenje na konstrukciju 'da li'
 # =============================================================================
 
+# Ispravak za konstrukciju 'da li sam' + prezent
+([Dd]a) li sam (\w+(m|š|a|amo|te|ju|i|e|u)) <- morph(\2, "po:glagol", False) and morph(\2, r"st:(\w+(ti|ći))", False) -> = \2.capitalize() + " li sam" if \1[0].isupper() else \2 + " li sam" # Ovu konstrukciju s 'da li' treba ispraviti u:
+
 # Ispravak konstrukcije 'da li se (je) htjela|htio...
 ([Dd]a) li se (?:je\s)?(htio|htjela|htjelo|htjeli|htjele) <- morph(\2, "po:glagol", False) -> = "je".capitalize() + " li se " + \2 if \1[0].isupper() else "je li se " + \2 # Vjerojatno biste htjeli preoblikovati konstrukciju 'da li se (je) \2':
 
@@ -177,23 +180,23 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 # Konstrukcija 'Da li se' hoću|hoćeš| ... neću|nećeš...
 ([Dd]a) li se (hoću|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete) <- morph(\2, "po:glagol", False) -> = \2.capitalize() + " li se" if \1[0].isupper() else \2 + " li se" # Bilo bi bolje konstrukciju 'da li se \2' preoblikovati u:
 
-### Hvatanje konstrukcije 'Da li je vidiš' da ne bi ispalo 'Je li vidiš' kada treba 'Vidiš li je'
+# Hvatanje konstrukcije 'Da li je vidiš' da ne bi ispalo 'Je li vidiš' kada treba 'Vidiš li je'
 ([Dd]a) li je (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\2, "po:glagol", False) and morph(\2, r"st:(\w+(ti|ći))", False) and \2.lower() not in glagolski_pridjev_radni_biti -> = \2.capitalize() + " li je" if \1[0].isupper() else \2 + " li je" # Konstrukciju '\1 li je \2' treba preoblikovati na sljedeći način:
 
 # Hvatanje konstrukcije 'Da li ne znam' da bi ispalo 'Ne znam li'
-([Dd]a) li (ne) (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\3, "po:glagol", False) and morph(\3, r"st:(\w+(ti|ći))", False) -> = \2.capitalize() + " " + \3 + " li" if \1[0].isupper() else \2 + " " + \3 + " li" # Konstrukciju '\1 li ne \2' treba preoblikovati:
+([Dd]a) li (ne) (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\3, "po:glagol", False) and morph(\3, r"st:(\w+(ti|ći))", False) -> = \2.capitalize() + " " + \3 + " li" if \1[0].isupper() else \2 + " " + \3 + " li" # Konstrukciju '\1 li \2' treba preoblikovati:
 
 # Hvatanje konstrukcije 'Da li ne mogu' da bi ispalo 'Ne mogu li'
-([Dd]a) li (ne) (mogu|možeš|može|možemo|možete) -> = \2.capitalize() + " " + \3 + " li" if \1[0].isupper() else \3 + " " + \2 + " li" # Konstrukcija 'Da li \2' treba glasiti:
+([Dd]a) li (ne) (mogu|možeš|može|možemo|možete) -> = \2.capitalize() + " " + \3 + " li" if \1[0].isupper() else \2 + " " + \3 + " li" # Konstrukcija 'Da li \2' treba glasiti:
 
 # Hvatanje konstrukcije 'Da li mogu' jer 'mogu' nije pokriveno prezentom običnih glagola jer ima drugačiji prezent
 ([Dd]a) li (mogu|možeš|može|možemo|možete) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukcija 'Da li \2' treba glasiti:
 
 # Hvatanje konstrukcije 'da li' + izravno prezent: 'Da li vidiš' (bez zamjenice)
-([Dd]a) li (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\2, "po:glagol", False) and morph(\2, r"st:(\w+(ti|ći))", False) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li je \2' treba preoblikovati na sljedeći način:
+([Dd]a) li (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\2, "po:glagol", False) and morph(\2, r"st:(\w+(ti|ći))", False) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li \2' treba preoblikovati na sljedeći način:
 
 # Konstrukcija 'da li' + aorist pom. gl. biti
-([Dd]a) li (bih|bi|bismo|biste) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li \2' treba preoblikovati tako da aorist dođe na prvo mjesto:
+([Dd]a) li (bih|bi|bismo|biste|biše) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li \2' treba preoblikovati tako da aorist dođe na prvo mjesto:
 
 # Prezent pomoćnog glagola biti u negaciji: nisam, nisi, nije, nismo, niste, nisu
 ([Dd]a) li (nisam|nisi|nije|nismo|niste|nisu) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li \2' treba preoblikovati na sljedeći način:
@@ -201,7 +204,7 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 # Hvatanje konstrukcije 'da li' + nenaglašeni prezent pomoćnog glagola biti (bez 3. l. 'je' jer se može podudarati sa zamjenicom 'je' (ona)
 ([Dd]a) li (sam|si|smo|ste|su) -> = "je".capitalize() + \2 + " li" if \1[0].isupper() else "je" + \2 + " li" # Ako iza konstrukcije 'da li' slijedi nenagl. prez. pom. glagola biti, treba pisati:
 
-### Hvatanje konstrukcije 'da li' + nenaglašeni prezent pomoćnog glagola biti 'je'
+# Hvatanje konstrukcije 'da li' + nenaglašeni prezent pomoćnog glagola biti 'je'
 \b([Dd]a) li je\b <- word(1) in ["bio", "bila", "bilo", "bili", "bile", "bila"] -> = "je".capitalize() + " li" if \1[0].isupper() else "je li" # Ako iza konstrukcije 'da li' slijedi nenagl. prez. pom. glag. biti u 3. l. jd, treba pisati:
 
 # Hvatanje konstrukcije 'da li' + nenaglašeni prezent pomoćnog glagola htjeti
@@ -213,8 +216,11 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 # Hvatanje konstrukcije 'da li' + niječni prezent pomoćnog glagola htjeti
 ([Dd]a) li (neću|nećeš|neće|nećemo|nećete) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li \2' treba preoblikovati tako da niječni prezent gl. 'htjeti' dođe na početak:
 
-# Najopćenitije koje hvata sve ako je predaleko glagol ili slično
-[Dd]a li -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika. Preoblikujte rečenicu.
+# Najopćenitije koje hvata sve ako je predaleko glagol ili slično (mora imati jake kontraargumente da nije u koliziji s prethodnim pravilima)
+\b[Dd]a li\b -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika. Preoblikujte rečenicu.
+
+
+# Pravila ako je pogrešno napisano 'dali (sam)'
 
 
 
@@ -278,7 +284,7 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 \b([sS])a\s(?![szšžSZŠŽ]|[kK][sS]|[pP][sS])(?!\bmnom\b)([a-zA-ZčČćĆžŽšŠđĐ\-]+)\b -> \1 \2  # Ako riječ iza 'sa' ne počinje sa 's, z, ž, š, ks, ps' i nije 'mnom', nema potrebe pisati 'sa'.
 
 # 5. Ispravak nakon provjere pravopisa > s menom > s mnom > sa mnom
-([sS]) mnom -> \1a mnom     # Ispravno je pisati:
+\b([sS])\b \bmnom\b -> \1a mnom     # Ispravno je pisati:
 
 
 
@@ -310,7 +316,7 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 
 (?<![.?!]\s)I(starsk)(i|og|oga|om|omu|ome|im)\s+(pršu)(t|ta|tu|tom)\b  <- word(-1) != ""  -> i\1\2 \3\4 # Sintagma 'istarski pršut' piše se malim slovom (osim na početku rečenice).
 
-(?<![.?!]\s)P(ašk)(i|og|oga|om|omu|ome|im)\s(si)(r|ra|ru|rom)?\b  <- word(-1) != ""  -> p\1\2 \3\4 # Sintagma 'paški sir' piše se malim slovom (osim na početku rečenice).
+(?<![.?!]\s)P(ašk)(i|og|oga|om|omu|ome|im)\s(sir)(a|u|om)?\b  <- word(-1) != ""  -> p\1\2 \3\4 # Sintagma 'paški sir' piše se malim slovom (osim na početku rečenice).
 
 
 
@@ -419,7 +425,7 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 ## 15. prvi/posljednji/svaki... puta > prvi/posljednji/svaki put
 ([pP]rvi|[Dd]rugi|[tT]reći|[čČ]etvrti|[pP]eti|[šŠ]esti|[sS]edmi|[oO]smi|[dD]eveti|[dD]eseti|[sS]toti|[tT]isućiti) puta -> \1 put     # Imenica u službi priloga je u krivom padežu, treba pisati:
 
-([0-9]+\.) puta -> \1 put   # Imenica u službi priloga je u krivom padžeu, treba pisati:
+([0-9]+\.) puta -> \1 put   # Imenica u službi priloga je u krivom padežu, treba pisati:
 
 ([pP]rošli|[sS]ljedeći|[nN]aredni|[pP]osljednji|[zZ]adnji|[pP]rethodni|[iI]sti) puta -> \1 put   # Imenica u službi priloga je u krivom padežu, treba pisati:
 
@@ -438,7 +444,7 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 \bZato jer\b -> Zato što|Budući da      # Gomilanje istoznačnih veznika, zamijenite: 
 
 ## 18. s nikim > ni s kim
-\b([sS]) nikim\b -> = "ni".lower() + "s kim" if \1.islower() else "Ni s kim" # Pravilno je pisati:
+\b([sS]) nikim\b -> = "ni".lower() + " s kim" if \1.islower() else "Ni s kim" # Pravilno je pisati:
 
 ## 19. iz ničega > ni iz čega
 \b([iI]z) ničega\b -> = "ni iz čega" if \1.islower() else "Ni iz čega" # Pravilno je pisati:
@@ -447,7 +453,7 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 \b([zZ]a) nikoga\b -> = "ni za koga" if \1.islower() else "Ni za koga" # Pravilno je pisati:
 
 ## 21.
-\b([sS]) ničim\b -> = "ni s čim" if \1.islower() else "Ni sa čim" # Pravilno je pisati:
+\b([sS]) ničim\b -> = "ni s čim" if \1.islower() else "Ni s čim" # Pravilno je pisati:
 
 # 22. oba dvoje > oboje | oba dvije > obje | oba dvojica > dvojica
 \b([oO]ba) (dvoje)\b -> = "oboje".title() if \1.istitle() else "oboje"         # Pisati 'oba dvoje' jest pleonazam. Treba pisati:
@@ -519,13 +525,6 @@ Oko (deset|dvadeset|trideset|pedeset|šezdeset|sedamdeset|osamdeset|devedeset|st
 n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
-# Ispravljanje konstrukcije prijedlog kroz + riječ koja označava vrijeme
-# =======================================================================
-
-\b(kroz)(?=\s+(cijele|cijelu|cijelog|čitavu|čitav|čitavog|iduća|sljedeća|protekla|prošla|naredna|zadnja|zadnjih|proteklih|dva|tri|četiri|pet|\d+)?\s*(godinu|godine|godina|mjesec|mjeseca|mjeseci|tjedan|tjedna|tjedana|dan|dana|sat|sata|sati|minutu|minuta|sekundu|sekundi|stoljeće|stoljeća|period|razdoblje|povijest|život|vrijeme|ljeto|zimu|proljeće|jesen|siječanj|veljaču|ožujak|travanj|svibanj|lipanj|srpanj|kolovoz|rujan|listopad|studeni|prosinac)\b) -> _ # Prijedlog 'kroz' ima prostorno značenje (npr. „proći kroz vrata”). Preformulirate. Primjer: umjesto „kroz cijelu godinu” treba pisati „tijekom cijele godine” ili „u cijeloj godini”.
-
-
-
 # Ispravljanje pogrešne uporabe pomoćnoga glagola 'je' uz povratnu zamjenicu 'se'
 # =======================================================================
 
@@ -533,7 +532,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 \b(\w+o|\w+ao|\w+la|\w+lo|\w+li|\w+le)\s+se\s+je\b -> \1 se                     # Pomoćni glagol 'je' izostavlja se uz povratnu zamjenicu 'se' i glagolski pridjev radni.
 
 ## 2. Slučaj: se je + glagolski pridjev radni (npr. 'on se je vratio', 'kuća se je gradila')
-\bse\s+je\s+(\w+o|\w+ao|\w+la|\w+lo|\w+li|\w+le)\b -> se \1               # Izbacivanje suvišnog 'je' ispred glagolskog pridjeva radnog (perfekt/pasiv).
+\bse\s+je\s+(\w+o|\w+ao|\w+la|\w+lo|\w+li|\w+le)\b -> se \1               # Izbacivanje suvišnog 'je' ispred glagolskog pridjeva radnog.
 
 ## 3. Slučaj: glagolski prilog sadašnji + se je (npr. 'smijući se je ušao' -> 'smijući se ušao')
 \b(\w+ući|\w+eći|\w+ći)\s+se\s+je\b -> \1 se                              # Uz glagolski prilog sadašnji ne dolazi pomoćni glagol 'je'.
@@ -554,7 +553,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 #\b([oO])ni će(\s)?ju (\w+)([^.?!]*?)(\w+(ti|ći))\b <- \3.lower() in ["sad", "sada", "već", "tek", "još", "opet", "ponovo", "ponovno", "brzo", "odmah", "hitno", "danas", "večeras", "sutra", "prekosutra", "ujutro", "popodne", "navečer", "noćas", "uvijek", "često", "rijetko", "stalno", "neprestano", "katkad", "ponekad", "nekad", "nekada", "ikad", "ikada", "nikad", "nikada", "tada", "onda", "uskoro"] and morph(\5, "po:glagol", False) -> \1ni će \3\4\5 # Konstrukcija 'će ju' ne pripada standardnom jeziku.
 
 
-# Provjera nezatvaranja navodnih zankova u rečenici.
+# Provjera nezatvaranja navodnih znakova u rečenici.
 # =======================================================================
 
 # Provjera nezatvorenih hrvatskih navodnika (podcrtava samo prvu riječ u rečenici)
@@ -577,7 +576,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 ## Provjera razmaka između riječi i zagrade.
 
 \(\s+([^\(\)]*?)\b\) -> (\1)    # Imate razmak između otvorene zagrade i prve riječi u zagradama.
-\(\b([^\(\)]*?)\s\) -> (\1)     # Imate razmak između zatvorene zagrade i posljednje riječi u zagrdama.
+\(\b([^\(\)]*?)\s\) -> (\1)     # Imate razmak između zatvorene zagrade i posljednje riječi u zagradama.
 \(\s([^\(\)]*?)\s\) -> (\1)     # Imate razmak između zagrade i riječi između zagrada.
 
 
@@ -600,7 +599,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 # Umetanje razmaka između riječi i pravopisnoga znaka
 \b(\w+)([,;\)”])(\w+)\b -> \1\2 \3 # Niste unijeli razmak između riječi i pravopisnoga znaka.
-\b(\w+)([„\(])(\w+)\b -> \1 \2\3 # Niste unijeli razmak između riječi i pravopisanoga znaka.
+\b(\w+)([„\(])(\w+)\b -> \1 \2\3 # Niste unijeli razmak između riječi i pravopisnoga znaka.
 
 
 
@@ -614,8 +613,8 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 ## Unos dvostruke točke, upitnika i uskličnika
 (\w+)(\.\.)(?!\.) -> \1...|\1.      # Unijeli ste svega dvije točke, treba ili jednu ili tri.
-(\w+)(\?\?)(?!\?) -> \1???|\1?      # Unijeli ste dva upitnika, treba ili jednu ili tri.
-(\w+)(\!\!)(?!\!) -> \1!!!|\1!      # Unijeli ste dva upitnika, treba ili jednu ili tri.
+(\w+)(\?\?)(?!\?) -> \1???|\1?      # Unijeli ste dva upitnika, treba ili jedan ili tri.
+(\w+)(\!\!)(?!\!) -> \1!!!|\1!      # Unijeli ste dva uskličnika, treba ili jedan ili tri.
 
 
 ## Dvostruki razmak
@@ -641,7 +640,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 (?<=\.)\s(\w+) <- \1.lower() in fileExtensions -> = \1.lower()    # Možda niste željeli započeti novu rečenicu, nego napisati naziv kakve datoteke?
 
 
-# Započinjanje rečnica ili razmak između broja i sljedeće riječi.
+# Započinjanje rečenica ili razmak između broja i sljedeće riječi.
 (\d+\.)(?!g\.|god\.|godine\.)([a-zA-ZčćžšđČĆŽŠĐ]\w*) -> = \1 + " " + \2  + "|" + \1 + " " + \2.capitalize()  # Možda ste htjeli započeti rečenicu ili jednostavno niste unijeli razmak?
 
 
