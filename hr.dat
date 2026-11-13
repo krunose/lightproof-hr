@@ -232,9 +232,6 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 # 4. 'da li se' + (opcionalno 'je') + bilo koja riječ koja NIJE glagol ni 'hoću/mogu/neću' (npr. 'Da li se i on slaže?')
 \b[Dd]a li\b(?=\s+se\s+(?:je\s+)?(?!(?:mogu|možeš|može|možemo|možete|hoću|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete)\b)(\w+)) <- not morph(\1, "po:glagol", False) -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika. Preoblikujte rečenicu.
 
-
-
-
 # Pravila ako je pogrešno napisano 'dali (sam)'
 
 
@@ -633,7 +630,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 
 
 ## Dvostruki razmak
-\s{2,3} -> " "                     # Unijeli ste više bjelina, možda ste željeli samo jednu.
+\b(?<=(?:\w))\s{2,3}(?=(?:\w)) -> " "  # Unijeli ste više bjelina, možda ste željeli samo jednu.
 
 # Razmak između riječi i pravopisnoga znaka
 (\w+)\s(\.)(?![\w\w+]) -> \1\2  # Možda ste željeli napisati:
