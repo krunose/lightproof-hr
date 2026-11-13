@@ -2,7 +2,7 @@
 
 > [!WARNING]
 > **OVISNOST O NOVOM RJEČNIKU ZA PROVJERU PRAVOPISA:**
-> Ovaj dodatak za pravilno funkcioniranje traži označeni rječnik. Uspjelo se označiti (POS tag) infinitive u Hunspellovu rječniku. Pravilo od inačice 0.5.5.9 radi isključivo ako LibreOffice koristi označen rječnik. Prije instalacije ovoga dodatka instalirajte dodatak s (djelomično) [označenim rječnikom za računalnu provjeru riječi](https://extensions.libreoffice.org/en/extensions/show/99660) iz LibreOfficeova službena [repozitorija dodatcima](https://extensions.libreoffice.org/en/extensions/show/99660). Ponovno pokrenite LibreOffice, također i u sistemskoj traci ako je aktivno (Windows). Primam pitanja i pružam pomoć na [ask.libreoffice.org Hrvatski](https://ask.libreoffice.org/c/croatian/15).
+> Ovaj dodatak za pravilno funkcioniranje traži označeni rječnik. Uspjelo se označiti (POS tag) infinitive u Hunspellovu rječniku. Pravilo od inačice 0.5.5.9 radi isključivo ako LibreOffice koristi označen rječnik. Prije instalacije ovoga dodatka instalirajte dodatak s (djelomično) [označenim rječnikom za računalnu provjeru riječi](https://extensions.libreoffice.org/en/extensions/show/99660) iz LibreOfficeova službena repozitorija dodatcima. Ponovno pokrenite LibreOffice, također i u sistemskoj traci ako je aktivno (Windows). Primam pitanja i pružam pomoć na [ask.libreoffice.org Hrvatski](https://ask.libreoffice.org/c/croatian/15).
 
 ---
 
