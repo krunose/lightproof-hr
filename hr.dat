@@ -74,50 +74,68 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 ## Primjeri: prozor je razbit -> razbijen, prijedlozi su podnijeti -> podneseni
 \b([a-zA-ZčČćĆžŽšŠđĐ]+t[aoie]?)\b <- \1.lower() in pogresni_trpni_t_u_n and ((word(-1).lower() in pomocni_nenaglaseni_biti or word(-1).lower() in pomocni_naglaseni_biti or word(-1).lower() in glagolski_pridjev_radni_biti) or (word(-2).lower() in pomocni_nenaglaseni_htjeti and word(-1).lower() in ["biti"])) -> = ispravi_trpni_t(\1) # U standardnom hrvatskom jeziku glagolski pridjev trpni ovog glagola tvori se nastavkom -n:
 
+#------------
+
+# 1. Modalni ili fazni glagol neposredno ispred krnjeg infinitiva "jest" (uključujući povratno "se")
+# Primjeri: "može jest", "može se jest", "počinje jest", "ne mora jest"
+(\w+) (se) (jest) <- morph(\1, r"(md:modalni|fz:fazni)", True) -> \1 \2 \3i # Iza modalnog ili faznog glagola dolazi puni infinitiv "jesti".
+(\w+) (jest) <- morph(\1, r"(md:modalni|fz:fazni)", True) -> \1 \2i # Iza modalnog ili faznog glagola dolazi puni infinitiv "jesti".
+
+# 2. Modalni ili fazni glagol u perfektu ili kondicionalu (sa zanaglasnicom) ispred "jest"
+# Primjeri: "počeo je jest", "htjela bi jest", "moglo bi se jest", "trebali su jest"
+(\w+) (sam|si|je|smo|ste|su|bih|bi|bismo|biste) (se) (jest) <- morph(\1, r"(md:modalni|fz:fazni)", True) -> \1 \2 \3 \4i # Iza modalnog ili faznog glagola dolazi puni infinitiv "jesti".
+(\w+) (sam|si|je|smo|ste|su|bih|bi|bismo|biste) (jest) <- morph(\1, r"(md:modalni|fz:fazni)", True) -> \1 \2 \3i # Iza modalnog ili faznog glagola dolazi puni infinitiv "jesti".
+
+# 3. Krnji infinitiv "jest" neposredno ispred modalnog ili faznog glagola (inverzija)
+# Primjeri: "jest mora", "jest počinje", "jest želi" (uz zaštitu futura I. "jest ću/ćeš/će...")
+jest (\w+) <- morph(\1, r"(md:modalni|fz:fazni)", True) and not re.match(r"^(ću|ćeš|će|ćemo|ćete)$", \1, re.I) -> jesti \1 # Ispred modalnog ili faznog glagola dolazi puni infinitiv "jesti".
+
+#------------
+
 # Ispravak uz imperativ nemoj, nemojmo i nemojte
-\b(\w+t)\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and (word(-1).lower() in imperativ_nemoj or word(1).lower() in imperativ_nemoj or word(-2).lower() in imperativ_nemoj or word(2).lower() in imperativ_nemoj) -> \1i # Možda ste zabunom napisali krnji infinitiv:
+\b(\w+t)\b <- morph(\1, "po:glagol", True) and not morph(\1, "po:imenica", True) and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and (word(-1).lower() in imperativ_nemoj or word(1).lower() in imperativ_nemoj or word(-2).lower() in imperativ_nemoj or word(2).lower() in imperativ_nemoj) -> \1i # Možda ste zabunom napisali krnji infinitiv:
 
 ## Hvatanje krnjega infinitiva glagola 'jesti' mora ispred općenitih pravila jer ga pišemo kao iznimku da se razlikuje od naglašenoga pomoćnoga #glagola biti 'jest'
-#\b(jest)\b <- ((word(-2).lower() in pomocni_nenaglaseni_biti or word(-2).lower() in pomocni_naglaseni_biti) and (morph(word(-1), "po:glagol", False) and re.match(r"(.*(o|la|lo|li|le))", word(-1))) or word(-1).lower() in nijecni_pomocni_htjeti or ( morph(word(-1), "po:glagol", False) and re.match(r"(.*(m|š|a|mo|te|ju|i|e|u))", word(-1)) or ( word(-1) in pomocni_naglaseni_htjeti ))) -> jesti # Infinitiv od 'jesti' u ovom kontekstu ne može biti krnj.
+#\b(jest)\b <- ((word(-2).lower() in pomocni_nenaglaseni_biti or word(-2).lower() in pomocni_naglaseni_biti) and (morph(word(-1), "po:glagol", True) and re.match(r"(.*(o|la|lo|li|le))", word(-1))) or word(-1).lower() in nijecni_pomocni_htjeti or ( morph(word(-1), "po:glagol", True) and re.match(r"(.*(m|š|a|mo|te|ju|i|e|u))", word(-1)) or ( word(-1) in pomocni_naglaseni_htjeti ))) -> jesti # Infinitiv od 'jesti' u ovom kontekstu ne može biti krnj.
 
 ## Krnji infinitiv na početku odlomka kada je zapravo subjekt: Učit je važno. > Učiti je važno.
-\b([A-ZČĆŽŠĐ]\w+t)\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and word(-1) == "" and word(1).lower() not in pomocni_nenaglaseni_htjeti and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and ( ( morph(word(1), "po:glagol", False) or word(1).lower() in pomocni_nenaglaseni_biti or word(1).lower() in pomocni_naglaseni_biti ) or ( morph(word(2), "po:glagol", False) or word(2).lower() in pomocni_nenaglaseni_biti or word(2).lower() in pomocni_naglaseni_biti ) or ( morph(word(3), "po:glagol", False) or word(3).lower() in pomocni_nenaglaseni_biti or word(3).lower() in pomocni_naglaseni_biti ) ) -> \1i # Ako je infinitiv na početku odlomka u službi subjekta, ne smije biti krnj:
+\b([A-ZČĆŽŠĐ]\w+t)\b <- morph(\1, "po:glagol", True) and not morph(\1, "po:imenica", True) and word(-1) == "" and word(1).lower() not in pomocni_nenaglaseni_htjeti and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and ( ( morph(word(1), "po:glagol", True) or word(1).lower() in pomocni_nenaglaseni_biti or word(1).lower() in pomocni_naglaseni_biti ) or ( morph(word(2), "po:glagol", True) or word(2).lower() in pomocni_nenaglaseni_biti or word(2).lower() in pomocni_naglaseni_biti ) or ( morph(word(3), "po:glagol", True) or word(3).lower() in pomocni_nenaglaseni_biti or word(3).lower() in pomocni_naglaseni_biti ) ) -> \1i # Ako je infinitiv na početku odlomka u službi subjekta, ne smije biti krnj:
 
 ## Krnji infinitiv na početku rečenice unutar odlomka kada je zapravo subjekt: Učit je važno. > Učiti je važno.
-\b(?<=[.?!]\s)([A-ZČĆŽŠĐ]\w+t)\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False)  and word(1).lower() not in pomocni_nenaglaseni_htjeti and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and ( ( morph(word(1), "po:glagol", False) or word(1).lower() in pomocni_nenaglaseni_biti or word(1).lower() in pomocni_naglaseni_biti ) or ( morph(word(2), "po:glagol", False) or word(2).lower() in pomocni_nenaglaseni_biti or word(2).lower() in pomocni_naglaseni_biti ) or ( morph(word(3), "po:glagol", False) or word(3).lower() in pomocni_nenaglaseni_biti or word(3).lower() in pomocni_naglaseni_biti ) ) -> \1i # Ako je infinitiv na početku rečenice u službi subjekta, ne smije biti krnj:
+\b(?<=[.?!]\s)([A-ZČĆŽŠĐ]\w+t)\b <- morph(\1, "po:glagol", True) and not morph(\1, "po:imenica", True)  and word(1).lower() not in pomocni_nenaglaseni_htjeti and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and ( ( morph(word(1), "po:glagol", True) or word(1).lower() in pomocni_nenaglaseni_biti or word(1).lower() in pomocni_naglaseni_biti ) or ( morph(word(2), "po:glagol", True) or word(2).lower() in pomocni_nenaglaseni_biti or word(2).lower() in pomocni_naglaseni_biti ) or ( morph(word(3), "po:glagol", True) or word(3).lower() in pomocni_nenaglaseni_biti or word(3).lower() in pomocni_naglaseni_biti ) ) -> \1i # Ako je infinitiv na početku rečenice u službi subjekta, ne smije biti krnj:
 
 ## Krnji infinitiv u službi subjekta u stilski obilježenom redu riječi: Najbolje je učit sam. > Najbolje je učiti sam.
-\b(\w+t)\b <- morph(\1, "po:glagol", False) and morph(\1, "st:" + \1 + "i", True) and \1.lower() not in popis_trpnih_t and word(1).lower() not in pomocni_nenaglaseni_htjeti and ( ( morph(word(-1), "po:glagol", False) or word(-1).lower() in pomocni_nenaglaseni_biti or word(-1).lower() in pomocni_naglaseni_biti ) or ( morph(word(-2), "po:glagol", False) or word(-2).lower() in pomocni_nenaglaseni_biti or word(-2).lower() in pomocni_naglaseni_biti ) or ( morph(word(-3), "po:glagol", False) or word(-3).lower() in pomocni_nenaglaseni_biti or word(-3).lower() in pomocni_naglaseni_biti ) ) -> \1i # Ako je infinitiv u stilski obilježenom redu riječi u službi subjekta, treba pisati:
+\b(\w+t)\b <- \1.lower() not in ["jest"] and morph(\1, "po:glagol", True) and morph(\1, "st:" + \1 + "i", True) and \1.lower() not in popis_trpnih_t and word(1).lower() not in pomocni_nenaglaseni_htjeti and ( ( morph(word(-1), "po:glagol", True) or word(-1).lower() in pomocni_nenaglaseni_biti or word(-1).lower() in pomocni_naglaseni_biti ) or ( morph(word(-2), "po:glagol", True) or word(-2).lower() in pomocni_nenaglaseni_biti or word(-2).lower() in pomocni_naglaseni_biti ) or ( morph(word(-3), "po:glagol", True) or word(-3).lower() in pomocni_nenaglaseni_biti or word(-3).lower() in pomocni_naglaseni_biti ) ) -> \1i # Ako je infinitiv u stilski obilježenom redu riječi u službi subjekta, treba pisati:
 
 ## Pravilo za rečenice poput 'On je shvatit mogao sve.' > 'On je shvatiti mogao sve.'
-\b(\w+t)\b <- \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and \1.lower() not in popis_trpnih_t and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and (word(-1).lower() in pomocni_naglaseni_biti or word(-1).lower() in pomocni_nenaglaseni_biti) and (morph(word(1), "po:glagol", False) and re.match(r"(.*(o|la|lo|li|le))", word(1))) -> \1i # Napisali ste infinitiv u stilski obilježenom redu riječi. Infinitiv ne može biti krnj.
+\b(\w+t)\b <- \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and \1.lower() not in popis_trpnih_t and morph(\1, "po:glagol", True) and not morph(\1, "po:imenica", True) and (word(-1).lower() in pomocni_naglaseni_biti or word(-1).lower() in pomocni_nenaglaseni_biti) and (morph(word(1), "po:glagol", True) and re.match(r"(.*(o|la|lo|li|le))", word(1))) -> \1i # Napisali ste infinitiv u stilski obilježenom redu riječi. Infinitiv ne može biti krnj.
 
 ## Futur I: Pisati ću. > Pisat ću.
-\b(\w+t)i\b <- morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and word(1) in pomocni_nenaglaseni_htjeti -> \1 # Infinitiv u futuru dolazi u krnjem obliku ako iza njega slijedi nenagl. jesni oblik pom. gl. htjeti.
+\b(\w+t)i\b <- morph(\1, "po:glagol", True) and not morph(\1, "po:imenica", True) and word(1) in pomocni_nenaglaseni_htjeti -> \1 # Infinitiv u futuru dolazi u krnjem obliku ako iza njega slijedi nenagl. jesni oblik pom. gl. htjeti.
 
 ## Negacija Futur I:
-\b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and word(1) in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # U negaciji futura I infinitiv nije krnj.
+\b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and morph(\1, "po:glagol", True) and not morph(\1, "po:imenica", True) and word(1) in ["neću", "nećeš", "neće", "nećemo", "nećete"] -> \1i # U negaciji futura I infinitiv nije krnj.
 
 ## Futur I: Željet ću pisat > Željet ću pisati.
-\b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and word(-1) in pomocni_nenaglaseni_htjeti -> \1i # Kada je nenaglašeni pomoćni glagol htjeti ispred infinitiva, on ne smije biti krnj.
+\b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and morph(\1, "po:glagol", True) and not morph(\1, "po:imenica", True) and word(-1) in pomocni_nenaglaseni_htjeti -> \1i # Kada je nenaglašeni pomoćni glagol htjeti ispred infinitiva, on ne smije biti krnj.
 
 ## krnji infinitivi izvan futura: Samostalni krnji infinitiv ako ispred ili iza stoji glagol koji nije glagolski pridjev radni biti ili nenaglašeni pomoćni glagol htjeti: On je mogao radit. > On je mogao raditi; On je radit mogao. > On je raditi mogao.; Ne smijem radit to što hoću. > Ne smijem raditi to što hoću.
-\b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and \1.lower() not in ["jest"] and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and morph(word(-1), "po:glagol", False) and word(-1) not in glagolski_pridjev_radni_biti and word(-1) != "" and (word(-1) not in pomocni_nenaglaseni_htjeti and word(1) not in pomocni_nenaglaseni_htjeti) -> \1i # U ovoj konstrukciji infinitiv ne smije biti krnj.
+\b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and \1.lower() not in ["jest"] and morph(\1, "po:glagol", True) and not morph(\1, "po:imenica", True) and morph(word(-1), "po:glagol", True) and word(-1) not in glagolski_pridjev_radni_biti and word(-1) != "" and (word(-1) not in pomocni_nenaglaseni_htjeti and word(1) not in pomocni_nenaglaseni_htjeti) -> \1i # U ovoj konstrukciji infinitiv ne smije biti krnj.
 
 ## On želi moći učit > On želi moći učiti; ali ne hvatamo Bio je izričit.| On je bio izričit. jer su to glagolski pridjevi trpni
-\b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and (morph(word(-2), "po:glagol", False) and word(-2).lower() not in glagolski_pridjev_radni_biti) and word(-1) in pomocni_nenaglaseni_biti -> \1i # U ovom se slučaju vjerojatno radi o infinitivu, ne smije biti u krnjem obliku.
+\b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and morph(\1, "po:glagol", True) and not morph(\1, "po:imenica", True) and (morph(word(-2), "po:glagol", True) and word(-2).lower() not in glagolski_pridjev_radni_biti) and word(-1) in pomocni_nenaglaseni_biti -> \1i # U ovom se slučaju vjerojatno radi o infinitivu, ne smije biti u krnjem obliku.
 
 ## Razdvojeno pomoćni glagol biti, infinitiv i modalni ili kakav drugi glagol
-\b(\w+t)\b <- morph(\1, "st:" + \1 + "i", True) and \1.lower() not in popis_trpnih_t and word(-1) in pomocni_nenaglaseni_biti and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and morph(word(1), "po:glagol", False) -> \1i # Izgleda kao infinitiv u rečenici sa stilski obilježenim redom riječi:
+\b(\w+t)\b <- morph(\1, "st:" + \1 + "i", True) and \1.lower() not in popis_trpnih_t and word(-1) in pomocni_nenaglaseni_biti and morph(\1, "po:glagol", True) and not morph(\1, "po:imenica", True) and morph(word(1), "po:glagol", True) -> \1i # Izgleda kao infinitiv u rečenici sa stilski obilježenim redom riječi:
 
 ## infinitivi izvan futura na daljinu (bilo bi lakše da je rječnik označen, ovako moram pogađati je li nešto glagol na udaljenosti do tri riječi
-\b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and \1.lower() not in ["jest"] and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and ((morph(word(-3), "po:glagol", False) or morph(word(-2), "po:glagol", False)) or (morph(word(3), "po:glagol", False) or morph(word(2), "po:glagol", False))) and word(1) not in pomocni_nenaglaseni_htjeti and word(1) not in pomocni_nenaglaseni_biti and word(-2).lower() not in pomocni_nenaglaseni_biti -> \1i # Najvjerojatnije je riječ o infinitivu, ne smije biti u krnjem obliku.
+\b(\w+t)\b <- \1.lower() not in popis_trpnih_t and \1.lower() not in imenice_na_t_iste_kao_krnji_infinitiv and \1.lower() not in ["jest"] and morph(\1, "po:glagol", True) and not morph(\1, "po:imenica", True) and ((morph(word(-3), "po:glagol", True) or morph(word(-2), "po:glagol", True)) or (morph(word(3), "po:glagol", True) or morph(word(2), "po:glagol", True))) and word(1) not in pomocni_nenaglaseni_htjeti and word(1) not in pomocni_nenaglaseni_biti and word(-2).lower() not in pomocni_nenaglaseni_biti -> \1i # Najvjerojatnije je riječ o infinitivu, ne smije biti u krnjem obliku.
 
 ## infinitiv u Futuru I na daljinu
-#\b(\w+t)i\b <- \1.lower() not in popis_trpnih_t and morph(\1, "po:glagol", False) and not morph(\1, "po:imenica", False) and (( word(-2) in pomocni_nenaglašeni_htjeti or word(-3) in pomocni_nenaglaseni_htjeti ) or ( word(3) in pomocni_nenaglaseni_htjeti or word(2) in pomocni_nenaglaseni_htjeti ) and (morph(word(-2), "po:glagol", False) and word(-3).lower() == "da") ) -> \1|\1i # Najvjerojatnije se radi o glagolskom pridjevu trpnome.
+#\b(\w+t)i\b <- \1.lower() not in popis_trpnih_t and morph(\1, "po:glagol", True) and not morph(\1, "po:imenica", True) and (( word(-2) in pomocni_nenaglašeni_htjeti or word(-3) in pomocni_nenaglaseni_htjeti ) or ( word(3) in pomocni_nenaglaseni_htjeti or word(2) in pomocni_nenaglaseni_htjeti ) and (morph(word(-2), "po:glagol", True) and word(-3).lower() == "da") ) -> \1|\1i # Najvjerojatnije se radi o glagolskom pridjevu trpnome.
 
 ## Pridjevi trpni na -t koji su zapravo krnji infinitivi (pogreške) ako ispred stoji negacija, a iza njega nema glagola
-\b(\w+t)\b <- \1.lower() in popis_trpnih_t and (word(-1) in pomocni_nenaglaseni_htjeti or word(-1) in nijecni_pomocni_htjeti) and not morph(word(1), "po:glagol", False) -> \1i # Čini se da je riječ o infinitivu, treba biti:
+\b(\w+t)\b <- \1.lower() in popis_trpnih_t and (word(-1) in pomocni_nenaglaseni_htjeti or word(-1) in nijecni_pomocni_htjeti) and not morph(word(1), "po:glagol", True) -> \1i # Čini se da je riječ o infinitivu, treba biti:
 
 ## Ovdje danas sutra, kada ćemo imati označen Hunspellov rječnik, idu provjere za imenice koje zavšravaju na -t i ako im se doda -i izgledaju kao infinitivi: ispit ~ ispiti, brat ~ brati...
 
@@ -127,36 +145,36 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 # =============================================================================
 
 ## 1. Slučaj: prijedlog + infinitiv na -ti
-\b(za|bez|umjesto|osim)\s+(\w+t)i\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskoga standardnog jezika. Umjesto 'za učiti' pravilno je upotrijebiti glagolsku imenicu ('za učenje') ili preformulirati rečenicu.
+\b(za|bez|umjesto|osim)\s+(\w+t)i\b <- morph(\2, "po:glagol", True) -> _ # Konstrukcija prijedlog + infinitiv nije u duhu hrvatskoga standardnog jezika. Umjesto 'za učiti' pravilno je upotrijebiti glagolsku imenicu ('za učenje') ili preformulirati rečenicu.
 
 ## 2. Slučaj: prijedlog + povratna zamjenica "se" + infinitiv na -ti
-\b(za|bez|umjesto|osim)\s+se\s+(\w+t)i\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za se pripremiti' pravilno je koristiti glagolsku imenicu ('za pripremu') ili preformulirati rečenicu.
+\b(za|bez|umjesto|osim)\s+se\s+(\w+t)i\b <- morph(\2, "po:glagol", True) -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za se pripremiti' pravilno je koristiti glagolsku imenicu ('za pripremu') ili preformulirati rečenicu.
 
 ## 3. Slučaj: prijedlog + infinitiv na -ti + povratna zamjenica "se"
-\b(za|bez|umjesto|osim)\s+(\w+t)i\s+se\b <- morph(\2, "po:glagol", False) -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za pripremiti se' pravilno je koristiti glagolsku imenicu ('za pripremu') ili preformulirati rečenicu.
+\b(za|bez|umjesto|osim)\s+(\w+t)i\s+se\b <- morph(\2, "po:glagol", True) -> _ # Konstrukcija prijedlog + povratni infinitiv nije u duhu standardnog jezika. Umjesto 'za pripremiti se' pravilno je koristiti glagolsku imenicu ('za pripremu') ili preformulirati rečenicu.
 
 ## 4. Slučaj: prijedlog + infinitiv na -ći (s eliminacijom lažnih uzbuna na imenice u lokativu/genitivu)
-\b(za|bez|umjesto|osim)\s+(\w+ći)\b <- morph(\2, "po:glagol", False) and \2.lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Konstrukcija prijedlog + infinitiv na -ći nije u duhu hrvatskoga standardnog jezika. Preformulirajte rečenicu ili upotrijebite glagolsku imenicu.
+\b(za|bez|umjesto|osim)\s+(\w+ći)\b <- morph(\2, "po:glagol", True) and \2.lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Konstrukcija prijedlog + infinitiv na -ći nije u duhu hrvatskoga standardnog jezika. Preformulirajte rečenicu ili upotrijebite glagolsku imenicu.
 
 ## 5. Slučaj: prijedlog + povratni oblici s infinitivom na -ći
-\b(za|bez|umjesto|osim)\s+se\s+(\w+ći)\b <- morph(\2, "po:glagol", False) and \2.lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
+\b(za|bez|umjesto|osim)\s+se\s+(\w+ći)\b <- morph(\2, "po:glagol", True) and \2.lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
 
-\b(za|bez|umjesto|osim)\s+(\w+ći)\s+se\b <- morph(\2, "po:glagol", False) and \2.lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
+\b(za|bez|umjesto|osim)\s+(\w+ći)\s+se\b <- morph(\2, "po:glagol", True) and \2.lower() not in imenice_na_c_iste_kao_infinitiv_na_c -> _ # Izbjegavajte konstrukciju prijedlog + povratni infinitiv na -ći. Preformulirate rečenicu.
 
 
 
 # Ispravak promjene glagola 'trebati' kroz lica ispred infinitiva (bezlični trebati)
 # =============================================================================
 
-#\b(ja|ti|on|ona|ono|mi|vi|oni|one)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> treba \3     # Glagol trebati ispred infinitiva je u strogom standardu bezličan.
+#\b(ja|ti|on|ona|ono|mi|vi|oni|one)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", True) -> treba \3     # Glagol trebati ispred infinitiva je u strogom standardu bezličan.
 
-#\b(Ja|Ti|On|Ona|Ono|Mi|Vi|Oni|One)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", False) -> Treba \3     # Glagol trebati ispred infinitiva je u strogom standardu bezličan.
+#\b(Ja|Ti|On|Ona|Ono|Mi|Vi|Oni|One)\s(trebam|trebaš|trebamo|trebate|trebaju)\s(\w+ti) <- morph(\3, "po:glagol", True) -> Treba \3     # Glagol trebati ispred infinitiva je u strogom standardu bezličan.
 
-#\b(trebam|trebaš|trebamo|trebate|trebaju)\s+(\w+)\b <- morph(\2, "po:glagol", False) -> = "treba " + \2 # Kada glagol 'trebati' dolazi ispred #infinitiva, u strogom standardu je bezličan. Primjer: umjesto 'trebamo raditi' pravilno je 'treba raditi'.
+#\b(trebam|trebaš|trebamo|trebate|trebaju)\s+(\w+)\b <- morph(\2, "po:glagol", True) -> = "treba " + \2 # Kada glagol 'trebati' dolazi ispred #infinitiva, u strogom standardu je bezličan. Primjer: umjesto 'trebamo raditi' pravilno je 'treba raditi'.
 
-#\b(sam|si|je|smo|ste|su)\s+(trebao|trebala|trebalo|trebali|trebale)\s+(\w+)\b <- morph(\3, "po:glagol", False) -> _ # Kada glagol 'trebati' dolazi ispred infinitiva u prošlom vremenu, u strogom standardu je bezličan (glasi 'trebalo je'). Preformulirajte rečenicu.
+#\b(sam|si|je|smo|ste|su)\s+(trebao|trebala|trebalo|trebali|trebale)\s+(\w+)\b <- morph(\3, "po:glagol", True) -> _ # Kada glagol 'trebati' dolazi ispred infinitiva u prošlom vremenu, u strogom standardu je bezličan (glasi 'trebalo je'). Preformulirajte rečenicu.
 
-#\b(trebao|trebala|trebalo|trebali|trebale)\s+(sam|si|je|smo|ste|su)\s+(\w+)\b <- morph(\3, "po:glagol", False) -> _ # Kada glagol 'trebati' dolazi ispred infinitiva u prošlom vremenu, u strogom standardu je bezličan (glasi 'trebalo je'). Preformulirajte rečenicu.
+#\b(trebao|trebala|trebalo|trebali|trebale)\s+(sam|si|je|smo|ste|su)\s+(\w+)\b <- morph(\3, "po:glagol", True) -> _ # Kada glagol 'trebati' dolazi ispred infinitiva u prošlom vremenu, u strogom standardu je bezličan (glasi 'trebalo je'). Preformulirajte rečenicu.
 
 
 
@@ -164,28 +182,28 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 # =============================================================================
 
 # Ispravak za konstrukciju 'da li sam' + prezent
-([Dd]a) li sam (\w+(m|š|a|amo|te|ju|i|e|u)) <- morph(\2, "po:glagol", False) and morph(\2, r"st:(\w+(ti|ći))", False) -> = \2.capitalize() + " li sam" if \1[0].isupper() else \2 + " li sam" # Ovu konstrukciju s 'da li' treba ispraviti u:
+([Dd]a) li sam (\w+(m|š|a|amo|te|ju|i|e|u)) <- morph(\2, "po:glagol", True) and morph(\2, r"st:(\w+(ti|ći))", True) -> = \2.capitalize() + " li sam" if \1[0].isupper() else \2 + " li sam" # Ovu konstrukciju s 'da li' treba ispraviti u:
 
 # Ispravak konstrukcije 'da li se (je) htjela|htio...
-([Dd]a) li se (?:je\s)?(htio|htjela|htjelo|htjeli|htjele) <- morph(\2, "po:glagol", False) -> = "je".capitalize() + " li se " + \2 if \1[0].isupper() else "je li se " + \2 # Vjerojatno biste htjeli preoblikovati konstrukciju 'da li se (je) \2':
+([Dd]a) li se (?:je\s)?(htio|htjela|htjelo|htjeli|htjele) <- morph(\2, "po:glagol", True) -> = "je".capitalize() + " li se " + \2 if \1[0].isupper() else "je li se " + \2 # Vjerojatno biste htjeli preoblikovati konstrukciju 'da li se (je) \2':
 
 # Ispravak konstrukcije 'Da li se (je)' + glagolski pridjev radni
-([Dd]a) li se (?:je\s)?(\w+(li|le|la|lo|o)) <- morph(\2, "po:glagol", False) and morph(\2, r"st:(\w+(ti|ći))", False) -> = "je".capitalize() + " li se " + \2 if \1[0].isupper() else "je li se " + \2 # Konstrukciju 'da li se (je) \2' treba preoblikovati u:
+([Dd]a) li se (?:je\s)?(\w+(li|le|la|lo|o)) <- morph(\2, "po:glagol", True) and morph(\2, r"st:(\w+(ti|ći))", True) -> = "je".capitalize() + " li se " + \2 if \1[0].isupper() else "je li se " + \2 # Konstrukciju 'da li se (je) \2' treba preoblikovati u:
 
 # Ispravak konstrukcije 'Da li se' + prezent
-([Dd]a) li se (\w+(m|š|a|amo|te|ju|i|e|u)) <- morph(\2, "po:glagol", False) and morph(\2, r"st:(\w+(ti|ći))", False) and \2.lower() not in glagolski_pridjev_radni_biti -> = \2.capitalize() + " li se" if \1[0].isupper() else \2 + " li se" # Konstrukciju 'da li se \2' treba preoblikovati u:
+([Dd]a) li se (\w+(m|š|a|amo|te|ju|i|e|u)) <- morph(\2, "po:glagol", True) and morph(\2, r"st:(\w+(ti|ći))", True) and \2.lower() not in glagolski_pridjev_radni_biti -> = \2.capitalize() + " li se" if \1[0].isupper() else \2 + " li se" # Konstrukciju 'da li se \2' treba preoblikovati u:
 
 # Ispravak konstrukcije 'Da li se' + mogu|možeš|može|možemo|možete
-([Dd]a) li se (mogu|možeš|može|možemo|možete) <- morph(\2, "po:glagol", False) -> = \2.capitalize() + " li se" if \1[0].isupper() else \2 + " li se" # Bilo bi bolje konstrukciju 'da li se \2' preoblikovati u:
+([Dd]a) li se (mogu|možeš|može|možemo|možete) <- morph(\2, "po:glagol", True) -> = \2.capitalize() + " li se" if \1[0].isupper() else \2 + " li se" # Bilo bi bolje konstrukciju 'da li se \2' preoblikovati u:
 
 # Konstrukcija 'Da li se' hoću|hoćeš| ... neću|nećeš...
-([Dd]a) li se (hoću|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete) <- morph(\2, "po:glagol", False) -> = \2.capitalize() + " li se" if \1[0].isupper() else \2 + " li se" # Bilo bi bolje konstrukciju 'da li se \2' preoblikovati u:
+([Dd]a) li se (hoću|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete) <- morph(\2, "po:glagol", True) -> = \2.capitalize() + " li se" if \1[0].isupper() else \2 + " li se" # Bilo bi bolje konstrukciju 'da li se \2' preoblikovati u:
 
 # Hvatanje konstrukcije 'Da li je vidiš' da ne bi ispalo 'Je li vidiš' kada treba 'Vidiš li je'
-([Dd]a) li je (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\2, "po:glagol", False) and morph(\2, r"st:(\w+(ti|ći))", False) and \2.lower() not in glagolski_pridjev_radni_biti -> = \2.capitalize() + " li je" if \1[0].isupper() else \2 + " li je" # Konstrukciju '\1 li je \2' treba preoblikovati na sljedeći način:
+([Dd]a) li je (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\2, "po:glagol", True) and morph(\2, r"st:(\w+(ti|ći))", True) and \2.lower() not in glagolski_pridjev_radni_biti -> = \2.capitalize() + " li je" if \1[0].isupper() else \2 + " li je" # Konstrukciju '\1 li je \2' treba preoblikovati na sljedeći način:
 
 # Hvatanje konstrukcije 'Da li ne znam' da bi ispalo 'Ne znam li'
-([Dd]a) li (ne) (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\3, "po:glagol", False) and morph(\3, r"st:(\w+(ti|ći))", False) -> = \2.capitalize() + " " + \3 + " li" if \1[0].isupper() else \2 + " " + \3 + " li" # Konstrukciju '\1 li \2' treba preoblikovati:
+([Dd]a) li (ne) (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\3, "po:glagol", True) and morph(\3, r"st:(\w+(ti|ći))", True) -> = \2.capitalize() + " " + \3 + " li" if \1[0].isupper() else \2 + " " + \3 + " li" # Konstrukciju '\1 li \2' treba preoblikovati:
 
 # Hvatanje konstrukcije 'Da li ne mogu' da bi ispalo 'Ne mogu li'
 ([Dd]a) li (ne) (mogu|možeš|može|možemo|možete) -> = \2.capitalize() + " " + \3 + " li" if \1[0].isupper() else \2 + " " + \3 + " li" # Konstrukcija 'Da li \2' treba glasiti:
@@ -194,7 +212,7 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 ([Dd]a) li (mogu|možeš|može|možemo|možete) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukcija 'Da li \2' treba glasiti:
 
 # Hvatanje konstrukcije 'da li' + izravno prezent: 'Da li vidiš' (bez zamjenice)
-([Dd]a) li (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\2, "po:glagol", False) and morph(\2, r"st:(\w+(ti|ći))", False) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li \2' treba preoblikovati na sljedeći način:
+([Dd]a) li (\w+(m|š|a|mo|te|ju|i|e|u)) <- morph(\2, "po:glagol", True) and morph(\2, r"st:(\w+(ti|ći))", True) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li \2' treba preoblikovati na sljedeći način:
 
 # Konstrukcija 'da li' + aorist pom. gl. biti
 ([Dd]a) li (bih|bi|bismo|biste|biše) -> = \2.capitalize() + " li" if \1[0].isupper() else \2 + " li" # Konstrukciju '\1 li \2' treba preoblikovati tako da aorist dođe na prvo mjesto:
@@ -221,16 +239,16 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 # -------------------------------------------------------------------------------------------------------------------------------------------
 
 # 1. 'da li' + bilo koja riječ koja NIJE pomoćni glagol, modalni glagol, 'se', 'je', 'ne' niti obični glagol u prezentu
-\b[Dd]a li\b(?=\s+(?!(?:mogu|možeš|može|možemo|možete|bih|bi|bismo|biste|biše|nisam|nisi|nije|nismo|niste|nisu|sam|si|smo|ste|su|ću|ćeš|će|ćemo|ćete|hoću|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete|je|se|ne)\b)(\w+)) <- not morph(\1, "po:glagol", False) -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika. Preoblikujte rečenicu.
+\b[Dd]a li\b(?=\s+(?!(?:mogu|možeš|može|možemo|možete|bih|bi|bismo|biste|biše|nisam|nisi|nije|nismo|niste|nisu|sam|si|smo|ste|su|ću|ćeš|će|ćemo|ćete|hoću|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete|je|se|ne)\b)(\w+)) <- not morph(\1, "po:glagol", True) -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika. Preoblikujte rečenicu.
 
 # 2. 'da li je' + bilo koja riječ koja NIJE 'bio/bila/bilo/bili/bile' niti glagol u prezentu (npr. 'Da li je ponekad vidiš?', 'Da li je moguće?')
-\b[Dd]a li\b(?=\s+je\s+(?!(?:bio|bila|bilo|bili|bile)\b)(\w+)) <- not morph(\1, "po:glagol", False) -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika. Preoblikujte rečenicu.
+\b[Dd]a li\b(?=\s+je\s+(?!(?:bio|bila|bilo|bili|bile)\b)(\w+)) <- not morph(\1, "po:glagol", True) -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika. Preoblikujte rečenicu.
 
 # 3. 'da li ne' + bilo koja riječ koja NIJE glagol u prezentu niti 'mogu/možeš...' (npr. 'Da li ne Marko dolazi?')
-\b[Dd]a li\b(?=\s+ne\s+(?!(?:mogu|možeš|može|možemo|možete)\b)(\w+)) <- not morph(\1, "po:glagol", False) -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika. Preoblikujte rečenicu.
+\b[Dd]a li\b(?=\s+ne\s+(?!(?:mogu|možeš|može|možemo|možete)\b)(\w+)) <- not morph(\1, "po:glagol", True) -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika. Preoblikujte rečenicu.
 
 # 4. 'da li se' + (opcionalno 'je') + bilo koja riječ koja NIJE glagol ni 'hoću/mogu/neću' (npr. 'Da li se i on slaže?')
-\b[Dd]a li\b(?=\s+se\s+(?:je\s+)?(?!(?:mogu|možeš|može|možemo|možete|hoću|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete)\b)(\w+)) <- not morph(\1, "po:glagol", False) -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika. Preoblikujte rečenicu.
+\b[Dd]a li\b(?=\s+se\s+(?:je\s+)?(?!(?:mogu|možeš|može|možemo|možete|hoću|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete)\b)(\w+)) <- not morph(\1, "po:glagol", True) -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika. Preoblikujte rečenicu.
 
 # Pravila ako je pogrešno napisano 'dali (sam)'
 
@@ -356,9 +374,9 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 \b(bi)(?=(\svi\s))(?!\s(smo|ste))\b -> biste      # Uz zamjenicu 'vi' u aoristu gl. 'biti' uvijek ide 'biste'.
 
 # Zamjena u konstrukcijama 'Bi li se mogao (ja|mi|vi)' + infinitiv
-(Bi) <- word(1) == "li" and word(2) == "se" and re.match(r"(\w+(la|le|li|lo|o))", word(3)) and word(4) == "ja" and morph(word(5), "po:glagol", False) and morph(word(5), "st:(\w+(ti|ći))", False) -> Bih # Uz zamjenicu 'ja' aorist glagola 'biti' glasi:
-(Bi) <- word(1) == "li" and word(2) == "se" and re.match(r"(\w+(la|le|li|lo|o))", word(3)) and word(4) == "mi" and morph(word(5), "po:glagol", False) and morph(word(5), "st:(\w+(ti|ći))", False) -> Bismo # Uz zamjenicu 'mi' aorist glagola 'biti' glasi:
-(Bi) <- word(1) == "li" and word(2) == "se" and re.match(r"(\w+(la|le|li|lo|o))", word(3)) and word(4) == "vi" and morph(word(5), "po:glagol", False) and morph(word(5), "st:(\w+(ti|ći))", False) -> Biste # Uz zamjenicu 'vi' aorist glagola 'biti' glasi:
+(Bi) <- word(1) == "li" and word(2) == "se" and re.match(r"(\w+(la|le|li|lo|o))", word(3)) and word(4) == "ja" and morph(word(5), "po:glagol", True) and morph(word(5), "st:(\w+(ti|ći))", True) -> Bih # Uz zamjenicu 'ja' aorist glagola 'biti' glasi:
+(Bi) <- word(1) == "li" and word(2) == "se" and re.match(r"(\w+(la|le|li|lo|o))", word(3)) and word(4) == "mi" and morph(word(5), "po:glagol", True) and morph(word(5), "st:(\w+(ti|ći))", True) -> Bismo # Uz zamjenicu 'mi' aorist glagola 'biti' glasi:
+(Bi) <- word(1) == "li" and word(2) == "se" and re.match(r"(\w+(la|le|li|lo|o))", word(3)) and word(4) == "vi" and morph(word(5), "po:glagol", True) and morph(word(5), "st:(\w+(ti|ći))", True) -> Biste # Uz zamjenicu 'vi' aorist glagola 'biti' glasi:
 
 # rastavljeno 'bi smo' i 'bi ste' u 'bismo' i 'biste'.
 \b([bB]i)\s(smo|ste)\b -> \1\2   # Pogrešno je rastavljati aorist gl. 'biti', piše se sastavljeno.
@@ -562,7 +580,7 @@ n.e. -> n. e.   # Kratica 'nove ere' piše se s razmakom.
 # Ispravljanje konstrukcije 'oni će ju raditi' > oni će raditi.
 # =======================================================================
 # ne možemo ispravljati jer 'ju' može biti i točno i višak ovisno o kontekstu, a kontekst ne možemo provjeravati
-#\b([oO])ni će(\s)?ju (\w+)([^.?!]*?)(\w+(ti|ći))\b <- \3.lower() in ["sad", "sada", "već", "tek", "još", "opet", "ponovo", "ponovno", "brzo", "odmah", "hitno", "danas", "večeras", "sutra", "prekosutra", "ujutro", "popodne", "navečer", "noćas", "uvijek", "često", "rijetko", "stalno", "neprestano", "katkad", "ponekad", "nekad", "nekada", "ikad", "ikada", "nikad", "nikada", "tada", "onda", "uskoro"] and morph(\5, "po:glagol", False) -> \1ni će \3\4\5 # Konstrukcija 'će ju' ne pripada standardnom jeziku.
+#\b([oO])ni će(\s)?ju (\w+)([^.?!]*?)(\w+(ti|ći))\b <- \3.lower() in ["sad", "sada", "već", "tek", "još", "opet", "ponovo", "ponovno", "brzo", "odmah", "hitno", "danas", "večeras", "sutra", "prekosutra", "ujutro", "popodne", "navečer", "noćas", "uvijek", "često", "rijetko", "stalno", "neprestano", "katkad", "ponekad", "nekad", "nekada", "ikad", "ikada", "nikad", "nikada", "tada", "onda", "uskoro"] and morph(\5, "po:glagol", True) -> \1ni će \3\4\5 # Konstrukcija 'će ju' ne pripada standardnom jeziku.
 
 
 # Provjera nezatvaranja navodnih znakova u rečenici.
