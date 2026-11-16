@@ -309,10 +309,9 @@ za po -> _ # To su rukavice za po zimi. > To su rukavice za zimu.
 # Ispravljanje zamjenice 'kojega' iza imenice muškoga roda za neživo
 # =============================================================================
 
-kojeg(a)? <- morph(word(-1), "po:imenica", False) and morph(word(-1), "zv:neživo", False) -> koji # Uz imenice muškoga roda za neživo umjesto 'kojeg(a)' akuzativ treba biti 'koji':
+(\w+), kojeg(a)? <- morph(\1, "po:imenica", False) and morph(\1, "zv:neživo", False)  and stem(\1)[0].lower() == \1.lower()-> \1, koji # Uz imenice muškoga roda za neživo umjesto 'kojeg(a)' akuzativ treba biti 'koji':
 
-(\w+), kojeg(a)? <- morph(\1, "po:imenica", False) and morph(\1, "zv:neživo", False) -> \1, koji # Uz imenice muškoga roda za neživo umjesto 'kojeg(a)' akuzativ treba biti 'koji':
-
+kojeg(a)? <- morph(word(-1), "po:imenica", False) and morph(word(-1), "zv:neživo", False) and stem(word(-1).lower())[0] == word(-1).lower() -> koji # Uz imenice muškoga roda za neživo umjesto 'kojeg(a)' akuzativ treba biti 'koji':
 
 
 # Ispravljanje konstrukcije prijedlog 'kroz' + riječ koja označava vrijeme
