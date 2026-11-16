@@ -327,10 +327,10 @@ za po -> _ # To su rukavice za po zimi. > To su rukavice za zimu.
 # =============================================================================
 
 # 1. Sa zarezom: "Babilon, kojeg vidim" (uz zaštitu od stvarnog genitiva i derivacija)
-(\w+), kojeg(a)? <- morph(\1, "po:imenica", False) and morph(\1, "zv:neživo", False) and (stem(\1) and stem(\1)[0] == \1) and word(1).lower() not in signali_stvarnog_genitiva and not (word(1).lower() in pomocni_za_se and word(2).lower() == "se") and not morph(word(1), "po:imenica", False) -> \1, koji # Uz imenice muškoga roda za neživo umjesto 'kojeg(a)' akuzativ treba biti 'koji':
+(\w+), kojeg(a)? <- morph(\1, "po:imenica", False) and morph(\1, "zv:neživo", False) and (stem(\1) and stem(\1.lower())[0] == \1.lower()) and word(1).lower() not in signali_stvarnog_genitiva and not (word(1).lower() in pomocni_za_se and word(2).lower() == "se") and not morph(word(1), "po:imenica", False) -> \1, koji # Uz imenice muškoga roda za neživo umjesto 'kojeg(a)' akuzativ treba biti 'koji':
 
 # 2. Bez zareza: "Ovo je autobus kojeg čekamo" (uz zaštitu od stvarnog genitiva i derivacija)
-kojeg(a)? <- morph(word(-1), "po:imenica", False) and morph(word(-1), "zv:neživo", False) and (stem(word(-1)) and stem(word(-1))[0] == word(-1)) and word(1).lower() not in signali_stvarnog_genitiva and not (word(1).lower() in pomocni_za_se and word(2).lower() == "se") and not morph(word(1), "po:imenica", False) -> koji # Uz imenice muškoga roda za neživo umjesto 'kojeg(a)' akuzativ treba biti 'koji':
+kojeg(a)? <- morph(word(-1), "po:imenica", False) and morph(word(-1), "zv:neživo", False) and (stem(word(-1)) and stem(word(-1).lower())[0] == word(-1).lower()) and word(1).lower() not in signali_stvarnog_genitiva and not (word(1).lower() in pomocni_za_se and word(2).lower() == "se") and not morph(word(1), "po:imenica", False) -> koji # Uz imenice muškoga roda za neživo umjesto 'kojeg(a)' akuzativ treba biti 'koji':
 
 
 
