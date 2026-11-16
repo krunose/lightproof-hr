@@ -140,26 +140,27 @@ Međutim navedeno nije dovoljno jer ne završavaju samo glagoli (infinitivi) na 
 
 Za relativnu robusnost ovoga pravila zaslužna je funkcija `morph()` koja prima tri argumenta: prvi je, u konkretnom primjeru, prva grupa unutar zagrada (`\1`), drugi je oznaka (engl. <i>part-of-speech tag</i>), a treći može imati vrijednost `True` ili `False`. (Objašnjenje napisano uz pomoć umjetne inteligencije).
 
-Hunspell za homonimne riječi može vratiti više različitih morfoloških analiza (redaka) — primjerice, za oblik *moći* vraća jednu analizu kao glagol (`st:moći po:glagol md:modalni`), a drugu kao imenicu u genitivu jednine (`st:moć po:imenica`). Budući da provjernik bez konteksta ne zna koje je značenje upotrijebljeno, u obzir uzima obje analize.
+Hunspell za homonimne riječi može vratiti više različitih morfoloških analiza (redaka) — primjerice, za oblik *bit* vraća jednu analizu kao krnji infinitiv glagola *biti* (`st:biti po:glagol`), a drugu kao imenicu *bît* (`st:bit po:imenica`). Budući da provjernik bez konteksta ne zna koje je značenje upotrijebljeno, u obzir uzima obje analize.
 
 Treći argument funkcije `morph(riječ, uzorak, all=False)` određuje moraju li zadani uzorak zadovoljiti **sve** vraćene analize te riječi ili je dovoljna **barem jedna**:
 
 * **`False` (zadana vrijednost; djeluje kao operator `OR`):** funkcija vraća `True` čim **barem jedna** od morfoloških analiza riječi sadrži zadani uzorak, a ostale analize zanemaruje.
 * **`True` (djeluje kao operator `AND`):** funkcija vraća `True` samo ako **svaka** vraćena analiza te riječi sadrži zadani uzorak. Ako riječ ima i glagolsku i imeničku analizu, provjera s `True` vratit će `False` jer imenička analiza ne sadrži glagolske oznake.
 
-Zato je najsigurnije za treći argument staviti `False` (ili ga potpuno izostaviti). Uzmimo za primjer pravilo koje ispravlja krnji infinitiv na *-t* (npr. *pit*, *bit*, *radit*):
+Zato je najsigurnije za treći argument staviti `False` (ili ga potpuno izostaviti). Uzmimo za primjer pravilo koje ispravlja krnji infinitiv na *-t*:
 
 ```text
 \b(\w+t)\b <- morph(\1, r"st:\w+(ti|ći)", True) -> \1i
 ```
 
-Ovo pravilo radit će samo ako riječ ima isključivo glagolsku analizu (npr. *radit* → `st:raditi po:glagol`). Međutim, neće raditi na homonimnim riječima poput *pit* ili *bit* jer Hunspell za njih vraća dvije analize — jednu za glagol (`st:piti po:glagol`) i jednu za imenicu (`st:pita po:imenica` / `st:bit po:imenica`). Kako imenička analiza ne završava na *ti* ili *ći*, uvjet s `True` pada. Zato provjeru treba napisati s `False`:
+Ovo pravilo radit će samo ako riječ ima isključivo glagolsku analizu (npr. *radit* → `st:raditi po:glagol`). Međutim, neće raditi na riječi *bit* jer Hunspell za nju vraća dvije analize — jednu za glagol (`st:biti po:glagol`) i jednu za imenicu *bît* (`st:bit po:imenica`). Kako imenička analiza (`st:bit`) ne završava na *ti* ili *ći*, uvjet s `True` pada. Zato provjeru treba napisati s `False`:
 
 ```text
 \b(\w+t)\b <- morph(\1, r"st:\w+(ti|ći)", False) -> \1i
 ```
 
 Tako će funkcija vratiti `True` čim pronađe barem jednu analizu u kojoj osnova (`st:`) završava na *ti* ili *ći*.
+
 
 
 Ako se unutar funkcije `morph()` želi pozvati na prvu grupu pogotka pravilnoga izraza, sintaksa je ovakva:
