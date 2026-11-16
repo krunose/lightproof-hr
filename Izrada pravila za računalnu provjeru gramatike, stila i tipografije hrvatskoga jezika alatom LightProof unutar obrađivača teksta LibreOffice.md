@@ -138,23 +138,29 @@ Međutim navedeno nije dovoljno jer ne završavaju samo glagoli (infinitivi) na 
 
 #### Funkcija morph()
 
-Za relativnu robusnost ovoga pravila zaslužna je funkcija `morph()` koja prima tri argumenta: prvi je, u konkretnom primjeru, prva grupa unutar zagrada (`\1`), drugi je oznaka (engl. <i>part-of-speech tag</i>), a treći može imati vrijednost `True` ili `False`.
+Za relativnu robusnost ovoga pravila zaslužna je funkcija `morph()` koja prima tri argumenta: prvi je, u konkretnom primjeru, prva grupa unutar zagrada (`\1`), drugi je oznaka (engl. <i>part-of-speech tag</i>), a treći može imati vrijednost `True` ili `False`. (Objašnjenje napisano uz pomoć umjetne inteligencije).
 
-Hunspell za neke riječi može vratiti više oznaka, recimo riječ `moći` može biti glagol (infinitiv od `moći`), ali može biti i imenica (Gjd od `moć`). Budući da provjernik riječi, ali i provjernik gramatike ne mogu znati na što se od toga misli, vraća za `moć` i `po:glagol` i `po:imenica` (kada rječnik bude označen). U tom kontekstu argument `False` znači zapravo `all` odnosno djeluje kao operator `OR` i vraća pogodak ako u oznakama postoji ili `po:glagol` ili `po:imenica`. Međutim ako bi treći argument bio `True`, onda funkcija traži da sve oznake `po:` budu zadovoljene; djeluje kao operator `AND`, odnosno vrati će `false` ako za konkretnu riječ stoji i `po:glagol` i `po:imenica`.
+Hunspell za homonimne riječi može vratiti više različitih morfoloških analiza (redaka) — primjerice, za oblik *moći* vraća jednu analizu kao glagol (`st:moći po:glagol md:modalni`), a drugu kao imenicu u genitivu jednine (`st:moć po:imenica`). Budući da provjernik bez konteksta ne zna koje je značenje upotrijebljeno, u obzir uzima obje analize.
 
-Najsigurnije je pisati `False` ili treći argument u potpunosti izostaviti. Evo primjer:
+Treći argument funkcije `morph(riječ, uzorak, all=False)` određuje moraju li zadani uzorak zadovoljiti **sve** vraćene analize te riječi ili je dovoljna **barem jedna**:
 
-```
+* **`False` (zadana vrijednost; djeluje kao operator `OR`):** funkcija vraća `True` čim **barem jedna** od morfoloških analiza riječi sadrži zadani uzorak, a ostale analize zanemaruje.
+* **`True` (djeluje kao operator `AND`):** funkcija vraća `True` samo ako **svaka** vraćena analiza te riječi sadrži zadani uzorak. Ako riječ ima i glagolsku i imeničku analizu, provjera s `True` vratit će `False` jer imenička analiza ne sadrži glagolske oznake.
+
+Zato je najsigurnije za treći argument staviti `False` (ili ga potpuno izostaviti). Uzmimo za primjer pravilo koje ispravlja krnji infinitiv na *-t* (npr. *pit*, *bit*, *radit*):
+
+```text
 \b(\w+t)\b <- morph(\1, r"st:\w+(ti|ći)", True) -> \1i
 ```
 
-Funkcija će raditi ako provjeravana riječ ima samo jednu oznaku i to tako što pravilni izraz provjerava završava li oznaka riječ unutar oznake `st:` na `ti` ili `ći`. Ovaj primjer neće raditi u riječi `moći` jer Hunspell vraća `po:glagol` i `po:imenica`, odnosno `st:moći`, ali i `st:moć` pa je provjeru bolje napisati ovako:
+Ovo pravilo radit će samo ako riječ ima isključivo glagolsku analizu (npr. *radit* → `st:raditi po:glagol`). Međutim, neće raditi na homonimnim riječima poput *pit* ili *bit* jer Hunspell za njih vraća dvije analize — jednu za glagol (`st:piti po:glagol`) i jednu za imenicu (`st:pita po:imenica` / `st:bit po:imenica`). Kako imenička analiza ne završava na *ti* ili *ći*, uvjet s `True` pada. Zato provjeru treba napisati s `False`:
 
-```
+```text
 \b(\w+t)\b <- morph(\1, r"st:\w+(ti|ći)", False) -> \1i
 ```
 
-Istina jest da LightProof nije moćan kao LanguageTool, ali kada bismo imali označen rječnik, značajke koje ovaj provjernik gramatike posjeduje bile bi i više nego dovoljne da se provjera gramatike za hrvatski jezik postavi na zdrave noge. Ključ napretka nije u samom alatu koliko u označavanju rječnika.
+Tako će funkcija vratiti `True` čim pronađe barem jednu analizu u kojoj osnova (`st:`) završava na *ti* ili *ći*.
+
 
 Ako se unutar funkcije `morph()` želi pozvati na prvu grupu pogotka pravilnoga izraza, sintaksa je ovakva:
 
