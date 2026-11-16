@@ -77,7 +77,7 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 ## Primjeri: prozor je razbit -> razbijen, prijedlozi su podnijeti -> podneseni
 \b([a-zA-ZčČćĆžŽšŠđĐ]+t[aoie]?)\b <- \1.lower() in pogresni_trpni_t_u_n and ((word(-1).lower() in pomocni_nenaglaseni_biti or word(-1).lower() in pomocni_naglaseni_biti or word(-1).lower() in glagolski_pridjev_radni_biti) or (word(-2).lower() in pomocni_nenaglaseni_htjeti and word(-1).lower() in ["biti"])) -> = ispravi_trpni_t(\1) # U standardnom hrvatskom jeziku glagolski pridjev trpni ovog glagola tvori se nastavkom -n:
 
-#------------
+#---------------------------------------------------------------
 
 # 1. Modalni ili fazni glagol neposredno ispred krnjeg infinitiva "jest" (uključujući povratno "se")
 # Primjeri: "može jest", "može se jest", "počinje jest", "ne mora jest"
@@ -99,8 +99,6 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 # Primjeri: "jest mora", "jest počinje", "jest želi" (uz zaštitu futura I. "jest ću/ćeš/će...")
 #jest (\w+) <- morph(\1, r"(md:modalni|fz:fazni)", False) and not re.match(r"^(ću|ćeš|će|ćemo|ćete)$", \1, re.I) -> jesti \1 # Ispred modalnog ili faznog glagola dolazi puni infinitiv "jesti".
 (jest) <- morph(word(1).lower(), r"(md:modalni|fz:fazni)", False) and not re.match(r"^(ću|ćeš|će|ćemo|ćete)$", word(1), re.I) -> \1i # Ispred modalnog ili faznog glagola infinitiv 'jesti' ne smije biti krnj.
-
-#-------------------------------------------------------------
 
 # 4. Krnji infinitiv "jest" neposredno iza modalnoga ili faznoga glagola
 (jest) <- morph(word(-1).lower(), r"(md:modalni|fz:fazni)", False) or word(-1).lower() in ["mogu", "možeš", "može", "možemo", "možete"] -> \1i # Iza modalnoga ili faznoga glagola infinitiv 'jesti' ne smije biti krnj.
@@ -293,6 +291,27 @@ imperativ_nemoj = set(["nemoj", "nemojmo", "nemojte"])
 \b[Dd]a li\b(?=\s+se\s+(?:je\s+)?(?!(?:mogu|možeš|može|možemo|možete|hoću|hoćeš|hoće|hoćemo|hoćete|neću|nećeš|neće|nećemo|nećete)\b)(\w+)) <- not morph(\1, "po:glagol", False) -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika. Preoblikujte rečenicu.
 
 # Pravila ako je pogrešno napisano 'dali (sam)'
+
+
+
+# Ispravljanje konstrukcije 'bez da'
+# =============================================================================
+
+bez da -> _ # Napravio je to bez da je ikome rekao. > Napravio je to, a da nikome nije rekao.
+
+
+# Ispravljanje konstrukcije 'za po'
+# =============================================================================
+
+za po -> _ # To su rukavice za po zimi. > To su rukavice za zimu.
+
+
+# Ispravljanje zamjenice 'kojega' iza imenice muškoga roda za neživo
+# =============================================================================
+
+kojeg(a)? <- morph(word(-1), "po:imenica", False) and morph(word(-1), "zv:neživo", False) -> koji # Uz imenice muškoga roda za neživo umjesto 'kojeg(a)' akuzativ treba biti 'koji':
+
+(\w+), kojeg(a)? <- morph(\1, "po:imenica", False) and morph(\1, "zv:neživo", False) -> \1, koji # Uz imenice muškoga roda za neživo umjesto 'kojeg(a)' akuzativ treba biti 'koji':
 
 
 
