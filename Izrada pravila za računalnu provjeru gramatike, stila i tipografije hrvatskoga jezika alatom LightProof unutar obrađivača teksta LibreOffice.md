@@ -356,5 +356,5 @@ i to je to. Imamo označen rječnik. Onda bi netko sa kakva fakulteta, instituta
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0NDA4NjA4NCwtMzUzNTIwNTIxXX0=
+eyJoaXN0b3J5IjpbLTE0NDA4NjA4NF19
 -->
