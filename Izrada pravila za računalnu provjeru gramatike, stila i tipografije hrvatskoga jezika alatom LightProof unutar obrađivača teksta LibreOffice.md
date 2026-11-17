@@ -56,9 +56,9 @@ python3 make.py src/hr/hr.cfg
 
 Datoteku `hr.cfg` također je pripremila umjetna inteligencija po uzoru na sličnu englesku datoteku. Budući da dobre dokumentacije za ovu fazu prilagodbe nema, nije preostalo drugo nego poslužiti se tim trikom.
 
-Nakon izvršenja naredbe za generiranje dodatka u krovnom direktoriju stvorit će se datoteka `Lightproof_hr-0.5.8.30.oxt` ili sličlno, ovisno o tome koja se brojčana oznaka upisala u datoteci `hr.cfg` u redak `version = 0.5.8.30`.
+Nakon izvršenja naredbe za generiranje dodatka u krovnom direktoriju stvorit će se datoteka `Lightproof_hr-0.5.8.30.oxt` ili slično, ovisno o tome koja se brojčana oznaka upisala u datoteci `hr.cfg` u redak `version = 0.5.8.30`.
 
-Za instalaciju dodatka potrebno je otvoriti LibreOffice Writer i odabrati `Tools` → `Extensions...` te označiti dodatak `Osnovna provjera gramatike...` ako je instaliran već od ranije i odabrati `Remove` te ponovno pokrenuti LibreOffice. Zatim se ponovimo `Tools` → `Extensions...`, ali sada odaberemo `Add` i pronađemo gdje se nalazi novogenerirani dodatak i odaberemo ga dvoklikom. Potrebno je ponovno pokrenuti LibreOffice klikom na `Close` u dijaloškom okviru dodataka te odabirom `Restart Now`.
+Za instalaciju dodatka potrebno je otvoriti LibreOffice Writer i odabrati `Tools` → `Extensions...` te označiti dodatak `Osnovna provjera gramatike...` ako je instaliran već od ranije i odabrati `Remove` te ponovno pokrenuti LibreOffice. Zatim ponovimo `Tools` → `Extensions...`, ali sada odaberemo `Add` i pronađemo gdje se nalazi novogenerirani dodatak i odaberemo ga dvoklikom. Potrebno je ponovno pokrenuti LibreOffice klikom na `Close` u dijaloškom okviru dodataka te odabirom `Restart Now`.
 
 Pravila koja smo do sada uspjeli napraviti nisu u izvornom kodu LibreOffice jer je proces uključivanja u izvorni kod spor i to je proces koji je izvan naših mogućnosti, a ni pravila još nisu sazrela jer nemamo povratnih informacija stvarnih korisnika na stvarnim tekstovima. Zato ih nudimo kao [dodatak LibreOfficeu](https://extensions.libreoffice.org/en/extensions/show/99654). Na ovaj način možemo brzo i bezbolno ispravit nedostatke i obavijestiti korisnike o postojanju novije inačice, ne treba čekati novo izdanje LibreOfficea a da bi se ispravilo pojavljivanje koje lažne uzbune.
 
@@ -71,7 +71,7 @@ Ako bi tko želio testirati ova pravila, potrebno je:
 * Obrisati stari rječnik ako je instaliran kao dodatak
 	* pomoću `Upravitelja dodatcima` tako što se otvara izbornik `Tools` → `Extensions...` te se odabere se dodatak s rječnikom i zatim klikne `Remove`. Odabirom `Close` u dijaloškom okviru `Upravitelja dodatcima` ponovno se pokreće LibreOffice odabirom `Restart Now`.
 * Instalirati novi dodatak s označenim rječnikom
-	* preuzimanjem iz [službenoga repozitorija dodataka LibreOfficea](https://extensions.libreoffice.org/en/extensions/show/99660) klikom na zeleni gumb `Download`. Zatim se odlazi u `Tools` → `Extensions...` i klikne se na `Add`. Odabere se ododatak s rječnikom. Klikne se na `Close` i odabere se `Restart Now`.
+	* preuzimanjem iz [službenoga repozitorija dodataka LibreOfficea](https://extensions.libreoffice.org/en/extensions/show/99660) klikom na zeleni gumb `Download`. Zatim se odlazi u `Tools` → `Extensions...` i klikne se na `Add`. Odabere se dodatak s rječnikom. Klikne se na `Close` i odabere se `Restart Now`.
 * Preuzima se dodatak s [pravilima za provjeru gramatike](https://extensions.libreoffice.org/en/extensions/show/99654) i instalira se prema uputama iz prethodnoga koraka.
 
 Nakon ponovnoga pokretanja LibreOfficea, provjera gramatike trebala bi biti aktivna.
@@ -96,7 +96,7 @@ U ovom slučaju LightProof podcrtava `s menom` i bez ikakva uvjeta predlaže kor
 
 ### Jednostavna zamjena bez prijedloga korisniku i bez uvjeta i pravilnoga izraza
 
-Općenito se vodimo načelom da ako bi koji prijedlog korisniku mogao uništiti tekst zbog lažnih uzbuna (engl. <i>false positive</i> i(li) <i>false negative</i>), bolje je ne predložiti ništa, već samo upozoriti korisnika da koja konstrukcije nije u duhu hrvatskoga standardnoga jezika. Takva je konstrukcije `da li`; ona se može naći na početku upitne rečenice, može se naći u sredini rečenice, a kao pogreška uvijek dolazi kada se čestica `li` nalazi iza `da`. Međutim prilikom ispravljanja dolazi do ispadanja `da` i premetanja riječi, što komplicira prijedlog korisniku. U situacijama kada nismo sigurni kako točno ispraviti pogrešku, ne nudimo zamjenu već samo upozorenje korisniku:
+Općenito se vodimo načelom da ako bi koji prijedlog korisniku mogao uništiti tekst zbog lažnih uzbuna (engl. <i>false positive</i> i(li) <i>false negative</i>), bolje je ne predložiti ništa, već samo upozoriti korisnika da koja konstrukcija nije u duhu hrvatskoga standardnoga jezika. Takva je konstrukcija `da li`; ona se može naći na početku upitne rečenice, može se naći u sredini rečenice, a kao pogreška uvijek dolazi kada se čestica `li` nalazi iza `da`. Međutim prilikom ispravljanja dolazi do ispadanja `da` i premetanja riječi, što komplicira prijedlog korisniku. U situacijama kada nismo sigurni kako točno ispraviti pogrešku, ne nudimo zamjenu već samo upozorenje korisniku:
 
 ```
 da li -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika, preoblikujte rečenicu.
@@ -290,7 +290,7 @@ Varijabla `s` po svemu sudeći vraća cijeli odlomak, evo kako se pomoću nje ri
 (^|(?<=\s))„(\w+)\b <- s.count("„") != s.count("”") -> _ # Provjerite navodnike. Čini se da niste zatvorili navodne znakove negdje u odlomku.
 ```
 
-Nije jasno kako se varijabla `s` odnosi prema varijabli `p` jer umjetna inteligencija spominje obje. Za prvu tvrdi da vraća cijelu rečenicu, a druga cijeli odlomak, ali to nismo uspjeli potvrditi na primjerima u praksi. Nezatvaranje navodnika varijablom `s` provodi se nad cijelim odlomkom. Treba provesti dodatne testove kako bi se utvrdilo što zapravo sadržava varijabla `p`; možda vrijednosti varijabli ovisi o tome pozivaju li se unutar sekcija `[word]` ili `[char]`.
+Nije jasno kako se varijabla `s` odnosi prema varijabli `p` jer umjetna inteligencija spominje obje. Za prvu tvrdi da vraća cijelu rečenicu, a druga cijeli odlomak, ali to nismo uspjeli potvrditi na primjerima u praksi. Nezatvaranje navodnika varijablom `s` provodi se nad cijelim odlomkom. Treba provesti dodatne testove kako bi se utvrdilo što zapravo sadržava varijabla `p`; možda vrijednosti varijabli ovise o tome pozivaju li se unutar sekcija `[word]` ili `[char]`.
 
 ### Word(-1) i word(1) odnosno word(n)
 
@@ -356,5 +356,5 @@ i to je to. Imamo označen rječnik. Onda bi netko sa kakva fakulteta, instituta
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIxMTY2OTAwNjEsLTM1MzUyMDUyMV19
+eyJoaXN0b3J5IjpbLTE0NDA4NjA4NCwtMzUzNTIwNTIxXX0=
 -->
