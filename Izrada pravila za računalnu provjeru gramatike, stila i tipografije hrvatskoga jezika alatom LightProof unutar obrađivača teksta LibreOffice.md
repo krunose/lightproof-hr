@@ -6,7 +6,7 @@ Krunoslav Šebetić (studeni 2026.) kruno.se@gmx.com
 
 Može se činiti da je provjera gramatike, tipografije i stila koja se izvodi lokalno u doba umjetne inteligencije zastario koncept, ali paradoks je u tome što je upravo umjetna inteligencija ovakav sustav provjere gramatike učinila aktualnijim negoli se na prvu može činiti: naime umjetna inteligencija u kontekstu obradbe teksta može puno, ali u kontekstu zaštite privatnosti u besplatnim inačicama može izuzetno malo. Za pravnike, liječnike i javnu upravu slanje povjerljivih dokumenata na udaljene poslužitelje mahom u SAD-u u kontekstu GDPR-a jednostavno nije opcija. Moguće je anonimizirati tekst &ndash; a što je ples po rubu jer ostavlja prostor za ljudsku pogrešku &ndash; ili koristiti naplatne (engl. <i>enterprise</i>) planove koji u većoj ili manjoj mjeri jamče privatnost, ali to znači izravnu ovisnost o stranim vlasničkim alatima i uslugama te trošku za nešto što može biti slobodno i besplatno te održavano od strane institucija i jezične zajednice.
 
-S druge pak strane umjetna inteligencije nije uvijek pouzdana jer, iako joj je generativna sposobnosti tekstova dobra, često halucinira te izmišlja pravila i zakonitosti koje u jeziku ne postoje. Nije tajna da umjetna inteligencija uglavnom nije trenirana na hrvatskom jeziku za hrvatski jezik jer je to ekonomski neisplativo; premaleno smo tržište, zato su prijedlozi često razgovorni jezik koji ne prati normu. Lokalni i deterministički provjernici su nužnost koja štiti jezičnu točnost, a u slučaju slobodnih alata pruža korisniku izbor i autonomiju, ali i neovisnost o poslovnim modelima velikih tvrtki pri čemu korisnik tajnost podataka plaća svojim privatnim podatcima na ovaj ili onaj način.
+S druge pak strane umjetna inteligencije nije uvijek pouzdana jer, iako joj je sposobnost generiranja tekstova dobra, često halucinira te izmišlja pravila i zakonitosti koje u jeziku ne postoje. Nije tajna da umjetna inteligencija uglavnom nije trenirana na hrvatskom jeziku za hrvatski jezik jer je to ekonomski neisplativo; premaleno smo tržište, zato su prijedlozi često razgovorni jezik koji ne prati normu. Lokalni i deterministički provjernici su nužnost koja štiti jezičnu točnost, a u slučaju slobodnih alata pruža korisniku izbor i autonomiju, ali i neovisnost o poslovnim modelima velikih tvrtki pri čemu korisnik tajnost podataka plaća svojim privatnim podatcima na ovaj ili onaj način.
 
 Alati poput [Ispravi.me](https://ispravi.me) hvale su vrijedni projekti, ali ne pružaju provjeru riječi i gramatike izravno unutar obrađivača teksta. U kontekstu navedenoga dolazi se do [LanguageToola](https://languagetool.org/): otvorenoga alata koji omogućuje da se napredna provjera gramatike preko dodataka za Microsoftov Word, LibreOfficeov Writer, ali i internetske preglednike kao što su Firefox, Edge i Chrome dovede na gotovo svako računalo i operacijski sustav. U plaćenoj inačici zaštita privatnosti je usklađena s GDPR-om, no postoji mogućnost pokretanja ovoga alata izravno s vlastitog poslužitelja. Međutim hrvatski unutar LanguageToola nije podržan jezik. Budući da se radi o alatu otvorenoga koda, netko bi ta pravila trebao napraviti, a institucije šute. Pravila za neke jezike unutar ovoga alata održava cijeli tim lingvista, stručnjaka za strojno učenje i zajednica entuzijasta. Hrvatski nema ništa. Zar je moguće da danas nitko ne brine o digitalnoj opstojnosti hrvatskoga jezika? Hrvatsko jezično područje malo je tržište i velike tvrtke za njega ne mare često ga stavljajući u isti koš s bliskim jezicima u okruženju. Dotjerati LanguageTool na razinu engleskoga ili njemačkoga nije posao za pojedinca, nego za tim stručnjaka s kakva fakulteta, instituta ili vijeća, koji bi trebali brinuti o tome da svaki govornik hrvatskoga jezika ima slobodu provjeriti tekst ne brinući o ograničenjima vlasničkoga softvera kada postoji besplatno rješenje, ali i slobodna infrastruktura.
 
@@ -81,7 +81,7 @@ Nakon ponovnoga pokretanja LibreOfficea, provjera gramatike trebala bi biti akti
 Štura dokumentacija o tome kako se pišu pravila za LightProof nalaze se u mapi `doc` u repozitoriju [github.com/karelin](https://github.com/karelin/lightproof/tree/master/doc) u datoteci `syntax.txt`. Osnovna struktura nije komplicirana: na lijevoj strani nalazi se pravilni izraz koji će LightProof prepoznati kao pogrešku, u sredini je uvjet koji mora biti ispunjen da bi se pravilni izraz aktivirao, a na desnoj je zamjena i poruka korisniku, shematski se struktura pravila može prikazati na sljedeći način:
 
 ```
-pravnilni izraz <- uvjet -> zamjena # Poruka korisniku vezano za pogrešku.
+pravilni izraz <- uvjet -> zamjena # Poruka korisniku vezano za pogrešku.
 ```
 
 ### Jednostavna zamjena s prijedlogom korisniku bez uvjeta i pravilnih izraza
@@ -96,13 +96,20 @@ U ovom slučaju LightProof podcrtava `s menom` i bez ikakva uvjeta predlaže kor
 
 ### Jednostavna zamjena bez prijedloga korisniku i bez uvjeta i pravilnoga izraza
 
-Općenito se vodimo načelom da ako bi koji prijedlog korisniku mogao uništiti tekst zbog lažnih uzbuna (engl. <i>false positive</i> i(li) <i>false negative</i>), bolje je ne predložiti ništa, već samo upozoriti korisnika da koja konstrukcije nije u duhu hrvatskoga standardnoga jezika. Takva je konstrukcije `da li`; ona se može naći na početku upitne rečenice, može se naći u sredini rečenice, a kao pogreška uvijek dolazi kada se čestica `li` nalazi iza `da`. Međutim prilikom ispravljanja dolazi do ispadanja `da` i premetanja riječi, što komplicira prijedlog korisniku. Umjesto krivih prijedloga, odlučili smo se za ovaj pristup:
+Općenito se vodimo načelom da ako bi koji prijedlog korisniku mogao uništiti tekst zbog lažnih uzbuna (engl. <i>false positive</i> i(li) <i>false negative</i>), bolje je ne predložiti ništa, već samo upozoriti korisnika da koja konstrukcije nije u duhu hrvatskoga standardnoga jezika. Takva je konstrukcije `da li`; ona se može naći na početku upitne rečenice, može se naći u sredini rečenice, a kao pogreška uvijek dolazi kada se čestica `li` nalazi iza `da`. Međutim prilikom ispravljanja dolazi do ispadanja `da` i premetanja riječi, što komplicira prijedlog korisniku. U situacijama kada nismo sigurni kako točno ispraviti pogrešku, ne nudimo zamjenu već samo upozorenje korisniku:
 
 ```
-da li -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika, preformulirajte rečenicu.
+da li -> _ # Konstrukcija 'da li' nije u duhu hrvatskoga standardnoga jezika, preoblikujte rečenicu.
 ```
 
 Ovo će pravilo podcrtati konstrukciju `da li`, ali zbog znaka `_` korisniku ne nudimo čvrstu zamjenu, već samo uputu: ` # Konstrukcija 'da li ' nije u duhu...`
+
+U međuvremenu smo pravila za `da li` raspisali i nudimo prijedloge ispravaka korisniku, ali još nisu razrađena pravila za ispravke konstrukcija `za po` i `bez da`:
+
+```
+za po -> _ # To su rukavice za po zimi. > To su rukavice za zimu.
+```
+Razlog zbog kojega ova pravila zaostaju za `da li` jest u tome što su prijedlozi ispravaka mnogo složeniji, a ne možemo mijenjati `zimi` u `zimu` jer nemamo označen rječnik. Nije moguće za svaku riječ u svakom rodu i broju ručno preoblikovati riječi.
 
 ### Uvođenje jednostavnoga pravilnoga izraza
 
@@ -165,7 +172,7 @@ Tako će funkcija vratiti `True` čim pronađe barem jednu analizu u kojoj osnov
 
 Ako se unutar funkcije `morph()` želi pozvati na prvu grupu pogotka pravilnoga izraza, sintaksa je ovakva:
 
-`\b(\w+t)\b <- morph(\1, "st:" + \1 + "i", True) -> \1i`
+`\b(\w+t)\b <- morph(\1, "st:" + \1 + "i", False) -> \1i`
 
 To će provjeriti je li `stem`, odnosno završava li lema (osnovni oblik) na `-ti`.
 
@@ -323,13 +330,13 @@ Uza sve upute i hvalu treba priznati da je LightProof &ndash; a nije se ni skriv
 
 ## Drska kritika za kraj
 
-Cijeli ovaj podnaslov mogao bi se svesti na jednu rečenicu: **Hrvatski nema ništa!** U rječnik za računalnu provjeru pravopisa uloženo je mnogo vremena i truda, ali još uvijek nije označen. Pitanje je hoće li i biti. Ono što za druge jezike odrađuju fakulteti, instituti i vijeća, kod nas se rade pojedinci u slobodno vrijeme bez ikakvih resursa. Zašto se alati i rječnici iskorišteni za istraživanja nisu pretočili u označen Hunspellov rječnik i pravila za računalnu provjeru gramatike LanguageToolom? Ne bi bilo teško. Evo koliko je složeno u GNU/Linuxu izvući prva tri retka iz [hrLex_v1.3](https://www.clarin.si/repository/xmlui/handle/11356/1232) i dobiti format rječnika pogodan za LanguageTool:
+Cijeli ovaj podnaslov mogao bi se svesti na jednu rečenicu: **Hrvatski nema ništa!** U rječnik za računalnu provjeru pravopisa uloženo je mnogo vremena i truda, ali još uvijek nije označen. Pitanje je hoće li i biti. Ono što za druge jezike odrađuju fakulteti, instituti i vijeća, kod nas se rade pojedinci u slobodno vrijeme bez ikakvih resursa. Zašto se alati i rječnici iskorišteni za istraživanja nisu pretočili u označen Hunspellov rječnik i pravila za računalnu provjeru gramatike LanguageToolom? Ne bi bilo teško. Evo koliko je složeno u GNU/Linuxu izvući prva tri stupca iz [hrLex_v1.3](https://www.clarin.si/repository/xmlui/handle/11356/1232) i dobiti format rječnika pogodan za LanguageTool:
 
 ```
 awk -F'\t' '{print $1, $2, $3}' hrLex_v1.3 > prva_tri_stupca_hrLex
 ```
 
-i to je to. Imamo označen rječnik. Onda bi netko sa kakva fakulteta, instituta ili vijeća trebao razgovarati sa tvorcima [Ispravi.me](https://ispravi.me/) i napisati pravila za LanguageTool u XML-u a nije teško i u kratko vrijeme hrvatski bi po tom pitanju bio u rangu sa drugim svjetskim jezicima. Svi oni u Chromeu i Firefoxu koriste ovaj rječnik s kojim se mi borimo; vjerojatno ga svi i kritiziraju, ali nitko ništa po tom pitanju ne poduzima. Svi oni koriste upravo rječnik na koji mi trošimo svoje slobodno vrijeme i vjerojatno mu se smiju, ali po tom pitanju se ne radi ništa. Nije više pitanje jesmo li zadovoljni i znamo li bolje kada je činjenica da ovo i jest najbolje što imamo.
+i to je to. Imamo označen rječnik. Onda bi netko sa kakva fakulteta, instituta ili vijeća trebao razgovarati s tvorcima [Ispravi.me](https://ispravi.me/) i napisati pravila za LanguageTool u XML-u a nije teško i u kratko vrijeme hrvatski bi po tom pitanju bio u rangu sa drugim svjetskim jezicima. Svi oni u Chromeu i Firefoxu koriste ovaj rječnik s kojim se mi borimo; vjerojatno ga svi i kritiziraju, ali nitko ništa po tom pitanju ne poduzima. Svi oni privatno i poslovno na računalima koriste upravo ovaj rječnik na koji mi trošimo svoje slobodno vrijeme i vjerojatno mu se smiju, ali se po tom pitanju ne radi ništa, a moglo bi biti savršeno. Nije više pitanje jesmo li zadovoljni i znamo li bolje kada je činjenica da ovo i jest najbolje što imamo.
 
 ## Vanjski izvori
 
@@ -348,3 +355,6 @@ i to je to. Imamo označen rječnik. Onda bi netko sa kakva fakulteta, instituta
 
 
 
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTM1MzUyMDUyMV19
+-->
