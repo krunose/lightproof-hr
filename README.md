@@ -24,7 +24,7 @@ Ako bi tko želio testirati ova pravila, potrebno je:
 	* preuzimanjem iz [službenoga repozitorija dodataka LibreOfficea](https://extensions.libreoffice.org/en/extensions/show/99660) klikom na zeleni gumb `Download`. Zatim se odlazi u `Tools` → `Extensions...` i klikne se na `Add`. Odabere se dodatak s rječnikom. Klikne se na `Close` i odabere se `Restart Now`.
 * Preuzima se dodatak s [pravilima za provjeru gramatike](https://extensions.libreoffice.org/en/extensions/show/99654) i instalira se prema uputama iz prethodnoga koraka.
 
-Ako ste slijedili upute i pazili na redoslijed. Pravila za provjeru gramatike moraju raditi.
+Ako ste slijedili upute i pazili na redoslijed, pravila za provjeru gramatike moraju raditi.
 
 ### Instalacija Hunspellovog rječnika podmetanjem rječničkih datoteka (ne kao OXT)
 
@@ -47,7 +47,7 @@ Ako ste slijedili upute i pazili na redoslijed. Pravila za provjeru gramatike mo
 * Razlikovanje pridjeva "sljedeći" i priloga "slijedeći"
 * Detekcija dupliranja riječi
 * Pravilna zamjena i naveza prijedloga "s/sa" i "k/ka"
-* Ispravak velikoga početnog slova u malom unutar rečenice
+* Ispravak velikoga početnog slova u malo unutar rečenice
 * Spajanje rastavljenih oblika kondicionala (bismo/biste)
 * Uklanjanje pleonazama, stilskih viškova i pogrešnih parova veznika
 * Uklanjanje suvišnoga "je" uz povratnu zamjenicu "se"
@@ -82,5 +82,5 @@ Složena pravila i dio „Kako ova pravila pokušavaju pomoći” pisana su uz p
 **Licenca:** MPL 2.0 / LGPLv3 (Otvoreni kod kompatibilan s LibreOffice ekosustavom)
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTI3MzUwMzQ2LC01NjQ4NzMwMDRdfQ==
+eyJoaXN0b3J5IjpbMjE0NTUyOTY2NSwtNTY0ODczMDA0XX0=
 -->
