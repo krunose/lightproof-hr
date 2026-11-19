@@ -19,7 +19,7 @@ Dodatak je pripremljen kao **OXT datoteka** i spreman je za instalaciju na svim 
 Ako bi tko želio testirati ova pravila, potrebno je:
 
 * Obrisati stari rječnik ako je instaliran kao dodatak
-	* pomoću `Upravitelja dodatcima` tako što se otvara izbornik `Tools` → `Extensions...` te se odabere se dodatak s rječnikom i zatim klikne `Remove`. Odabirom `Close` u dijaloškom okviru `Upravitelja dodatcima` ponovno se pokreće LibreOffice odabirom `Restart Now`.
+	* pomoću `Upravitelja dodatcima` tako što se otvara izbornik `Tools` → `Extensions...` te se odabere dodatak s rječnikom i zatim klikne `Remove`. Odabirom `Close` u dijaloškom okviru `Upravitelja dodatcima` ponovno se pokreće LibreOffice odabirom `Restart Now`.
 * Instalirati novi dodatak s označenim rječnikom
 	* preuzimanjem iz [službenoga repozitorija dodataka LibreOfficea](https://extensions.libreoffice.org/en/extensions/show/99660) klikom na zeleni gumb `Download`. Zatim se odlazi u `Tools` → `Extensions...` i klikne se na `Add`. Odabere se dodatak s rječnikom. Klikne se na `Close` i odabere se `Restart Now`.
 * Preuzima se dodatak s [pravilima za provjeru gramatike](https://extensions.libreoffice.org/en/extensions/show/99654) i instalira se prema uputama iz prethodnoga koraka.
@@ -82,5 +82,5 @@ Složena pravila i dio „Kako ova pravila pokušavaju pomoći” pisana su uz p
 **Licenca:** MPL 2.0 / LGPLv3 (Otvoreni kod kompatibilan s LibreOffice ekosustavom)
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU2NDg3MzAwNF19
+eyJoaXN0b3J5IjpbNTI3MzUwMzQ2LC01NjQ4NzMwMDRdfQ==
 -->
